@@ -1,855 +1,878 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dungeons — Quest Guide v2 (Dialogue Update)</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#12121a;--bg2:#1a1a25;--bg3:#1f1f2e;
+  --border:#343450;--border-hi:#7a5cff;
+  --text:#e8e8f0;--text2:#9898b8;--text3:#606080;
+  --gold:#f4d06f;--purple:#7a5cff;--green:#3a8a50;--red:#c03030;
+  --radius:10px;--radius-sm:6px;
+}
+body{background:var(--bg);color:var(--text);font-family:'Crimson Text',serif;min-height:100vh}
+.page{max-width:1100px;margin:0 auto;padding:2rem 1.5rem}
 
-  <!-- Swiper CDN -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+/* hero */
+.hero{text-align:center;padding:3rem 2rem 2.5rem;margin-bottom:2rem;background:linear-gradient(135deg,rgba(122,92,255,.12),rgba(0,0,0,.2));border:1px solid #5144a8;border-radius:20px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at center,rgba(122,92,255,.2),transparent 70%)}
+.hero-title{font-family:'Cinzel',serif;font-size:40px;font-weight:600;color:var(--gold);text-shadow:0 0 20px rgba(244,208,111,.3);position:relative}
+.hero-sub{font-size:16px;color:#b9b9c9;font-style:italic;margin-top:.5rem;position:relative}
+.hero-meta{font-size:12px;color:#606080;margin-top:.5rem;position:relative}
 
-  <!-- Bootstrap -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
-    integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+/* stats */
+.stat-bar{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:2rem}
+.stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:.85rem 1rem;text-align:center}
+.stat-num{font-family:'Cinzel',serif;font-size:22px;font-weight:600}
+.stat-label{font-size:11px;color:var(--text2);margin-top:3px}
 
-  <!-- Boxicons -->
-  <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+/* section */
+.section{margin-bottom:2.5rem}
+.section-title{font-family:'Cinzel',serif;font-size:14px;font-weight:600;letter-spacing:.06em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid #5144a8}
 
-  <!-- jQuery -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+/* dialogue banner */
+.dialogue-banner{background:linear-gradient(90deg, #161626 0%, #201a35 100%);border:1px dashed var(--gold);border-radius:var(--radius);padding:1.25rem;margin-bottom:2rem;text-align:center;cursor:pointer;transition:all .2s;position:relative}
+.dialogue-banner:hover{border-color:var(--purple);box-shadow:0 0 12px rgba(244,208,111,0.15)}
+.dialogue-banner i{color:var(--gold);margin-right:8px}
 
-  <!-- Leaflet -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+/* tabs */
+.tabs{display:flex;gap:6px;margin-bottom:1.5rem;flex-wrap:wrap}
+.tab{padding:6px 14px;border-radius:20px;font-size:13px;border:1px solid var(--border);cursor:pointer;background:var(--bg2);color:var(--text2);transition:all .15s;font-family:'Crimson Text',serif}
+.tab.active{background:var(--purple);border-color:var(--purple);color:#fff}
+.tab:hover:not(.active){border-color:var(--purple);color:var(--text)}
 
-  <!-- Your Custom CSS -->
-  <link rel="stylesheet" href="style.css" />
+/* quest cards */
+.quest-list{display:flex;flex-direction:column;gap:1rem}
+.quest-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:all .2s}
+.quest-card:hover{border-color:var(--border-hi);box-shadow:0 0 15px rgba(122,92,255,.2)}
+.quest-header{display:flex;align-items:center;gap:12px;padding:1rem 1.25rem;cursor:pointer}
+.quest-diff{width:38px;height:38px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.quest-info{flex:1}
+.quest-chapter{font-size:11px;font-weight:600;letter-spacing:.08em;color:var(--text2);text-transform:uppercase}
+.quest-name{font-family:'Cinzel',serif;font-size:15px;font-weight:600;color:#fff;margin-top:2px}
+.quest-boss{font-size:13px;color:#9e9eb8;font-style:italic;margin-top:2px}
+.quest-prereq{font-size:11px;color:#f4a830;margin-top:3px}
+.chevron{color:var(--text2);font-size:18px;transition:transform .2s;flex-shrink:0}
+.chevron.open{transform:rotate(180deg)}
+.quest-body{border-top:1px solid var(--border);padding:1.25rem;display:none}
+.quest-body.open{display:block}
+
+/* story */
+.story-box{background:#161621;border-left:3px solid var(--purple);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:.75rem 1rem;font-size:14px;font-style:italic;color:#d2d2dd;margin-bottom:1rem;line-height:1.6}
+
+/* detail grid */
+.detail-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:1.25rem}
+.detail-label{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text2);margin-bottom:6px;margin-top:10px}
+.detail-label:first-child{margin-top:0}
+
+/* badges */
+.badge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:600;margin:2px 2px 2px 0}
+.b-frag{background:#4935a8;color:#fff}
+.b-reward{background:#245a39;color:#fff}
+.b-npc{background:#77501a;color:#fff}
+.b-type{padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;margin:2px 2px 2px 0;display:inline-block}
+.bt-fight{background:#6b2020;color:#ffaaaa}
+.bt-collect{background:#1a4a6b;color:#aaddff}
+.bt-explore{background:#2a5a2a;color:#aaffaa}
+.bt-talk{background:#5a3a6b;color:#ddaaff}
+.bt-craft{background:#5a4a1a;color:#ffdaaa}
+.bt-mine{background:#3a3a4a;color:#ccccee}
+
+/* objectives */
+.obj-list{list-style:none}
+.obj-item{display:flex;align-items:flex-start;gap:8px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:13px;line-height:1.5}
+.obj-item:last-child{border-bottom:none}
+.obj-num{font-family:'Cinzel',serif;font-size:11px;color:var(--gold);min-width:18px;padding-top:1px}
+.obj-text{flex:1;color:var(--text)}
+
+/* prereq chain */
+.prereq-chain{background:#1a1527;border:1px solid #4a3a7a;border-radius:var(--radius-sm);padding:.75rem 1rem;margin-bottom:1rem;font-size:13px}
+.prereq-title{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#a080ff;margin-bottom:6px}
+.chain-steps{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.chain-step{background:#2a1f4a;border:1px solid #5a4a8a;border-radius:var(--radius-sm);padding:3px 10px;font-size:12px;color:#c8b0ff}
+.chain-arrow{color:#5a4a7a;font-size:14px}
+.chain-step.current{background:#4a35a8;border-color:#7a5cff;color:#fff;font-weight:600}
+
+/* diff colors */
+.diff-easy{background:#2e6f42}
+.diff-mid{background:#8c6d25}
+.diff-hard{background:#9a4d2a}
+.diff-end{background:#5830a5}
+.diff-final{background:#a22222;box-shadow:0 0 10px rgba(255,0,0,.3)}
+
+/* system cards */
+.sys-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:2rem}
+.sys-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.1rem}
+.sys-title{font-size:13px;font-weight:500;margin-bottom:8px;display:flex;align-items:center;gap:8px;color:var(--text)}
+.sys-body{font-size:13px;color:var(--text2);line-height:1.7}
+.fail-list{list-style:none}
+.fail-list li{padding:3px 0;font-size:13px;color:var(--text2)}
+.fail-list li::before{content:"✕";color:#c03030;margin-right:8px;font-size:11px}
+.ok-list li::before{content:"✓";color:#3a8a50;margin-right:8px;font-size:11px}
+
+/* npc cards */
+.npc-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.1rem;transition:all .2s;cursor:default}
+.npc-card:hover{border-color:var(--border-hi);box-shadow:0 0 12px rgba(122,92,255,.2)}
+.npc-top{display:flex;align-items:flex-start;gap:10px;margin-bottom:.6rem}
+.npc-icon{width:36px;height:36px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.npc-icon-hub{background:#2a2060}
+.npc-icon-main{background:#3a2810}
+.npc-icon-bridge{background:#1a3a28}
+.npc-icon-reward{background:#2a1a40}
+.npc-head{flex:1}
+.npc-name{font-family:'Cinzel',serif;font-size:14px;font-weight:600;color:#fff}
+.npc-type-badge{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:1px 7px;border-radius:10px;margin-top:3px}
+.nb-hub{background:#3a2f80;color:#c0b0ff}
+.nb-main{background:#5a3010;color:#ffc070}
+.nb-bridge{background:#1a4a30;color:#70ffa0}
+.nb-reward{background:#3a1a60;color:#c080ff}
+.npc-body{font-size:12px;color:var(--text2);line-height:1.6}
+.npc-row{display:flex;gap:6px;margin-top:3px;align-items:baseline}
+.npc-row-label{font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#6060a0;min-width:52px;flex-shrink:0}
+.npc-row-val{font-size:12px;color:var(--text2)}
+.npc-id{font-size:10px;color:#6060a0;font-family:monospace;background:#111118;padding:1px 5px;border-radius:3px;margin-top:4px;display:inline-block}
+.npc-location-badge{font-size:10px;padding:1px 7px;border-radius:10px;background:#1e1e30;color:#8080b0;border:1px solid #343450;display:inline-block;margin-top:4px}
+</style>
 </head>
-
 <body>
-  <div class="preloader-wrapper">
-    <div class="preloader"></div>
-  </div> 
+<div class="page">
 
-  <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasModify"
-    aria-labelledby="offcanvasModify">
-    <div class="offcanvas-header justify-content-center">
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+<div class="hero">
+  <div class="hero-title">Dungeons & Quest Guide</div>
+  <div class="hero-sub">The Shattered Realm Chronicles — Quest & NPC Guide v2</div>
+  <div class="hero-meta">Multiplayer 100 คน · Party Quest · Hardcore Mode · 93 Objectives</div>
+</div>
+
+<div class="stat-bar">
+  <div class="stat"><div class="stat-num" style="color:#a080ff">93</div><div class="stat-label">Objectives</div></div>
+  <div class="stat"><div class="stat-num" style="color:#3a8a50">13</div><div class="stat-label">Quest หลัก</div></div>
+  <div class="stat"><div class="stat-num" style="color:#f4d06f">13</div><div class="stat-label">Boss ทั้งหมด</div></div>
+  <div class="stat"><div class="stat-num" style="color:#e07040">27</div><div class="stat-label">NPC (Beta)</div></div>
+  <div class="stat"><div class="stat-num" style="color:#c03030">5</div><div class="stat-label">บทเรื่องราว</div></div>
+</div>
+
+<div class="section" style="margin-bottom: 1.5rem;">
+  <div class="section-title">🔊 เสียงเล่าอ้างจากนักเดินทาง (สุ่มบทพูดเปิดตัวบอส)</div>
+  <div class="dialogue-banner" onclick="rollIntroDialogue()">
+    <span style="font-size: 15px; color: var(--gold); font-style: italic;" id="introQuoteDisplay">
+      <i class="ti ti-volume"></i> "คลิกตรงนี้เพื่อฟังเสียงกระซิบแห่งโชคชะตาเกี่ยวกับเหล่าอสูรร้าย..."
+    </span>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">ประเภท Objective ที่รองรับ</div>
+  <div class="type-legend">
+    <div class="legend-item"><span class="b-type bt-fight">⚔ ต่อสู้</span> สังหารมอนสเตอร์ / Boss (รองรับ Custom Entity ID)</div>
+    <div class="legend-item"><span class="b-type bt-collect">📦 รวบรวม</span> เก็บไอเทมในช่องเก็บของ</div>
+    <div class="legend-item"><span class="b-type bt-explore">🧭 สำรวจ</span> ไปยังพิกัดที่กำหนด</div>
+    <div class="legend-item"><span class="b-type bt-talk">💬 คุยกับ NPC</span> คุยกับ NPC ที่กำหนด</div>
+    <div class="legend-item"><span class="b-type bt-craft">🔨 สร้างไอเทม</span> Craft ไอเทมเป้าหมาย</div>
+    <div class="legend-item"><span class="b-type bt-mine">⛏ ขุด</span> ทำลายบล็อกที่ระบุ (รองรับ Block ID)</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Quest ทั้งหมด</div>
+  <div class="tabs">
+    <div class="tab active" onclick="filterQuests('all',this)">ทั้งหมด</div>
+    <div class="tab" onclick="filterQuests('easy',this)">🥉 ง่าย</div>
+    <div class="tab" onclick="filterQuests('mid',this)">🥈 ปานกลาง</div>
+    <div class="tab" onclick="filterQuests('hard',this)">🥇 ยาก</div>
+    <div class="tab" onclick="filterQuests('end',this)">💀 ท้ายเกม</div>
+    <div class="tab" onclick="filterQuests('final',this)">🏆 Final</div>
+  </div>
+  <div class="quest-list" id="questList"></div>
+</div>
+
+<div class="section">
+  <div class="section-title">ระบบ Party Quest — Hardcore Mode</div>
+  <div class="sys-grid">
+    <div class="sys-card">
+      <div class="sys-title"><i class="ti ti-users"></i> หลักการ Party</div>
+      <div class="sys-body">หัว Party คุยกับ NPC → ทุกคนใน Party ได้ Quest พร้อมกัน<br><br>บอสตาย → Quest Complete ทุกคน<br><br>แต่ละคนรับรางวัลเองที่ Reward Clerk</div>
     </div>
-    <div class="offcanvas-body">
-      <div id="form-container">
-        <h2>Consumer Form</h2>
-        <form id="consumerForm">
-          <input type="hidden" id="rowIndex" name="rowIndex">
-          <div class="form-group">
-            <label for="name">รายการ</label>
-            <input type="text" class="form-control" id="name" name="name" required>
-          </div>
-          <div class="form-group">
-            <label for="address">ราคา</label>
-            <input type="text" class="form-control" id="address" name="address" required>
-          </div>
-          <div class="form-group">
-            <label for="Mobile No">จำนวน</label>
-            <input type="text" class="form-control" id="mobileno" name="mobileno" required>
-          </div>
-          <div class="form-group">
-            <label for="Age">Age</label>
-            <input type="text" class="form-control" id="age" name="age" required>
-          </div>
-          <div class="form-group">
-            <label for="gender">หมวดหมู่</label>
-            <select class="form-control" id="gender" name="gender" required>
-              <option value="Male">ของแปรรูป (processed food)</option>
-              <option value="Female">เนื้อสัตว์ (meat)</option>
-              <option value="Transgender">เส้น (overall noodle)</option>
-              <option value="Others">อื่นๆ</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="image">Image</label>
-            <input type="file" class="form-control-file" id="image" name="image" accept="image/*" required>
-          </div>
-          <div class="form-group">
-            <div id="imagePreview"></div>
-          </div>
-          <button type="submit" class="btn btn-success" id="submitbutton">Submit</button>
-          <button type="button" class="btn btn-secondary" id="cancelEdit" style="display: none;">Cancel</button>
-        </form>
-      </div>
+    <div class="sys-card">
+      <div class="sys-title"><i class="ti ti-key"></i> Key Fragment</div>
+      <div class="sys-body">ได้จากการฆ่า Boss — ทุกคนได้ Fragment ของตัวเอง<br><br>Fragment ไม่แชร์กัน แต่ไม่หายแม้ Quest Unsuccessful<br><br>ต้องมีครบจึงจะเข้า Final Boss ได้</div>
+    </div>
+    <div class="sys-card">
+      <div class="sys-title"><i class="ti ti-circle-x" style="color:#c03030"></i> Unsuccessful ทันที</div>
+      <ul class="fail-list">
+        <li>สมาชิกออกจาก Party</li>
+        <li>หัว Party Log out</li>
+        <li>Party ถูกยุบ</li>
+        <li>สมาชิก Log out กลางคัน</li>
+        <li>Party Wipe (ตายพร้อมกันหมด)</li>
+      </ul>
+    </div>
+    <div class="sys-card">
+      <div class="sys-title"><i class="ti ti-circle-check" style="color:#3a8a50"></i> ไม่ Unsuccessful</div>
+      <ul class="fail-list ok-list">
+        <li>ตายแต่ยัง Respawn กลับได้</li>
+        <li>ส่งต่อหัว Party ก่อนออก</li>
+        <li>เดินแยกแต่ยังอยู่ใน Party</li>
+      </ul>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:12px;color:var(--text2)">Quest Fail → กลับหา NPC รับใหม่ · Objective และ Boss Reset ทั้งหมด</div>
     </div>
   </div>
+</div>
 
-  <!-- ค้นหาพิกัด -->
-  <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasSearch"
-    aria-labelledby="offcanvasSearchLabel">
-    <div class="offcanvas-header justify-content-center">
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-      <p id="location"><i>กำลังหาตำแหน่งของคุณ กรุณารอสักครู่</i></p>
-      <p id="distance"></p>
-      <div id="map" style="height: 300px;"></div>
-
-      <!-- เลือกวิธีชำระเงิน -->
-      <label>เลือกวิธีชำระเงิน:</label>
-      <select id="paymentMethod">
-        <option value="cash">💵 ชำระเงินสด</option>
-        <option value="qr">📲 สแกน QR Code</option>
-      </select>
-
-      <button id="checkout-btn" onclick="checkout()" class="w-100 btn btn-primary btn-lg" disabled>สั่งซื้อ</button>
-    </div>
+<div class="section">
+  <div class="section-title">NPC ทั้งหมด</div>
+  <div class="tabs" style="margin-bottom:1.25rem">
+    <div class="tab active" onclick="filterNPC('all',this)">ทั้งหมด</div>
+    <div class="tab" onclick="filterNPC('hub',this)">🏰 Hub</div>
+    <div class="tab" onclick="filterNPC('main',this)">📜 Quest หลัก</div>
+    <div class="tab" onclick="filterNPC('bridge',this)">🔗 Bridge</div>
+    <div class="tab" onclick="filterNPC('reward',this)">🎁 Reward</div>
   </div>
-
-
-  <!-- ตะกร้าสินค้า -->
-  <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasCart"
-    aria-labelledby="offcanvasCartLabel">
-    <div class="offcanvas-header justify-content-center">
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-      <h4 id="cart-type-title" class="text-primary">ตะกร้าสินค้า: -</h4>
-      <!-- <h4 id="order-type-title" class="text-secondary">ประเภทการจัดส่ง: -</h4> -->
-      <ul id="cart-list" class="list-group mb-3"></ul>
-      <li id="cart-total-price" class="list-group-item d-flex justify-content-between">
-        <span>รวมทั้งหมด:</span>
-        <strong>0 บาท</strong>
-      </li>
-      <li id="member-point" class="list-group-item d-flex justify-content-between"></li>
-      <button id="nextButton" onclick="getLocation()" class="w-100 btn btn-primary btn-lg">ถัดไป</button>
-    </div>
+  <div id="npcGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px"></div>
+  <div style="margin-top:1rem;padding:.75rem 1rem;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);font-size:12px;color:var(--text2)">
+    💡 NPC ×2 = วางสองตัวในจุดเดียวกันเพื่อรองรับ 50 คน / NPC Bridge วางนอก Hub ใกล้พื้นที่ Quest
   </div>
+</div>
 
-  <!-- ชำระเงิน -->
-  <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasNavbar"
-    aria-labelledby="offcanvasNavbarLabel">
-    <div class="offcanvas-header justify-content-center">
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
+</div>
 
-    <div class="offcanvas-body">
-      <div class="header">
-        <h5>📦 รายการสั่งซื้อ</h5>
+<script>
+const T = {
+  fight: '<span class="b-type bt-fight">⚔ ต่อสู้</span>',
+  collect: '<span class="b-type bt-collect">📦 รวบรวม</span>',
+  explore: '<span class="b-type bt-explore">🧭 สำรวจ</span>',
+  talk: '<span class="b-type bt-talk">💬 คุย NPC</span>',
+  craft: '<span class="b-type bt-craft">🔨 สร้าง</span>',
+  mine: '<span class="b-type bt-mine">⛏ ขุด</span>',
+};
+
+// 15 General Intro Boss Quotes
+const introQuotes = [
+  "ข้าได้ยินเสียงคำรามของบางสิ่งจากส่วนลึกใต้พิภพ...",
+  "มีผู้กล้ามากมายหายสาบสูญระหว่างตามล่ามัน...",
+  "อย่าประมาทแม้เพียงชั่วครู่เมื่อเผชิญหน้าบอสเหล่านั้น",
+  "กุญแจสมบัติอันล้ำค่าถูกเฝ้าโดยอสูรร้ายเหล่านี้",
+  "บางตัวใช้พละกำลัง บางตัวใช้เวทมนตร์... แต่ทุกตัวอันตราย",
+  "เตรียมอาวุธ เกราะ และหัวใจของเจ้าให้พร้อม",
+  "ตำนานเล่าว่าผู้ที่ล้มพวกมันได้จะได้รับขุมทรัพย์มหาศาล",
+  "หากเจ้าเห็นแสงประหลาดในความมืด จงระวังไว้ก่อน",
+  "ไม่มีบอสตัวใดอ่อนแอ... มีเพียงนักผจญภัยที่ประมาทเท่านั้น",
+  "ชัยชนะเป็นของผู้ที่เรียนรู้รูปแบบการโจมตีของศัตรู",
+  "บางครั้งการหลบหนีก็สำคัญกว่าการโจมตี",
+  "ความโลภทำให้นักผจญภัยหลายคนไม่เคยกลับมา",
+  "ยิ่งลึก ยิ่งอันตราย ยิ่งคุ้มค่าแก่การค้นหา",
+  "โลกใบนี้ยังมีความลับอีกมากที่รอการเปิดเผย",
+  "หากเจ้าพร้อมแล้ว... เส้นทางสู่บอสตัวต่อไปกำลังรออยู่"
+];
+
+function rollIntroDialogue() {
+  const randIdx = Math.floor(Math.random() * introQuotes.length);
+  document.getElementById("introQuoteDisplay").innerHTML = `<i class="ti ti-volume"></i> "${introQuotes[randIdx]}"`;
+}
+
+const chains = {
+  1: {steps:[{id:1,name:"หม้อต้มแห่งหายนะ"}]},
+  2: {steps:[{id:1,name:"หม้อต้มแห่งหายนะ"},{id:2,name:"วิญญาณที่ไม่ยอมจาก"}]},
+  3: {steps:[{id:1,name:"หม้อต้มฯ"},{id:2,name:"วิญญาณฯ"},{id:3,name:"ชื่อที่ถูกลืม"}]},
+  4: {steps:[{id:1,name:"หม้อต้มฯ"},{id:2,name:"วิญญาณฯ"},{id:4,name:"ไฟใต้ท้องฟ้า"}]},
+  5: {steps:[{id:2,name:"วิญญาณฯ"},{id:3,name:"ชื่อที่ถูกลืม"},{id:5,name:"ยามแห่งท้องทะเลลึก"}]},
+  6: {steps:[{id:3,name:"ชื่อที่ถูกลืม"},{id:4,name:"ไฟใต้ท้องฟ้า"},{id:5,name:"ยามฯ"},{id:6,name:"หัวใจหินแดง"}]},
+  7: {steps:[{id:4,name:"ไฟใต้ท้องฟ้า"},{id:5,name:"ยามฯ"},{id:6,name:"หัวใจหินแดง"},{id:7,name:"รากเลือด"}]},
+  8: {steps:[{id:5,name:"ยามฯ"},{id:6,name:"หัวใจหินแดง"},{id:7,name:"รากเลือด"},{id:8,name:"ฟ้าคำรามในพายุ"}]},
+  9: {steps:[{id:6,name:"หัวใจหินแดง"},{id:7,name:"รากเลือด"},{id:8,name:"ฟ้าคำราม"},{id:9,name:"เงาแห่งออบซิเดียน"}]},
+  10:{steps:[{id:3,name:"ชื่อที่ถูกลืม"},{id:10,name:"เห็ดแห่งการทดสอบ"}]},
+  11:{steps:[{id:7,name:"รากเลือด"},{id:8,name:"ฟ้าคำราม"},{id:9,name:"เงาฯ"},{id:10,name:"เห็ดฯ"},{id:11,name:"ผู้ส่งสาร 6 หน้า"}]},
+  12:{steps:[{id:9,name:"เงาฯ"},{id:10,name:"เห็ดฯ"},{id:11,name:"ผู้ส่งสาร 6 หน้า"},{id:12,name:"สองหน้าของอำนาจ"}]},
+  13:{steps:[{id:12,name:"สองหน้าของอำนาจ"},{id:13,name:"จุดเริ่มต้นของโลกใหม่"}]},
+};
+
+const quests = [
+  {
+    id:1, diff:"easy", chapter:"บทที่ 1 — รากแห่งความเน่าเฟะ",
+    name:"หม้อต้มแห่งหายนะ", boss:"Corrupted Cauldron", emoji:"🥉",
+    npcMain:"Farmer Aldus", npcBridge:"-", fragment:"Key Fragment I", reward:"Iron Equipment Set",
+    story:"ชาวบ้าน Ashfen Village ค้นพบหม้อต้มโบราณถูกสาปด้วยพลังงาน Ender มันเรียกซอมบี้และสไลม์ทำลายหมู่บ้าน ผู้รอดชีวิตหนีมาขอความช่วยเหลือ",
+    dialogues: [
+      "หม้อต้มยักษ์ในรังแม่มดแถวหนองน้ำ... มันมีชีวิต!",
+      "ตัวหม้อขยับไม่ได้ แต่ถ้าปล่อยไว้นานจะรับมือยากมาก",
+      "มันจะใช้กระบวยกวนหม้อแล้วเสก Mossy Zombie ออกมา",
+      "ห้ามให้พวกซอมบี้ตายใกล้หม้อ ไม่งั้นมันจะดูดไปฟื้นเลือด!",
+      "สไลม์สีชมพูที่มันพ่นออกมาโจมตีเร็วและน่ารำคาญสุดๆ",
+      "ถ้าเข้าใกล้เกินไป มันจะจุดไฟม่วงเผารอบตัวทันที",
+      "จงระดมตีมันตอนมันกำลังร่ายเวทฮีลเพื่อขัดจังหวะซะ",
+      "ล้มหม้อต้มนี้ได้ เจ้าจะได้กุญแจไขหีบเพชรประจำรัง",
+      "ตอมันไปเรื่อยๆ อย่าหยุดมือ ไม่งั้นมันฮีลตัวเองจนเต็มแน่"
+    ],
+    objectives:[
+      {type:"talk", text:"คุยกับ Farmer Aldus — NPC ID: farmer_aldus"},
+      {type:"explore", text:"เดินทางไปยังซาก Ashfen Village (พิกัด X:120 Z:-340)"},
+      {type:"mine", text:"ทำลาย Corrupted Block ×3 — ID: alylica:corrupted_stone"},
+      {type:"collect", text:"เก็บ Village Clue ×3 — Item ID: alylica:village_clue"},
+      {type:"fight", text:"สังหาร Corrupted Zombie ×5 — Entity ID: alylica:corrupted_zombie"},
+      {type:"fight", text:"สังหาร Corrupted Slime ×3 — Entity ID: alylica:corrupted_slime"},
+      {type:"fight", text:"ทำลาย Corrupted Cauldron — Entity ID: alylica:corrupted_cauldron"},
+      {type:"talk", text:"รายงานผลกับ Elder Maren — NPC ID: elder_maren"},
+    ]
+  },
+  {
+    id:2, diff:"easy", chapter:"บทที่ 1 — รากแห่งความเน่าเฟะ",
+    name:"วิญญาณที่ไม่ยอมจาก", boss:"Wretched Wraith", emoji:"🥉",
+    npcMain:"Sister Vael", npcBridge:"Ghost Whisperer Omra", fragment:"Key Fragment II", reward:"Diamond Armor (1 ชิ้น)",
+    story:"วิญญาณของอดีตนักบวชชั้นสูงถูกปลุกขึ้นเป็น Wretched Wraith ใน Frostmere วิหาร Sister Vael ขอให้ปลดปล่อยครูของเธอ",
+    dialogues: [
+      "บนยอดป้อมปราการ Lone Fortress มีผีดิบน้ำแข็งรออยู่",
+      "พื้นสนามรบเป็นน้ำแข็งลื่นปรื๊ด หลบการโจมตียากชะมัด!",
+      "มันชอบพ่นไฟนรกสีฟ้าใส่เจ้าจากระยะไกล",
+      "ถ้าเจ้าเข้าใกล้เกินไป มันจะปล่อยไอเย็นผลักและทำให้ช้า",
+      "มันเสกไฟเวทมนตร์ขึ้นมาบนพื้นเพื่อขวางทางเดินเจ้า",
+      "ระวังช่วงที่มันอมตะแล้วระดมยิงห่ากระสุนปืนกลล่ะ",
+      "จงฉวยโอกาสเข้าโจมตีตอนมันติดสถานะมึนงง",
+      "กุญแจ Wretched Key จะเปิดหีบในห้องบัลลังก์ปราสาท",
+      "การวาร์ปของมันทำให้ข้าเวียนหัวและเสียจังหวะตลอดเลย"
+    ],
+    objectives:[
+      {type:"talk", text:"คุยกับ Sister Vael — NPC ID: sister_vael"},
+      {type:"explore", text:"หา Ghost Whisperer Omra บริเวณ Frostmere Ruins (X:-80 Z:200)"},
+      {type:"talk", text:"คุยกับ Ghost Whisperer Omra — NPC ID: ghost_omra"},
+      {type:"collect", text:"เก็บ Frost Crystal ×5 — Item ID: alylica:frost_crystal"},
+      {type:"craft", text:"สร้าง Frost Ward Charm ×1 — Item ID: alylica:frost_ward_charm"},
+      {type:"fight", text:"สังหาร Skeleton Vanguard ×4 — Entity ID: alylica:skeleton_vanguard"},
+      {type:"fight", text:"ทำลาย Wretched Wraith — Entity ID: alylica:wretched_wraith"},
+      {type:"talk", text:"นำ Soul Shard คืนให้ Sister Vael — NPC ID: sister_vael"},
+    ]
+  },
+  {
+    id:3, diff:"mid", chapter:"บทที่ 2 — ศัตรูจากทุกทิศ",
+    name:"ชื่อที่ถูกลืม", boss:"The Nameless One", emoji:"🥈",
+    npcMain:"Scholar Verik", npcBridge:"Skeleton Deserter", fragment:"Key Fragment III", reward:"Spell Book (Special Item)",
+    story:"จอมเวทโบราณนิรนามถูกปิดผนึกในห้องสมุด Ruinspire เพิ่งตื่นจากพลัง Ender กำลังรวบรวมกองทัพ Skeleton Vanguard",
+    dialogues: [
+      "สุสานใต้ทะเลทรายคือที่พำนักของราชาไร้นาม",
+      "เขาเป็นจอมเวทอมตะจากอาณาจักรโบราณที่ล่มสลายไปแล้ว",
+      "ลำแสงเวทมนตร์จากไม้เท้าของเขาดาเมจแรงเอาเรื่องเลยล่ะ",
+      "เขาชอบอัญเชิญทหารโครงกระดูกถือโล่และง้าวมาบังหน้า",
+      "ท่าไม้ตายของเขาคือการเสกร่างแยกปลอมมาล้อมโจมตีเจ้า",
+      "ระวังให้ดี ร่างปลอมจะหลอกตา แต่ตัวจริงชอบแอบวาร์ปหนี",
+      "กุญแจจากซากปรักหักพังนี้จะเปิดหีบสมบัติล้ำค่า",
+      "จงใช้ความเร็ววิ่งอ้อมไปตีตัวจริงตอนมันชาร์จเวทซะ",
+      "โล่ของพวก Vanguard ถึกมาก หาอาวุธเจาะเกราะไปด้วยล่ะ"
+    ],
+    objectives:[
+      {type:"talk", text:"คุยกับ Scholar Verik — NPC ID: scholar_verik"},
+      {type:"explore", text:"ค้นหา Skeleton Deserter ในป่าทางตะวันออก (X:350 Z:120)"},
+      {type:"talk", text:"คุยกับ Skeleton Deserter — NPC ID: skeleton_deserter"},
+      {type:"collect", text:"เก็บ Ancient Tome Page ×4 — Item ID: alylica:ancient_tome_page"},
+      {type:"fight", text:"สังหาร Skeleton Vanguard ×8 — Entity ID: alylica:skeleton_vanguard"},
+      {type:"fight", text:"ทำลายร่างแยกของ Nameless One ×3 — Entity ID: alylica:nameless_clone"},
+      {type:"fight", text:"สังหาร The Nameless One — Entity ID: alylica:the_nameless_one"},
+      {type:"talk", text:"ส่งตำราต้องห้ามให้ Scholar Verik — NPC ID: scholar_verik"},
+    ]
+  },
+  {
+    id:4, diff:"mid", chapter:"บทที่ 2 — ศัตรูจากทุกทิศ",
+    name:"ไฟใต้ท้องฟ้า", boss:"Hovering Inferno", emoji:"🥈",
+    npcMain:"Pyromancer Ixal", npcBridge:"Blaze Refugee", fragment:"Key Fragment IV", reward:"Flame Resistance Gear Set",
+    story:"Wildfire ดูดซับพลัง Ender กลายเป็น Hovering Inferno กำลังเผา Embercrest Pyromancer Ixal เป็นคนเดียวรู้วิธีจัดการ",
+    dialogues: [
+      "เจ้าแห่งไฟตัวนี้อาศัยอยู่ในลานประลองกลางทะเลลาวาเนเธอร์",
+      "มันคือเวอร์ชันอัปเกรดของ Wildfire ที่โหดหินกว่าเดิม",
+      "มีโล่ลอยล้อมรอบตัวหนาแน่น คอยกันดาเมจได้ดีเยี่ยม",
+      "มันจะยิงลูกไฟระเบิดใส่เจ้าทีเดียว 3 นัดรวด!",
+      "ถ้าเจ้าดึงดันจะเข้าใกล้ มันจะกระแทกพื้นสร้างคลื่นกระแทก",
+      "คลื่นกระแทกของมันจะผลักเจ้าตกทะเลลาวาเอาได้ง่ายๆ",
+      "หลังทุบพื้น มันจะเสกพวก Blaze มารุมพ่นไฟใส่เจ้า",
+      "Blaze Key คือสิ่งตอบแทนหากเจ้าเอาชนะนรกนี้ได้",
+      "เตรียมชุดกันไฟและอาวุธระยะไกลไปจะช่วยได้เยอะ"
+    ],
+    objectives:[
+      {type:"talk", text:"คุยกับ Pyromancer Ixal — NPC ID: pyromancer_ixal"},
+      {type:"explore", text:"หา Blaze Refugee ใกล้ซาก Embercrest (X:500 Z:-200)"},
+      {type:"talk", text:"คุยกับ Blaze Refugee — NPC ID: blaze_refugee"},
+      {type:"collect", text:"เก็บ Blaze Rod ×8 — Item ID: minecraft:blaze_rod"},
+      {type:"craft", text:"สร้าง Fireproof Potion ×10 — Item ID: alylica:fireproof_potion"},
+      {type:"fight", text:"สังหาร Blaze Minion ×6 — Entity ID: alylica:blaze_minion"},
+      {type:"fight", text:"ทำลาย Hovering Inferno — Entity ID: alylica:hovering_inferno"},
+      {type:"explore", text:"เดินไปยังจุดดับไฟ Embercrest (X:520 Z:-220) หลังบอสตาย"},
+    ]
+  },
+  {
+    id:5, diff:"mid", chapter:"บทที่ 2 — ศัตรูจากทุกทิศ",
+    name:"ยามแห่งท้องทะเลลึก", boss:"Ancient Guardian", emoji:"🥈",
+    npcMain:"Admiral Coris", npcBridge:"Drowned Messenger", fragment:"Key Fragment V", reward:"Aquatic Gear + Secret Map Fragment",
+    story:"ห้องเก็บความลับใต้น้ำ Sunken Archive มีแผนที่หา Arch-Illager แต่ Ancient Guardian ที่ถูกสาปคุ้มกันอยู่",
+    dialogues: [
+      "เจ้าต้องดำน้ำลงไปใต้ทะเลลึกเพื่อหาวนอุทยาน Abyssal",
+      "ระวังเกจออกซิเจนหมดล่ะ ศึกนี้สู้ใต้น้ำล้วนๆ",
+      "เลเซอร์ตาของมันแรงถึงตาย หาที่กำบังหรือใช้โล่บล็อกซะ",
+      "พอยิงเลเซอร์เสร็จ มันจะพุ่งชนเจ้าอย่างรวดเร็ว",
+      "มันจะเสกเจ้าการ์เดียนตัวเล็กๆ มาคอยยิงตอดก่อกวน",
+      "ทุ่นระเบิด Biomines จะลอยไล่ล่าและระเบิดเป็นควันพิษ",
+      "ใช้ธนูยิงระเบิด Biomines จากระยะไกลเพื่อตัดกำลังมัน",
+      "ล้มบอสใต้น้ำตัวนี้เพื่อรับ Ancient Key ไปไขหีบสมบัติ",
+      "น้ำยาช่วยหายใจใต้น้ำคือสิ่งจำเป็นที่สุดในศึกนี้"
+    ],
+    objectives:[
+      {type:"talk", text:"คุยกับ Admiral Coris — NPC ID: admiral_coris"},
+      {type:"explore", text:"หา Drowned Messenger บริเวณชายฝั่งใต้ (X:-100 Z:600)"},
+      {type:"talk", text:"คุยกับ Drowned Messenger — NPC ID: drowned_messenger"},
+      {type:"collect", text:"เก็บ Prismarine Shard ×10 — Item ID: minecraft:prismarine_shard"},
+      {type:"mine", text:"ทำลาย Poison Mine ×4 — ID: alylica:poison_mine_block"},
+      {type:"fight", text:"สังหาร Guardian Minion ×6 — Entity ID: minecraft:guardian"},
+      {type:"fight", text:"ทำลาย Ancient Guardian — Entity ID: alylica:ancient_guardian"},
+      {type:"explore", text:"เข้าถึง Sunken Archive เก็บ Secret Map (X:-150 Z:650)"},
+    ]
+  },
+  {
+    id:6, diff:"hard", chapter:"บทที่ 3 — ยักษ์จากยุคก่อน",
+    name:"หัวใจหินแดง", boss:"Redstone Monstrosity", emoji:"🥇",
+    npcMain:"Engineer Torvin", npcBridge:"Redstone Cube Survivor", fragment:"Key Fragment VI", reward:"Redstone Core (Crafting Material)",
+    story:"Engineer Torvin สร้าง Golem ปกป้องเมือง แต่พลัง Ender ทำให้มันกลายเป็นฆาตกรมุ่งทำลายฐานปฏิบัติการสุดท้าย",
+    dialogues: [
+      "ลึกลงไปใต้ค่าย Pillager มีเตาหลอมไฟลุกโชนซ่อนอยู่",
+      "เจ้าอสูรกายสีแดงจะตื่นขึ้นทันทีถ้าเจ้าเข้าไปใกล้ตัวมัน",
+      "หมัดยักษ์ของมันทุบทีแผ่นดินสะเทือนและกระเด็นไกลมาก!",
+      "มันพ่นระเบิดเพลิงออกมารัวๆ เหมือนปืนกลเลยล่ะ",
+      "ระวังพื้นแตกแล้วมีลาวาพุ่งขึ้นมาเผาร่างเจ้านะ",
+      "หินเรดสโตนก้อนจิ๋วที่มันเสกมาจะคอยวิ่งไล่ตอดเลือดเจ้า",
+      "ถ้าล้มมันได้ เจ้าจะได้กุญแจไขหีบเพชรสุดหรูในเตาหลอม",
+      "อย่าลืมพกยาไปเยอะๆ เตาหลอมนั่นร้อนแรงสายโหด",
+      "การกลิ้งหลบระเบิดแมกมาคือทางรอดเดียวของเจ้า!"
+    ],
+    objectives:[
+      {type:"talk", text:"คุยกับ Engineer Torvin รับ Blueprint — NPC ID: engineer_torvin"},
+      {type:"explore", text:"หา Redstone Cube Survivor ใกล้ Ironveil (X:280 Z:-80)"},
+      {type:"talk", text:"คุยกับ Redstone Cube Survivor — NPC ID: rs_cube_survivor"},
+      {type:"mine", text:"ทำลาย Redstone Spawner ×4 — ID: alylica:redstone_spawner"},
+      {type:"fight", text:"สังหาร Redstone Cube ×10 — Entity ID: alylica:redstone_cube"},
+      {type:"collect", text:"เก็บ Redstone Fragment ×6 — Item ID: alylica:redstone_fragment"},
+      {type:"fight", text:"ทำลาย Redstone Monstrosity — Entity ID: alylica:redstone_monstrosity"},
+      {type:"collect", text:"เก็บ Core Crystal จากซาก — Item ID: alylica:core_crystal"},
+    ]
+  },
+  {
+    id:7, diff:"hard", chapter:"บทที่ 3 — ยักษ์จากยุคก่อน",
+    name:"รากเลือด", boss:"Jungle Abomination", emoji:"🥇",
+    npcMain:"Druid Essara", npcBridge:"Ancient Tree Spirit", fragment:"Key Fragment VII", reward:"Life Seed (Key Item)",
+    story:"พืชโบราณใน Verdant Abyss ถูก Ender ปลุกเป็น Jungle Abomination Arch-Illager ต้องการพลังชีวิตโบราณที่อยู่ในมัน",
+    dialogues: [
+      "วิหารรกทึบกลางป่าดงดิบคือที่อยู่ของอสูรกายพฤกษา",
+      "มันเลือดเยอะและหมัดหนักมาก แต่โชคดีที่เดินช้าชะมัด",
+      "มันสามารถสั่งเถาวัลย์พิษให้งอกขึ้นมาล้อมและขวางทางเจ้า",
+      "ลูกดอกพิษที่มันพ่นออกมาจะกระจายกว้าง ยืนห่างๆ ไว้ดีกว่า",
+      "เมื่อเลือดมันลดต่ำกว่าครึ่ง มันจะคำรามลั่นวิหาร!",
+      "หลังคำราม พลังโจมตีและความเร็วของมันจะเพิ่มขึ้นถาวร",
+      "เถาวัลย์หนามเหล่านั้นตีให้พังเพื่อเปิดทางหนีได้นะ",
+      "กุญแจของมันจะไขหีบเพชรที่ซ่อนอยู่ในวิหารป่า",
+      "ใช้ความเร็วของเจ้าให้เป็นประโยชน์ วิ่งตอดแล้วถอยซะ"
+    ],
+    objectives:[
+      {type:"talk", text:"คุยกับ Druid Essara รับพร Poison Resist — NPC ID: druid_essara"},
+      {type:"explore", text:"หา Ancient Tree Spirit ใน Verdant Abyss (X:-400 Z:-300)"},
+      {type:"talk", text:"คุยกับ Ancient Tree Spirit รับ Vine Cutter — NPC ID: tree_spirit"},
+      {type:"mine", text:"ทำลาย Corrupted Root ×5 — ID: alylica:corrupted_root"},
+      {type:"fight", text:"สังหาร Poison Vine ×8 — Entity ID: alylica:poison_vine"},
+      {type:"fight", text:"สังหาร Angry Mooshroom ×4 — Entity ID: alylica:angry_mooshroom"},
+      {type:"fight", text:"สังหาร Jungle Abomination (Phase Berserk) — Entity ID: alylica:jungle_abomination"},
+      {type:"collect", text:"เก็บ Life Seed — Item ID: alylica:life_seed"},
+    ]
+  },
+  {
+    id:8, diff:"hard", chapter:"บทที่ 3 — ยักษ์จากยุคก่อน",
+    name:"ฟ้าคำรามในพายุ", boss:"Tempest Golem", emoji:"🥇",
+    npcMain:"Stormcaller Mira", npcBridge:"Totem Guardian", fragment:"Key Fragment VIII", reward:"Thunder Gem",
+    story:"Tempest Golem ปกป้องโทเท็มสายฟ้า 4 ต้น ต้องทำลายโทเท็มทั้งหมดก่อน โกเลมจึงจะสูญเสียโล่พลังงาน",
+    dialogues: [
+      "โกเลมแห่งพายุนอนหลับอยู่บนยอดเขาสูงชันนู่น",
+      "ตัวมันขยับไปไหนไม่ได้ แต่ดาบคู่ที่แขนฟันแรงสุดๆ",
+      "ถ้าได้ยินเสียงระฆังดังและเห็นวงสีฟ้า รีบวิ่งหนีจากตรงนั้นซะ!",
+      "สายฟ้าผ่า Tempest Thunder จะถล่มลงมาตรงมาร์กเกอร์ฟ้า",
+      "ตอนโล่ลมทำงาน เจ้าจะตีมันไม่เข้าและโดนปัดกระเด็น",
+      "จงวิ่งไปทำลายเสาโทเทมลมทั้งสองข้างเพื่อปลดโล่ของมัน",
+      "พอโล่พัง มันจะเรียก Squall Golem ออกมาคุ้มกันเพิ่ม",
+      "กุญแจของมันใช้เปิดหีบเพชรบนวิหารลอยฟ้า",
+      "ศึกนี้ต้องใช้สมองและความไว ไม่ใช่แค่พลังโจมตีอย่างเดียว"
+    ],
+    objectives:[
+      {type:"talk", text:"คุยกับ Stormcaller Mira — NPC ID: stormcaller_mira"},
+      {type:"talk", text:"คุยกับ Totem Guardian รับคำแนะนำ — NPC ID: totem_guardian"},
+      {type:"mine", text:"ทำลาย Storm Totem เหนือ — ID: alylica:storm_totem_north"},
+      {type:"mine", text:"ทำลาย Storm Totem ใต้ — ID: alylica:storm_totem_south"},
+      {type:"mine", text:"ทำลาย Storm Totem ตะวันออก — ID: alylica:storm_totem_east"},
+      {type:"mine", text:"ทำลาย Storm Totem ตะวันตก — ID: alylica:storm_totem_west"},
+      {type:"fight", text:"สังหาร Tempest Golem (ไร้โล่) — Entity ID: alylica:tempest_golem"},
+      {type:"talk", text:"กลับรายงาน Stormcaller Mira — NPC ID: stormcaller_mira"},
+    ]
+  },
+  {
+    id:9, diff:"hard", chapter:"บทที่ 3 — ยักษ์จากยุคก่อน",
+    name:"เงาแห่งออบซิเดียน", boss:"Obsidian Monstrosity", emoji:"🥇",
+    npcMain:"Void Miner Drax", npcBridge:"Vindicator Defector", fragment:"Key Fragment IX", reward:"Obsidian Shield",
+    story:"Arch-Illager สร้าง Obsidian Monstrosity ปกป้อง Obsidian Fortress ป้อมปราการสุดท้ายก่อนถึงที่พำนักของเขา",
+    dialogues: [
+      "บนยอดเขา Obsidian Pinnacle มีอสูรกายสูง 14 บล็อกยืนเฝ้าอยู่",
+      "มันคือหนึ่งในบอสที่มีพลังโจมตีรุนแรงที่สุดในโลกนี้",
+      "ฝ่ามือยักษ์ของมันทุบพื้นทีเดียวเกราะหนาๆ แตกได้เลย",
+      "มันชอบอ้าปากพ่นห่ากระสุนระเบิดออกมาเป็นชุดๆ",
+      "เสียงคำรามของมันจะสร้างระเบิดสายฟ้าขวางทางบนพื้น",
+      "อย่าไปเหยียบระเบิดสายฟ้านั่นเชียวล่ะ ดาเมจแรงและทำให้ช็อตด้วย",
+      "มันจะคอยเรียกพวก Vindicator ถือขวานมาช่วยรุมเจ้า",
+      "ล้มยักษ์ตนนี้ได้ เจ้าจะได้ Obsidian Key ไปเปิดหีบสุดแรร์",
+      "ระยะโจมตีมันกว้างมาก พยายามตอดจากด้านหลังจะปลอดภัยกว่า"
+    ],
+    objectives:[
+      {type:"talk", text:"คุยกับ Void Miner Drax รับ Blueprint — NPC ID: void_miner_drax"},
+      {type:"explore", text:"หา Vindicator Defector ชานเมือง Fortress (X:700 Z:400)"},
+      {type:"talk", text:"คุยกับ Vindicator Defector รับ Weakness Scroll — NPC ID: vindicator_defector"},
+      {type:"collect", text:"เก็บ Electric Core ×4 — Item ID: alylica:electric_core"},
+      {type:"craft", text:"สร้าง Electric Bomb Trap ×3 — Item ID: alylica:electric_bomb_trap"},
+      {type:"mine", text:"ทำลาย Obsidian Gate Seal ×2 — ID: alylica:obsidian_gate_seal"},
+      {type:"fight", text:"สังหาร Vindicator Guard ×6 — Entity ID: minecraft:vindicator"},
+      {type:"fight", text:"ทำลาย Obsidian Monstrosity — Entity ID: alylica:obsidian_monstrosity"},
+    ]
+  },
+  {
+    id:10, diff:"hard", chapter:"บทที่ 3 — ยักษ์จากยุคก่อน (Side)",
+    name:"เห็ดแห่งการทดสอบ", boss:"Mooshroom Monstrosity", emoji:"🥇",
+    npcMain:"Mushroom Hermit Bolo", npcBridge:"Angry Mooshroom Scout", fragment:"Key Fragment X (Bonus)", reward:"Mushroom Power-Up (Permanent Buff)",
+    story:"Mushroom Island ถูก Mooshroom Monstrosity ยึดครอง Hermit Bolo มีความลับเกี่ยวกับ Arch-Illager ที่ไม่มีในแผนที่ใด",
+    dialogues: [
+      "เกาะเห็ดที่ดูสงบ... จริงๆ มีซากปรักหักพังสายโหดซ่อนอยู่",
+      "อสูรกายเห็ดตัวนี้ถึกและโหดกว่ารุ่นเรดสโตนเป็นเท่าตัว!",
+      "หมัดหนักๆ ของมันทุบทีเดียวเลือดเจ้าอาจหายไปครึ่งหลอด",
+      "มันจะทุบพื้นแล้วเสกพวก Angry Mooshroom มารุมเจ้า",
+      "ถ้าเจ้าคิดจะวิ่งหนี มันจะยิงจรวดเห็ดไล่หลังทันที!",
+      "เตรียมของระดับท็อปไปเถอะ ไม่งั้นได้ไปเกิดใหม่แน่",
+      "Questionable Key คือรางวัลหลังเจ้าล้มมันได้สำเร็จ",
+      "หีบเพชรในซากปรักหักพังเห็ดมีของดีระดับตำนานรออยู่",
+      "จรวดเห็ดของมันดาเมจแรงมาก อย่าอยู่ห่างมันเกินไปล่ะ"
+    ],
+    objectives:[
+      {type:"talk", text:"คุยกับ Mushroom Hermit Bolo — NPC ID: hermit_bolo"},
+      {type:"explore", text:"หา Angry Mooshroom Scout ที่ Mushroom Island (X:-600 Z:500)"},
+      {type:"talk", text:"คุยกับ Angry Mooshroom Scout รับ Antidote — NPC ID: mooshroom_scout"},
+      {type:"collect", text:"เก็บ Mushroom Spore ×6 — Item ID: alylica:mushroom_spore"},
+      {type:"fight", text:"สังหาร Angry Mooshroom ×8 — Entity ID: alylica:angry_mooshroom"},
+      {type:"fight", text:"ทำลาย Mooshroom Monstrosity — Entity ID: alylica:mooshroom_monstrosity"},
+      {type:"talk", text:"รับความลับจาก Hermit Bolo — NPC ID: hermit_bolo"},
+    ]
+  },
+  {
+    id:11, diff:"end", chapter:"บทที่ 4 — ก่อนมืดสนิท",
+    name:"ผู้ส่งสาร 6 หน้า", boss:"Enchanted Endersent", emoji:"💀",
+    npcMain:"Rift Scholar Saya", npcBridge:"-", fragment:"Key Fragment XI", reward:"Ender Seal Key + Endersent Armor Set",
+    story:"ผู้ส่งสารจาก Ender Dimension มี 6 รูปแบบจากมิติต่างกัน ต้องเอาชนะทั้ง 6 รูปแบบจึงจะเปิดทางสู่ Ender Realm ได้",
+    dialogues: [
+      "พวกมันมีกันถึง 6 ร่าง กระจายอยู่ตามรังใต้ดินทั่วมิติ",
+      "ซื้อแผนที่จาก Wandering Trader เพื่อตามหารังของพวกมันซะ",
+      "ระวังหมอก Void สีดำบนพื้น มันทำให้เจ้าโดนดาเมจแรงขึ้น",
+      "หมัดยักษ์ของมันทุบหนักตามสไตล์เอนเดอร์แมนกลายพันธุ์",
+      "ถ้ามันวาร์ปหายไปหลังเจ้า... รีบกลิ้งหนี! มันกำลังจะทุบไม้ตาย",
+      "มันจะเสกพวก Watchling ตัวเล็กๆ มาป่วนสายตาเจ้า",
+      "Endersent แต่ละตัวมีดวงตาเวทมนตร์และพลังพิเศษต่างกัน",
+      "มันดร็อปทั้งกุญแจหีบเพชร และดวงตาเอนเดอร์ดวงพิเศษ",
+      "สะสมดวงตาให้ครบทั้ง 6 ดวงเพื่อเปิดศึกกับบอสใหญ่!"
+    ],
+    objectives:[
+      {type:"talk", text:"คุยกับ Rift Scholar Saya รับข้อมูล 6 รูปแบบ — NPC ID: rift_saya"},
+      {type:"collect", text:"เก็บ Resistance Crystal ×6 (แต่ละธาตุ) — Item ID: alylica:resistance_crystal"},
+      {type:"craft", text:"สร้าง Ender Resistance Potion ×6 — Item ID: alylica:ender_resist_potion"},
+      {type:"fight", text:"เอาชนะ Endersent Storm Form — Entity ID: alylica:endersent_storm"},
+      {type:"fight", text:"เอาชนะ Endersent Inferno Form — Entity ID: alylica:endersent_inferno"},
+      {type:"fight", text:"เอาชนะ Endersent Void Form — Entity ID: alylica:endersent_void"},
+      {type:"fight", text:"เอาชนะ Endersent Frost Form — Entity ID: alylica:endersent_frost"},
+      {type:"fight", text:"เอาชนะ Endersent True Form — Entity ID: alylica:endersent_true"},
+      {type:"collect", text:"เก็บ Ender Seal Fragment ×6 — Item ID: alylica:ender_seal_fragment"},
+      {type:"craft", text:"ประกอบ Ender Seal Key — Item ID: alylica:ender_seal_key"},
+    ]
+  },
+  {
+    id:12, diff:"final", chapter:"บทที่ 5 — การสิ้นสุดและจุดเริ่มต้น",
+    name:"สองหน้าของอำนาจ", boss:"Arch-Illager & Heart of Ender", emoji:"🏆",
+    npcMain:"Elder Maren (Final)", npcBridge:"ตัวแทนทุก NPC", fragment:"ต้องมีครบทุก Fragment", reward:"Legendary Weapon Set + Title: Guardian of Alylica",
+    story:"Arch-Illager อดีตสมาชิกสภาผู้พิทักษ์ที่ถูกขับออก กำลังถูก Heart of Ender กลืนกิน ถ้าปล่อยไว้มันจะทำลายทุกมิติ",
+    dialogues: [
+      "เจ้า Archie ตัวแสบรอเจ้าอยู่ในปราสาทกลางป่าสีดำ",
+      "ในเฟสแรก มันจะยิงกระสุนเวทมนตร์ออกมาทีละ 3 นัดและเรียกกองทัพมาคุ้มกัน",
+      "ระวังลำแสงบัฟของมัน มันทำให้ลูกน้องเก่งขึ้นผิดหูผิดตาเลยล่ะ",
+      "เมื่อล้ม Archie ได้... อย่าเพิ่งดีใจ ลูกแก้วครอบงำจะตื่นขึ้นกลายร่างเป็น Heart of Ender!",
+      "บอสใหญ่สุดของพวกมันอาศัยอยู่บนยอดซากป้อมปราการอันมืดมิดในมิติ The End",
+      "เจ้าต้องรวบรวมดวงตาเวทมนตร์ให้ครบทั้ง 6 ดวงเพื่อเปิดพอร์ทัลร่ายศึก",
+      "มันอึดชะมัด! มีพลังชีวิตรวมร่างสูงถึง 1500 หน่วยเชียวนะ",
+      "มันชอบปล่อยทุ่นระเบิดกลิ้งได้ พอระเบิดเสร็จจะมีพวก Endermite พุ่งมารุมตอด",
+      "มันพ่นไฟทำลายล้างออกมาพร้อมกันถึง 5 แฉก แต่เจ้าตีทำลายลูกไฟทิ้งได้",
+      "พอมันพ่นไฟเสร็จ มันจะพุ่งชนเป้าหมายด้วยความเร็วสูงมาก จงกลิ้งหลบให้ดี",
+      "เมื่อเลือดลดถึงขีดอันตราย มันจะมุดพอร์ทัลวาร์ปเพื่อหลบกระสุนดาเมจ",
+      "ขณะที่มันหลบใต้ดิน มันจะสร้างหลุมดำทรงพลังดูดทุกคนเข้าหาตัวมัน",
+      "เมื่อเห็นวงพลังงานขยายตัว จงวิ่งหนีสุดชีวิต ท่า Big Bang รุนแรงทะลุเกราะ!"
+    ],
+    objectives:[
+      {type:"talk", text:"รับ Final Briefing จาก Elder Maren — NPC ID: elder_maren"},
+      {type:"collect", text:"ตรวจสอบว่ามี Life Seed — Item ID: alylica:life_seed"},
+      {type:"collect", text:"ตรวจสอบว่ามี Ender Seal Key — Item ID: alylica:ender_seal_key"},
+      {type:"explore", text:"เข้าสู่ Ender Realm Portal (X:0 Z:0 Y:64)"},
+      {type:"fight", text:"สังหาร Arch-Illager Phase 1 — Entity ID: alylica:arch_illager"},
+      {type:"fight", text:"ทำลาย Ender Shield ด้วย Life Seed — Entity ID: alylica:ender_shield"},
+      {type:"fight", text:"สังหาร Endermite Wave ×20 — Entity ID: minecraft:endermite"},
+      {type:"fight", text:"ทำลาย Vengeful Heart of Ender — Entity ID: alylica:vengeful_heart_of_ender"},
+      {type:"explore", text:"ใช้ Ender Seal Key ปิดผนึก Heart of Ender ที่ Seal Point"},
+      {type:"talk", text:"กลับรายงาน Elder Maren — NPC ID: elder_maren"},
+    ]
+  },
+  {
+    id:13, diff:"final", chapter:"บทที่ 5 — Epilogue",
+    name:"จุดเริ่มต้นของโลกใหม่", boss:"— Epilogue —", emoji:"🏆",
+    npcMain:"All NPC Representatives", npcBridge:"-", fragment:"-", reward:"Hall of Fame · ชื่อทุกคนบันทึกโดย Archivist Lenn",
+    story:"โลกได้รับการช่วยเหลือ ตัวแทนทุก NPC มาร่วมงานเฉลิมฉลอง ชื่อของผู้รอดชีวิตทั้ง 50 คนถูกบันทึกไว้ในประวัติศาสตร์",
+    dialogues: [
+      "สงครามอันยาวนานสิ้นสุดลงแล้ว Alylica กลับมาสงบสุขอีกครั้ง",
+      "ขอบคุณพวกเจ้าทุกคน หากไม่มีเหล่านักผจญภัย โโลกนี้คงล่มสลายไปแล้ว",
+      "ชื่อของพวกเจ้าทั้ง 50 คนจะถูกสลักไว้บนแท่นศิลาตราบนานเท่านาน",
+      "งานเฉลิมฉลองจัดขึ้นทั่วทุกมุมเมือง เหล้าและอาหารฟรีตลอดค่ำคืน!",
+      "Archivist Lenn กำลังเร่งมือจดบันทึกตำราหน้าใหม่เกี่ยวกับชัยชนะนี้",
+      "หอเกียรติยศ Hall of Fame เปิดต้อนรับเหล่าวีรบุรุษผู้กล้าแล้ว",
+      "แม้ภัยร้ายจะผ่านไป แต่จิตวิญญาณแห่งการผจญภัยจะไม่มีวันดับสูญ",
+      "เดินทางกลับ Sanctuary อย่างปลอดภัย และเสพสุขกับรางวัลที่ควรได้เถอะ",
+      "บทประพันธ์บทนี้ปิดฉากลงอย่างงดงาม... ขอให้โชคดีในเส้นทางสายต่อไป!"
+    ],
+    objectives:[
+      {type:"talk", text:"คุยกับ Elder Maren รับ Epilogue — NPC ID: elder_maren"},
+      {type:"explore", text:"เดินทางไป Hall of Fame ที่ The Last Sanctuary (X:0 Z:0 Y:70)"},
+      {type:"talk", text:"คุยกับ Archivist Lenn รับรางวัล Hall of Fame — NPC ID: archivist_lenn"},
+    ]
+  },
+];
+
+// count total objectives
+const totalObj = quests.reduce((s,q)=>s+q.objectives.length,0);
+document.querySelectorAll('.stat-num')[0].textContent = totalObj;
+
+const diffColors = {easy:"diff-easy",mid:"diff-mid",hard:"diff-hard",end:"diff-end",final:"diff-final"};
+
+function buildChain(qid){
+  const chain = chains[qid];
+  if(!chain) return "";
+  return `<div class="prereq-chain">
+    <div class="prereq-title"><i class="ti ti-git-branch"></i> เงื่อนไขการปลดล็อค</div>
+    <div class="chain-steps">${chain.steps.map((s,i)=>{
+      const cls = s.id===qid?"chain-step current":"chain-step";
+      const arrow = i<chain.steps.length-1?'<span class="chain-arrow">→</span>':"";
+      return `<span class="${cls}">${s.name}</span>${arrow}`;
+    }).join("")}</div>
+  </div>`;
+}
+
+function renderQuests(filter){
+  const list = document.getElementById("questList");
+  list.innerHTML="";
+  quests.filter(q=>filter==="all"||q.diff===filter).forEach(q=>{
+    const card = document.createElement("div");
+    card.className="quest-card";
+    const prereqNote = q.id>1 ? `<div class="quest-prereq"><i class="ti ti-lock" style="font-size:10px"></i> ต้องทำ Quest ก่อนหน้าก่อน</div>` : "";
+    
+    // Generate Dialogue HTML Block
+    const dialogueHtml = q.dialogues ? `
+      <div class="detail-label" style="color:var(--gold); margin-top:12px;"><i class="ti ti-message-chatbot"></i> เบาะแสและคำเตือนจาก NPC (${q.dialogues.length})</div>
+      <div style="background:rgba(244,208,111,0.03); border:1px dashed rgba(244,208,111,0.25); border-radius:var(--radius-sm); padding:0.75rem; max-height:160px; overflow-y:auto; margin-bottom:10px;">
+        ${q.dialogues.map(d=>`<div style="font-size:12.5px; font-style:italic; color:var(--text2); margin-bottom:5px; line-height:1.4;">💬 "${d}"</div>`).join("")}
       </div>
+    ` : "";
 
-
-      <div class="mt-3">
-        <h6>📌 ข้อมูลลูกค้า</h6>
-        <p><strong>ชื่อ:</strong>
-          <?= userData.name; ?>
-        </p>
-        <p><strong>โทร:</strong>
-          <?= userData.telephone; ?>
-        </p>
-        <input type="text" class="form-control" placeholder="ข้อความถึงพนักงานส่ง">
-      </div>
-
-      <div class="mt-3">
-        <h6>🛒 รายการสินค้า</h6>
-        <div id="cart-list"></div>
-        <li id="cart-total-price" class="list-group-item d-flex justify-content-between">
-          <span>รวมทั้งหมด:</span>
-          <strong>0 บาท</strong>
-        </li>
-      </div>
-
-      <div class="mt-3">
-        <h6>🚚 ตัวเลือกการจัดส่ง</h6>
-        <div class="d-flex align-items-center">
-          <div class="form-check me-3">
-            <input class="form-check-input" type="radio" name="delivery" id="deliveryNow" checked onclick="toggleTimeInput(false)">
-            <label class="form-check-label" for="deliveryNow">รับทันที</label>
-          </div>
-          <div class="form-check d-flex align-items-center">
-            <input class="form-check-input me-1" type="radio" name="delivery" id="deliveryLater" onclick="toggleTimeInput(true)">
-            <label class="form-check-label me-2" for="deliveryLater">ระบุเวลา</label>
-            <input type="time" id="deliveryTime" class="form-control form-control-sm" style="display: none; width: 120px;">
-          </div>
+    card.innerHTML=`
+      <div class="quest-header" onclick="toggleQ(${q.id})">
+        <div class="quest-diff ${diffColors[q.diff]}">${q.emoji}</div>
+        <div class="quest-info">
+          <div class="quest-chapter">${q.chapter}</div>
+          <div class="quest-name">${q.name}</div>
+          <div class="quest-boss">${q.boss}</div>
+          ${prereqNote}
+        </div>
+        <div style="text-align:right;flex-shrink:0">
+          <div style="font-size:11px;color:#a080ff;margin-bottom:4px">${q.objectives.length} objectives</div>
+          <i class="ti ti-chevron-down chevron" id="chv-${q.id}"></i>
         </div>
       </div>
-
-
-      <div class="mt-3">
-        <h6>🔧 ตัวเลือกเพิ่มเติม</h6>
-        <div class="d-flex flex-wrap">
-          <div class="form-check me-3">
-            <input class="form-check-input" type="checkbox" id="noSpoon">
-            <label class="form-check-label" for="noSpoon">ไม่รับช้อน</label>
-          </div>
-          <div class="form-check me-3">
-            <input class="form-check-input" type="checkbox" id="noStraw">
-            <label class="form-check-label" for="noStraw">ไม่รับหลอด</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="noBag">
-            <label class="form-check-label" for="noBag">ไม่รับถุง</label>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="mt-3">
-        <h6>💳 เลือกวิธีชำระเงิน</h6>
-
-        <div class="btn-group-vertical w-100" role="group">
-          <input type="radio" class="btn-check" name="paymentMethod" id="payNow" autocomplete="off" onclick="togglePaymentOption('now')">
-          <label class="btn btn-outline-primary" for="payNow">💳 สแกน QR Code</label>
-
-          <input type="radio" class="btn-check" name="paymentMethod" id="payLater" autocomplete="off" onclick="togglePaymentOption('later')">
-          <label class="btn btn-outline-primary" for="payLater">🚚 ชำระปลายทาง</label>
-        </div>
-
-        <div id="paymentOptions" class="mt-3" style="display: none;">
-          <div id="qrCodeOption">
-            <p>📌 กรุณาสแกน QR Code เพื่อชำระเงิน</p>
-            <img id="qrCodeImage" alt="QR Code" class="img-fluid" width="200">
-          </div>
-          <div id="cashOption" style="display: none;">
-            <p>💰 จ่ายเงินกับ Rider</p>
-          </div>
-        </div>
-      </div>
-
-      <script>
-        // ฟังก์ชันสร้าง PromptPay QR Code
-        function generatePromptPayQR(phoneNumber, amount) {
-          var url = "https://promptpay.io/" + phoneNumber + "/" + amount + ".png";
-          return url;  // คืนค่า URL ของ QR Code
-        }
-
-        // ฟังก์ชันการแสดงตัวเลือกการชำระเงิน
-        function togglePaymentOption(method) {
-          let paymentDiv = document.getElementById("paymentOptions");
-          let qrCode = document.getElementById("qrCodeOption");
-          let cash = document.getElementById("cashOption");
-
-          // แสดงตัวเลือกการชำระเงินเมื่อมีการเลือก
-          paymentDiv.style.display = "block";
-
-          if (method === 'now') {
-            let phoneNumber = "0636869497";  // หมายเลขโทรศัพท์ของร้าน
-            let amount = 100;  // จำนวนเงินที่กำหนด (สามารถปรับให้เป็นค่าจากตะกร้าสินค้า)
-            let qrUrl = generatePromptPayQR(phoneNumber, amount);
+      <div class="quest-body" id="body-${q.id}">
+        <div class="story-box">${q.story}</div>
+        ${buildChain(q.id)}
+        <div class="detail-grid">
+          <div>
+            <div class="detail-label">NPC หลัก</div>
+            <div><span class="badge b-npc">${q.npcMain}</span></div>
+            ${q.npcBridge!=="-"?`<div class="detail-label">NPC Bridge</div><div><span class="badge b-npc">${q.npcBridge}</span></div>`:""}
+            <div class="detail-label">รางวัล</div>
+            <div><span class="badge b-reward">${q.reward}</span></div>
+            ${q.fragment!=="-"?`<div style="margin-top:6px"><span class="badge b-frag">${q.fragment}</span></div>`:""}
             
-            // แสดง QR Code
-            qrCode.style.display = "block";
-            qrCode.innerHTML = `<p>📌 กรุณาสแกน QR Code เพื่อชำระเงิน</p><img src="${qrUrl}" alt="QR Code" class="img-fluid" width="200">`;
-
-            cash.style.display = "none";
-          } else {
-            qrCode.style.display = "none";
-            cash.style.display = "block"; // แสดงข้อความ "จ่ายเงินกับ Rider"
-          }
-        }
-
-        // ฟังก์ชันสำหรับเลือกเวลาในการจัดส่ง
-        function toggleTimeInput(show) {
-          document.getElementById("deliveryTime").style.display = show ? "block" : "none";
-        }
-      </script>
-    </div>
-
-
-  </div>
-  <!-- User -->
-  <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasUser"
-    aria-labelledby="offcanvasNavbarLabel">
-    <div class="offcanvas-header justify-content-center">
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="profile-card">
-      <!-- Container ห่อรูปโปรไฟล์ พร้อมกับ OTP -->
-      <div class="profile-image-container">
-        <!-- รูปโปรไฟล์ -->
-        <img src="<?= userData.picture; ?>" alt="Profile Picture" class="profile-img">
-        <!-- OTP วางแบบ Absolute ที่มุมขวาบน -->
-        <span id="otp-display" class="otp-badge">
-          <?= userData.otp; ?>
-        </span>
-      </div>
-
-      <!-- ชื่อผู้ใช้ -->
-      <h2 class="text-dark">
-        <?= userData.name; ?>
-      </h2>
-
-      <!-- เบอร์โทร -->
-      <p class="text-dark" id="telephone-display">
-        <span id="telephone-text"><?= userData.telephone; ?></span>
-        <button class="btn btn-sm btn-primary" onclick="editTelephone()">แก้ไข</button>
-      </p>
-
-      <!-- ฟอร์มแก้ไขเบอร์โทร -->
-      <p class="text-dark" id="telephone-edit" style="display: none;">
-        <input type="text" id="telephone-input" class="form-control d-inline-block w-auto" value="<?= userData.telephone; ?>">
-        <button class="btn btn-sm btn-success" onclick="saveTelephone()">บันทึก</button>
-        <button class="btn btn-sm btn-danger" onclick="cancelEdit()">ยกเลิก</button>
-      </p>
-
-      <!-- คะแนน -->
-      <p class="text-dark">
-        Member Point: <span class="highlight"><?= userData.point; ?></span> Point
-      </p>
-
-      <!-- UID -->
-      <button class="btn btn-sm btn-primary" onclick="toggleUID()">
-        UID:
-        <p class="text-muted" id="uid-display" style="display: none;"><?= userData.uid; ?></p>
-      </button>
-    </div>
-
-    <script>
-      var userData = {
-            uid: "<?= userData.uid; ?>",
-            telephone: "<?= userData.telephone; ?>",
-            otp: "<?= userData.otp; ?>"
-        };
-
-        function editTelephone() {
-            document.getElementById("telephone-display").style.display = "none";
-            document.getElementById("telephone-edit").style.display = "block";
-        }
-
-        function cancelEdit() {
-            document.getElementById("telephone-display").style.display = "block";
-            document.getElementById("telephone-edit").style.display = "none";
-        }
-
-        function saveTelephone() {
-            var newTelephone = document.getElementById("telephone-input").value;
-
-            google.script.run.withSuccessHandler(function(response) {
-                if (response === 'success') {
-                    document.getElementById("telephone-text").innerText = newTelephone;
-                    userData.telephone = newTelephone;
-                    cancelEdit();
-                } else {
-                    alert('Failed to save data. Please try again later.');
-                }
-            }).saveData({ id: userData.uid, telephone: newTelephone });
-        }
-
-        function toggleUID() {
-            var uidElement = document.getElementById("uid-display");
-            uidElement.style.display = uidElement.style.display === "none" ? "block" : "none";
-        }
-
-
-        google.script.run.withSuccessHandler(function(result) {
-            if (result) {
-                document.getElementById("otp-display").innerHTML = `
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" style="fill: rgba(255, 196, 63, 1);">
-                        <path d="M19.965 8.521C19.988 8.347 20 8.173 20 8c0-2.379-2.143-4.288-4.521-3.965C14.786 2.802 13.466 2 12 2s-2.786.802-3.479 2.035C6.138 3.712 4 5.621 4 8c0 .173.012.347.035.521C2.802 9.215 2 10.535 2 12s.802 2.785 2.035 3.479A3.976 3.976 0 0 0 4 16c0 2.379 2.138 4.283 4.521 3.965C9.214 21.198 10.534 22 12 22s2.786-.802 3.479-2.035C17.857 20.283 20 18.379 20 16c0-.173-.012-.347-.035-.521C21.198 14.785 22 13.465 22 12s-.802-2.785-2.035-3.479zm-9.01 7.895-3.667-3.714 1.424-1.404 2.257 2.286 4.327-4.294 1.408 1.42-5.749 5.706z"></path>
-                    </svg>`;
-            } else {
-                document.getElementById("otp-display").innerText = "OTP ไม่ถูกต้อง";
-            }
-        }).verifyOTPAndClear(userData.uid, userData.otp);
-
-    </script>
-  </div>
-
-  <header>
-    <div class="container-fluid">
-      <div class="row py-3 border-bottom">
-        <div class="col-sm-4 col-lg-3 text-center text-sm-start">
-          <div class="main-logo">
-            <a>
-              <img src="https://img5.pic.in.th/file/secure-sv1/b355aac94056dfc55e4d7a2a0034b55b.png" alt="โลโก้" border="0">
-            </a>
+            ${dialogueHtml}
+          </div>
+          <div>
+            <div class="detail-label">Objectives (${q.objectives.length})</div>
+            <ul class="obj-list">${q.objectives.map((o,i)=>`
+              <li class="obj-item">
+                <span class="obj-num">${i+1}</span>
+                ${T[o.type]}
+                <span class="obj-text">${o.text}</span>
+              </li>`).join("")}
+            </ul>
           </div>
         </div>
-        <div class="col-sm-6 offset-sm-2 offset-md-0 col-lg-5 d-none d-lg-block"></div>
-        <div class="d-flex justify-content-end list-unstyled m-0">
-          <li>
-            <a class="rounded-circle bg-light p-2 mx-1">
-              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-award"
-                viewBox="0 0 16 16">
-                <path
-                  d="M9.669.864 8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68zm1.196 1.193.684 1.365 1.086 1.072L12.387 6l.248 1.506-1.086 1.072-.684 1.365-1.51.229L8 10.874l-1.355-.702-1.51-.229-.684-1.365-1.086-1.072L3.614 6l-.25-1.506 1.087-1.072.684-1.365 1.51-.229L8 1.126l1.356.702z" />
-                <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1z" />
-              </svg>
-            </a>
-          </li>
-          <ul class="d-flex justify-content-end list-unstyled m-0">
-            <li>
-              <a class="rounded-circle bg-light p-2 mx-1" data-bs-toggle="offcanvas" data-bs-target="#offcanvasUser"
-                aria-controls="offcanvasUser">
-                <img src="<?= userData.picture; ?>" width="30" height="30" style="border-radius: 50%;">
-              </a>
-            </li>
-            <li>
-              <a class="rounded-circle bg-light p-2 mx-1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-heart"
-                  viewBox="0 0 16 16">
-                  <path
-                    d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
-                </svg>
-              </a>
-            </li>
-            <li>
-              <a class="rounded-circle bg-light p-2 mx-1" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart"
-                aria-controls="offcanvasCart">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-basket"
-                  viewBox="0 0 16 16">
-                  <path
-                    d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217L5.07 1.243a.5.5 0 0 1 .686-.172zM2 9v4.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9zM1 7v1h14V7zm3 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 4 10m2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 6 10m2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5m2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5" />
-                </svg>
-              </a>
-            </li>
-            <div class="cart text-end d-none d-lg-block dropdown">
-              <button class="border-0 bg-transparent d-flex flex-column gap-2 lh-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
+      </div>`;
+    list.appendChild(card);
+  });
+}
 
-                <span class="cart-total fs-5 fw-bold"></span>
-              </button>
-            </div>
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-          </ul>
+function toggleQ(id){
+  const b=document.getElementById(`body-${id}`);
+  const c=document.getElementById(`chv-${id}`);
+  const open=b.classList.toggle("open");
+  c.classList.toggle("open",open);
+}
+
+function filterQuests(f,el){
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+  el.classList.add("active");
+  renderQuests(f);
+}
+
+renderQuests("all");
+
+// ===== NPC DATA =====
+const npcs = [
+  // HUB
+  {type:"hub", icon:"👴", name:"Elder Maren", count:2, npcId:"elder_maren",
+   role:"ผู้อาวุโสแห่ง Sanctuary", desc:"ให้ Main Quest ทุกบท / Final Quest บทที่ 5",
+   location:"Hub A — เกาะหินเหนือ", quest:"Main Story (บทที่ 1–5)"},
+  {type:"hub", icon:"⚔️", name:"Sergeant Dova", count:2, npcId:"sergeant_dova",
+   role:"จ่าทหารผู้ฝึกฝน", desc:"ให้ Side Quest และ Tips การต่อสู้กับบอส",
+   location:"Hub A — เกาะหินเหนือ", quest:"Side Quest / Combat Tips"},
+  {type:"hub", icon:"⚗️", name:"Alchemist Rue", count:2, npcId:"alchemist_rue",
+   role:"นักเล่นแร่แปรธาตุ", desc:"อัปเกรดอาวุธ แลกวัสดุจากบอส รับ Crafting Recipe พิเศษ",
+   location:"Hub A — เกาะหินเหนือ", quest:"Shop / Upgrade"},
+  {type:"hub", icon:"📚", name:"Archivist Lenn", count:1, npcId:"archivist_lenn",
+   role:"นักจดบันทึกประวัติศาสตร์", desc:"เก็บ Lore ทุกชิ้น ให้ Bonus Reward เมื่อเก็บครบ / จด Hall of Fame",
+   location:"Hub A — เกาะหินเหนือ", quest:"Lore Collector / Epilogue"},
+  {type:"hub", icon:"💰", name:"Trader Brix", count:1, npcId:"trader_brix",
+   role:"พ่อค้าร่อนเร่", desc:"ขายของหายาก รับซื้อ Drop จากบอส",
+   location:"Hub A — เกาะหินเหนือ", quest:"Shop"},
+  {type:"hub", icon:"🔒", name:"Gate Keeper", count:1, npcId:"gate_keeper",
+   role:"ผู้รักษาประตู", desc:"ตรวจสอบ Key Fragment / แจก Info เนื้อเรื่อง / เปิดทาง Final Boss",
+   location:"Hub A — เกาะหินเหนือ", quest:"Fragment Check / Gate"},
+
+  // REWARD
+  {type:"reward", icon:"🎁", name:"Reward Clerk Hana", count:2, npcId:"reward_clerk_hana",
+   role:"เสมียนรางวัลฝั่งต้น", desc:"รับรางวัล Quest บทที่ 1–2 หลัง Quest Complete",
+   location:"Hub A — เกาะหินเหนือ", quest:"Reward บทที่ 1–2"},
+  {type:"reward", icon:"🎁", name:"Reward Clerk Oswin", count:2, npcId:"reward_clerk_oswin",
+   role:"เสมียนรางวัลฝั่งกลาง", desc:"รับรางวัล Quest บทที่ 3 หลัง Quest Complete",
+   location:"Hub A — เกาะหินเหนือ", quest:"Reward บทที่ 3"},
+  {type:"reward", icon:"🎁", name:"Reward Clerk Taya", count:1, npcId:"reward_clerk_taya",
+   role:"เสมียนรางวัลฝั่งท้าย", desc:"รับรางวัล Quest บทที่ 4–5 และ Legendary Items",
+   location:"Hub A — เกาะหินเหนือ", quest:"Reward บทที่ 4–5"},
+
+  // MAIN — Quest NPC
+  {type:"main", icon:"🧑‍🌾", name:"Farmer Aldus", count:2, npcId:"farmer_aldus",
+   role:"ชาวนาผู้รอดชีวิตจาก Ashfen", desc:"ให้ Quest บทที่ 1 / บอก Lore หมู่บ้าน Ashfen Village",
+   location:"จุด D — กลาง Map", quest:"หม้อต้มแห่งหายนะ (Corrupted Cauldron)"},
+  {type:"main", icon:"🕯️", name:"Sister Vael", count:2, npcId:"sister_vael",
+   role:"นักบวชผู้เคราะห์ร้าย", desc:"ให้ Quest บทที่ 1 / รับ Soul Shard ตอน Quest จบ",
+   location:"จุด D — กลาง Map", quest:"วิญญาณที่ไม่ยอมจาก (Wretched Wraith)"},
+  {type:"main", icon:"📖", name:"Scholar Verik", count:2, npcId:"scholar_verik",
+   role:"นักวิชาการผู้คลั่งไคล้ตำรา", desc:"ให้ Quest บทที่ 2 / รับตำราต้องห้ามตอน Quest จบ",
+   location:"จุด B — กลางบน", quest:"ชื่อที่ถูกลืม (The Nameless One)"},
+  {type:"main", icon:"🔥", name:"Pyromancer Ixal", count:2, npcId:"pyromancer_ixal",
+   role:"นักไฟผู้เคยฝึกกับ Blaze", desc:"ให้ Quest บทที่ 2 / ให้ Fireproof Potion Formula",
+   location:"จุด D — กลาง Map", quest:"ไฟใต้ท้องฟ้า (Hovering Inferno)"},
+  {type:"main", icon:"⚓", name:"Admiral Coris", count:2, npcId:"admiral_coris",
+   role:"นักสำรวจทะเลผู้เฒ่า", desc:"ให้ Quest บทที่ 2 / บอกเส้นทางใต้น้ำ Sunken Archive",
+   location:"จุด F — ใต้สุด", quest:"ยามแห่งท้องทะเลลึก (Ancient Guardian)"},
+  {type:"main", icon:"⚙️", name:"Engineer Torvin", count:2, npcId:"engineer_torvin",
+   role:"วิศวกรผู้สร้าง Redstone Golem", desc:"ให้ Quest บทที่ 3 / ให้ Blueprint Ironveil",
+   location:"จุด C — ขวากลาง", quest:"หัวใจหินแดง (Redstone Monstrosity)"},
+  {type:"main", icon:"🌿", name:"Druid Essara", count:2, npcId:"druid_essara",
+   role:"นักบวชป่าผู้บาดเจ็บ", desc:"ให้ Quest บทที่ 3 / ให้พร Poison Resist ชั่วคราว",
+   location:"จุด E — ซ้ายบน", quest:"รากเลือด (Jungle Abomination)"},
+  {type:"main", icon:"⚡", name:"Stormcaller Mira", count:2, npcId:"stormcaller_mira",
+   role:"นักเรียกพายุแห่ง Thunder Keep", desc:"ให้ Quest บทที่ 3 / รับการรักษาหลัง Quest จบ",
+   location:"จุด E — ซ้ายบน", quest:"ฟ้าคำรามในพายุ (Tempest Golem)"},
+  {type:"main", icon:"🖤", name:"Void Miner Drax", count:2, npcId:"void_miner_drax",
+   role:"นักขุดผู้หนีจาก Nether", desc:"ให้ Quest บทที่ 3 / ให้ Layout Obsidian Fortress",
+   location:"จุด C — ขวากลาง", quest:"เงาแห่งออบซิเดียน (Obsidian Monstrosity)"},
+  {type:"main", icon:"🍄", name:"Mushroom Hermit Bolo", count:2, npcId:"hermit_bolo",
+   role:"ผู้อยู่อาศัยใน Mushroom Island", desc:"ให้ Side Quest บทที่ 3 / มีความลับ Arch-Illager",
+   location:"จุด F — ใต้สุด", quest:"เห็ดแห่งการทดสอบ (Mooshroom Monstrosity)"},
+  {type:"main", icon:"🌀", name:"Rift Scholar Saya", count:2, npcId:"rift_saya",
+   role:"นักวิจัย Ender Dimension", desc:"ให้ Quest บทที่ 4 / อธิบาย 6 รูปแบบ Endersent",
+   location:"Hub A — เกาะหินเหนือ (ปลดล็อคหลังบทที่ 3)", quest:"ผู้ส่งสาร 6 หน้า (Enchanted Endersent)"},
+
+  // BRIDGE
+  {type:"bridge", icon:"👻", name:"Ghost Whisperer Omra", count:1, npcId:"ghost_omra",
+   role:"ผู้สื่อสารกับวิญญาณ", desc:"ให้ข้อมูลจุดอ่อน Wretched Wraith / ให้ Frost Ward Charm Formula",
+   location:"ใกล้ Frostmere Ruins (X:-80 Z:200)", quest:"วิญญาณที่ไม่ยอมจาก"},
+  {type:"bridge", icon:"💀", name:"Skeleton Deserter", count:1, npcId:"skeleton_deserter",
+   role:"โครงกระดูกผู้แปรพักตร์", desc:"ให้ Insider Info เกี่ยวกับ Nameless One / บอกตำแหน่งร่างแยก",
+   location:"ป่าตะวันออก (X:350 Z:120)", quest:"ชื่อที่ถูกลืม"},
+  {type:"bridge", icon:"🌋", name:"Blaze Refugee", count:1, npcId:"blaze_refugee",
+   role:"Blaze ที่หนีจากการควบคุม", desc:"ให้ Fireproof Potion Recipe / บอกจุดอ่อน Hovering Inferno",
+   location:"ใกล้ซาก Embercrest (X:500 Z:-200)", quest:"ไฟใต้ท้องฟ้า"},
+  {type:"bridge", icon:"🐟", name:"Drowned Messenger", count:1, npcId:"drowned_messenger",
+   role:"ซอมบี้ใต้น้ำที่ยังมีสติ", desc:"ให้เส้นทางใต้น้ำสู่ Sunken Archive / บอกตำแหน่ง Poison Mine",
+   location:"ชายฝั่งใต้ (X:-100 Z:600)", quest:"ยามแห่งท้องทะเลลึก"},
+  {type:"bridge", icon:"🔴", name:"Redstone Cube Survivor", count:1, npcId:"rs_cube_survivor",
+   role:"นักทดลองที่รอดชีวิตจาก Golem", desc:"บอกจุดอ่อน Redstone Monstrosity / ตำแหน่ง Spawner",
+   location:"ใกล้ Ironveil (X:280 Z:-80)", quest:"หัวใจหินแดง"},
+  {type:"bridge", icon:"🌳", name:"Ancient Tree Spirit", count:1, npcId:"tree_spirit",
+   role:"วิญญาณต้นไม้โบราณ", desc:"ให้ Vine Cutter / บอกตำแหน่ง Corrupted Root 5 จุด",
+   location:"ใน Verdant Abyss (X:-400 Z:-300)", quest:"รากเลือด"},
+  {type:"bridge", icon:"🗿", name:"Totem Guardian", count:1, npcId:"totem_guardian",
+   role:"โกเลมเล็กที่ยังจงรักภักดี", desc:"บอกวิธีเข้าหาโทเท็มอย่างปลอดภัย / ลำดับการทำลาย",
+   location:"Thunder Keep (X:600 Z:-500)", quest:"ฟ้าคำรามในพายุ"},
+  {type:"bridge", icon:"🪓", name:"Vindicator Defector", count:1, npcId:"vindicator_defector",
+   role:"Vindicator ผู้แปรพักตร์", desc:"ให้ Obsidian Weakness Scroll / บอก Layout ป้อม",
+   location:"ชานเมือง Fortress (X:700 Z:400)", quest:"เงาแห่งออบซิเดียน"},
+  {type:"bridge", icon:"🐄", name:"Angry Mooshroom Scout", count:1, npcId:"mooshroom_scout",
+   role:"Mooshroom ที่ยังเป็นมิตร", desc:"ให้ Mushroom Antidote / บอกตำแหน่ง Mooshroom Monstrosity",
+   location:"Mushroom Island (X:-600 Z:500)", quest:"เห็ดแห่งการทดสอบ"},
+];
+
+function renderNPC(filter){
+  const grid = document.getElementById("npcGrid");
+  grid.innerHTML="";
+  const list = filter==="all" ? npcs : npcs.filter(n=>n.type===filter);
+  list.forEach(n=>{
+    const typeLabel = {hub:"Hub",main:"Quest หลัก",bridge:"Bridge",reward:"Reward"}[n.type];
+    const typeCls = {hub:"nb-hub",main:"nb-main",bridge:"nb-bridge",reward:"nb-reward"}[n.type];
+    const iconCls = {hub:"npc-icon-hub",main:"npc-icon-main",bridge:"npc-icon-bridge",reward:"npc-icon-reward"}[n.type];
+    grid.innerHTML+=`
+      <div class="npc-card">
+        <div class="npc-top">
+          <div class="npc-icon ${iconCls}">${n.icon}</div>
+          <div class="npc-head">
+            <div class="npc-name">${n.name}${n.count>1?` <span style="color:#6060a0;font-size:11px">×${n.count}</span>`:""}</div>
+            <span class="npc-type-badge ${typeCls}">${typeLabel}</span>
+          </div>
         </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-12">
-          <div class="category-carousel swiper">
-            <div class="swiper-wrapper">
-
-              <a id="btn-delivery" class="btn-pickup category-item swiper-slide" onclick="selectOrderType('ส่งทันที')">
-                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24"
-                  style="fill: rgba(0, 0, 0, 1);">
-                  <circle cx="18" cy="4" r="2"></circle>
-                  <path
-                    d="m17.836 12.014-4.345.725 3.29-4.113a1 1 0 0 0-.227-1.457l-6-4a.999.999 0 0 0-1.262.125l-4 4 1.414 1.414 3.42-3.42 2.584 1.723-2.681 3.352a5.913 5.913 0 0 0-5.5.752l1.451 1.451A3.972 3.972 0 0 1 8 12c2.206 0 4 1.794 4 4 0 .739-.216 1.425-.566 2.02l1.451 1.451A5.961 5.961 0 0 0 14 16c0-.445-.053-.878-.145-1.295L17 14.181V20h2v-7a.998.998 0 0 0-1.164-.986zM8 20c-2.206 0-4-1.794-4-4 0-.739.216-1.425.566-2.02l-1.451-1.451A5.961 5.961 0 0 0 2 16c0 3.309 2.691 6 6 6 1.294 0 2.49-.416 3.471-1.115l-1.451-1.451A3.972 3.972 0 0 1 8 20z">
-                  </path>
-                </svg>
-                <h3 class="category-title">ส่งทันที</h3>
-              </a>
-
-              <a id="btn-pickup" class="btn-delivery category-item swiper-slide"
-                onclick="selectOrderType('รับที่ร้าน')">
-                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24"
-                  style="fill: rgba(0, 0, 0, 1);">
-                  <path
-                    d="M22 5c0-1.654-1.346-3-3-3H5C3.346 2 2 3.346 2 5v2.831c0 1.053.382 2.01 1 2.746V19c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2v-8.424c.618-.735 1-1.692 1-2.746V5zm-2 0v2.831c0 1.14-.849 2.112-1.891 2.167L18 10c-1.103 0-2-.897-2-2V4h3c.552 0 1 .449 1 1zM10 4h4v4c0 1.103-.897 2-2 2s-2-.897-2-2V4zM4 5c0-.551.448-1 1-1h3v4c0 1.103-.897 2-2 2l-.109-.003C4.849 9.943 4 8.971 4 7.831V5zm6 14v-3h4v3h-4zm6 0v-3c0-1.103-.897-2-2-2h-4c-1.103 0-2 .897-2 2v3H5v-7.131c.254.067.517.111.787.125A3.988 3.988 0 0 0 9 10.643c.733.832 1.807 1.357 3 1.357s2.267-.525 3-1.357a3.988 3.988 0 0 0 3.213 1.351c.271-.014.533-.058.787-.125V19h-3z">
-                  </path>
-                </svg>
-                <h3 class="category-title">รับที่ร้าน</h3>
-              </a>
-
-            </div>
-          </div>
-          <!-- ประเภทสินค้า -->
-          <div class="container my-4" id="product-type-container">
-            <h3>เลือกประเภทสินค้า</h3>
-            <button id="btn-piking-tasoss" class="btn btn-outline-primary" onclick="selectProductType('ปิ้งทาซอสหม่าล่า')">ปิ้งทาซอสหม่าล่า</button>
-            <button id="btn-samros" class="btn btn-outline-primary" onclick="selectProductType('ยำสามรส')">ยำสามรส</button>
-            <button id="btn-shabu" class="btn btn-outline-primary" onclick="selectProductType('ชาบู')">ชาบู</button>
-          </div>
-
-          <!-- ตัวเลือกน้ำซุปสำหรับชาบู -->
-          <div class="container my-4" id="shabu-options" style="display:none;">
-            <button class="btn btn-outline-primary" onclick="selectShabuType('น้ำดำ')">น้ำดำ</button>
-            <button class="btn btn-outline-primary" onclick="selectShabuType('น้ำหม่าล่า')">น้ำหม่าล่า</button>
-          </div>
+        <div class="npc-body">
+          <div class="npc-row"><span class="npc-row-label">ตำแหน่ง</span><span class="npc-row-val">${n.role}</span></div>
+          <div class="npc-row"><span class="npc-row-label">หน้าที่</span><span class="npc-row-val">${n.desc}</span></div>
+          <div class="npc-row"><span class="npc-row-label">Quest</span><span class="npc-row-val" style="color:#f4a830">${n.quest}</span></div>
+          <div class="npc-row"><span class="npc-row-label">จุดใน Map</span><span class="npc-row-val">${n.location}</span></div>
+          <div><span class="npc-id">NPC ID: ${n.npcId}</span></div>
         </div>
-      </div>
-    </div>
-  </header>
+      </div>`;
+  });
+}
 
-  <!-- รายการสินค้า -->
-  <section class="py-5">
-    <div class="container-fluid" id="list">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="bootstrap-tabs product-tabs">
-            <div class="tabs-header d-flex justify-content-between border-bottom my-5">
-              <h3>รายการสินค้า</h3>
-            </div>
-            <div class="tab-content" id="nav-tabContent">
-              <div class="tab-pane fade show active" id="nav-all" role="tabpanel">
-                <div id="product-list"
-                  class="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+function filterNPC(f,el){
+  el.closest(".tabs").querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+  el.classList.add("active");
+  renderNPC(f);
+}
 
-    <script>
-      let map, userMarker, startMarker;
-      let userLat = null, userLon = null;
-      let startLat = 16.5554488, startLon = 99.7297617;
-
-      let products = [];
-      let cart = {};
-      let orderType = "";
-      let selectedProductType = "ประเภทสินค้า";
-      let productType = "";      // ประเภทสินค้า (ปิ้งทาซอสหม่าล่า, ยำสามรส, ชาบู)
-      let currentShabuType = ""; // ประเภทน้ำซุป (น้ำดำ, น้ำหม่าล่า)
-      var userData = {
-        uid: "<?= userData.uid; ?>",
-        telephone: "<?= userData.telephone; ?>"
-      };
-      const checkoutBtn = document.getElementById("checkout-btn");
-
-      document.getElementById("nextButton").addEventListener("click", function () {
-        let cartOffcanvas = bootstrap.Offcanvas.getInstance(document.getElementById("offcanvasCart"));
-        cartOffcanvas.hide();
-        setTimeout(() => {
-          new bootstrap.Offcanvas(document.getElementById("offcanvasSearch")).show();
-        }, 300);
-      });
-
-      function getLocation() {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(position => {
-            userLat = position.coords.latitude;
-            userLon = position.coords.longitude;
-
-            document.getElementById("location").innerHTML = `<b>พิกัดของคุณ:</b> ${userLat.toFixed(6)}, ${userLon.toFixed(6)}`;
-            document.getElementById("distance").innerHTML = `<b>🚗 ระยะทางห่างจากร้าน:</b> ${calculateDistance(startLat, startLon, userLat, userLon).toFixed(2)} กม.`;
-
-            checkoutBtn.disabled = false;
-            showMap(userLat, userLon);
-          }, error => {
-            alert("ไม่สามารถดึงตำแหน่งได้: " + error.message);
-          });
-        } else {
-          alert("เบราว์เซอร์ของคุณไม่รองรับการแชร์ตำแหน่ง");
-        }
-      }
-
-      function calculateDistance(lat1, lon1, lat2, lon2) {
-        const R = 6371, dLat = toRad(lat2 - lat1), dLon = toRad(lon2 - lon1);
-        const a = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
-        return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
-      }
-
-      const toRad = degrees => degrees * (Math.PI / 180);
-
-      function showMap(lat, lon) {
-        if (!map) {
-          map = L.map('map').setView([lat, lon], 13);
-          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap contributors' }).addTo(map);
-          startMarker = L.marker([startLat, startLon]).addTo(map).bindPopup("📍 ตำแหน่งร้าน").openPopup();
-        }
-        if (userMarker) map.removeLayer(userMarker);
-        userMarker = L.marker([lat, lon]).addTo(map).bindPopup("📍 ตำแหน่งของคุณ").openPopup();
-        map.setView([lat, lon], 13);
-      }
-
-      function fetchProducts() {
-        google.script.run.withSuccessHandler(renderProducts).getProducts();
-      }
-
-      ///รายการสินค้าและตะกร้า///
-      function renderProducts(data) {
-        products = data;
-        let productList = document.getElementById("product-list");
-        productList.innerHTML = data.map((product, index) => {
-            let cartQty = cart[index] ? cart[index].quantity : 0; // ตรวจสอบว่ามีสินค้าอยู่ในตะกร้าหรือไม่
-            let remainingStock = product.stock - cartQty; // คำนวณสต็อกคงเหลือจริง
-
-            return `
-            <div class="product-item">
-              <a class="btn-wishlist" data-bs-toggle="offcanvas" data-bs-target="#offcanvasModify">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
-                </svg>
-              </a>
-              <figure>
-                <a><img src="${product.image}" class="tab-image" alt="${product.name}"></a>
-              </figure>
-              <h3>${product.name}</h3>
-              <span class="qty">เหลือ: <span id="stock-${index}">${remainingStock}</span> ชิ้น</span>
-              <span class="price">ราคา: ${product.price} บาท</span>
-              <div class="d-flex align-items-center justify-content-between">
-                <div class="input-group product-qty">
-                  <button class="btn btn-danger" onclick="updateCart(${index}, -1)">-</button>
-                  <input type="text" class="form-control text-center" id="qty-${index}" value="${cartQty}" readonly>
-                  <button class="btn btn-success" onclick="updateCart(${index}, 1)">+</button>
-                </div>
-              </div>
-            </div>
-            `;
-        }).join("");
-
-        renderCart();  
-      }
-
-      function updateCart(index, change) {
-        if (!products[index]) {
-            console.error(`สินค้า index ${index} ไม่ถูกต้อง`);
-            return;
-        }
-
-        let product = products[index];
-        if (!cart[index]) {
-            cart[index] = { name: product.name, quantity: 0, price: product.price };
-        }
-
-        let newQty = (cart[index].quantity || 0) + change;
-        
-        if (newQty > 0 && newQty <= product.stock) {
-            cart[index].quantity = newQty;
-        } else if (newQty <= 0) {
-            delete cart[index]; // ลบออกจากตะกร้า
-        }
-
-        renderCart();
-
-        // อัปเดตค่าในหน้าเว็บ
-        if (document.getElementById(`qty-${index}`)) {
-            document.getElementById(`qty-${index}`).value = cart[index] ? cart[index].quantity : 0;
-        }
-
-        if (document.getElementById(`stock-${index}`)) {
-            let remainingStock = product.stock - (cart[index] ? cart[index].quantity : 0);
-            document.getElementById(`stock-${index}`).innerText = remainingStock;
-        }
-      }
-
-      function renderCart() {
-        let cartList = document.getElementById("cart-list");
-        cartList.innerHTML = Object.entries(cart)
-            .map(([index, item]) => `
-            <li class="list-group-item d-flex justify-content-between lh-sm">
-                <div>
-                    <h6>${item.name}</h6><small>${item.quantity * item.price} บาท</small>
-                </div>
-                <span class="d-flex align-items-center">
-                    <button class="btn btn-danger" onclick="updateCart(${index}, -1)">-</button>
-                    <span class="mx-2" id="quantity-${index}">${item.quantity} ชิ้น</span>
-                    <button class="btn btn-success" onclick="updateCart(${index}, 1)">+</button>
-                    <button type="button" class="btn-close" onclick="removeFromCart(${index})"></button>
-                </span>
-            </li>`).join("");
-
-        let totalPrice = Object.values(cart).reduce((sum, item) => sum + item.quantity * item.price, 0);
-        document.getElementById("total-price").innerText = ` ${totalPrice} บาท`;
-        document.getElementById("cart-total-price").innerHTML = `<span>รวมทั้งหมด:</span> <strong>${totalPrice} บาท</strong>`;
-        
-        // เพิ่มการอัปเดตคะแนนสมาชิก โดยใช้ค่าเดียวกับ totalPrice
-        document.getElementById("member-point").innerHTML = `<span>member-point:</span> <strong>${totalPrice} point</strong>`;
-      }
-
-
-      function removeFromCart(index) {
-          delete cart[index];
-          renderCart();
-          if (document.getElementById(`qty-${index}`)) {
-              document.getElementById(`qty-${index}`).value = 0;
-          }
-      }
-
-      // ฟังก์ชันนี้จะถูกเรียกเมื่อเลือกประเภทสินค้าที่ต้องการ
-      function setProductType(type) {
-          selectedProductType = type; // กำหนดประเภทสินค้า
-          updateCartTitle(); // อัปเดตชื่อประเภทที่แสดงในตะกร้า
-      }
-
-      // ฟังก์ชันนี้ใช้สำหรับอัปเดตข้อความประเภทสินค้าในตะกร้า
-      function updateCartTitle() {
-        const cartTitle = document.getElementById("cart-type-title");
-          if (cartTitle) {
-              cartTitle.innerText = `ตะกร้าสินค้า: ${productType}`;
-          }
-      }
-
-      // รอให้ DOM โหลดเสร็จแล้วจึงเริ่มทำงาน
-      document.addEventListener("DOMContentLoaded", function() {
-          setProductType("อาหาร"); // ตัวอย่างการตั้งค่าให้แสดงประเภท "อาหาร"
-      });
-
-      ///รายการสินค้าและตะกร้า///
-      function checkout() { 
-        if (!userData || !userData.uid) {
-            alert("ไม่พบข้อมูลผู้ใช้ กรุณาเข้าสู่ระบบใหม่");
-            return;
-        }
-
-        let orderItems = Object.values(cart).filter(item => item.quantity > 0);
-        if (orderItems.length === 0) {
-            alert("กรุณาเลือกสินค้าในตะกร้าก่อนทำการสั่งซื้อ!");
-            return;
-        }
-        if (!orderType) {
-            alert("กรุณาเลือกประเภทการจัดส่งก่อนทำการสั่งซื้อ!");
-            return;
-        }
-        if (!userLat || !userLon) {
-            alert("กรุณาหาพิกัดก่อนกดสั่งซื้อ");
-            return;
-        }
-
-        // ตรวจสอบวิธีการชำระเงิน
-        let paymentMethod = document.getElementById('paymentMethod').value;
-        if (!paymentMethod) {
-            alert("กรุณาเลือกวิธีการชำระเงิน!");
-            return;
-        }
-
-        let totalPrice = 0;
-        orderItems.forEach(item => {
-            totalPrice += item.quantity * item.price;
-        });
-
-        let point = totalPrice; // ใช้ราคาทั้งหมดเป็นแต้มสะสม
-
-        let checkoutBtn = document.getElementById('checkout-btn');
-        checkoutBtn.disabled = true;
-        checkoutBtn.innerText = "กำลังดำเนินการ...";
-
-        // สร้างข้อมูลคำสั่งซื้อ
-        let fullOrderData = {
-            type: orderType,
-            productType: productType,
-            shabuType: currentShabuType,
-            items: orderItems,
-            paymentMethod: paymentMethod,
-            point: point
-        };
-
-        let userOrderData = { 
-            uid: userData.uid,
-            lat: userLat, 
-            lon: userLon,
-            paymentMethod: paymentMethod,
-            totalPrice: totalPrice
-        };
-
-        google.script.run.withSuccessHandler(() => {
-            alert(`สั่งซื้อสำเร็จ! วิธีชำระเงิน: ${paymentMethod}`);
-            cart = {};
-            renderCart();
-            fetchProducts();
-            checkoutBtn.disabled = false;
-            checkoutBtn.innerText = "สั่งซื้อ";
-        }).saveOrderAndUserClick(userOrderData, fullOrderData);
-    }
-
-
-      // เลือกประเภทการจัดส่ง
-      // ซ่อน container รายการสินค้าตั้งแต่เริ่มต้น (สามารถเพิ่มใน CSS ได้ด้วยเช่นกัน)
-      document.getElementById("list").style.display = "block";
-
-      // ฟังก์ชันตรวจสอบและแสดงรายการสินค้า
-      function checkAndShowProducts() {
-        if (orderType && productType) {
-          // เมื่อเลือกทั้งประเภทจัดส่งและประเภทสินค้าแล้ว
-          document.getElementById("list").style.display = "block"; // none / flex หรือ block ตามที่คุณต้องการ 
-          fetchProducts();
-        }
-      }
-
-      // ปรับปรุงฟังก์ชันเลือกประเภทการจัดส่ง
-      function selectOrderType(type) {
-        orderType = type;
-        console.log("เลือกประเภทการจัดส่ง: ", orderType);
-
-        // อัปเดตคลาสปุ่มที่เลือก
-        document.getElementById("btn-delivery").classList.toggle("btn-active", type === "ส่งทันที");
-        document.getElementById("btn-pickup").classList.toggle("btn-active", type === "รับที่ร้าน");
-
-        // (ถ้ามีการอัปเดตในส่วนอื่น เช่นในตะกร้า ให้ทำที่นี่)
-
-        // ตรวจสอบว่าทั้งสองการเลือกครบแล้วหรือไม่
-        checkAndShowProducts();
-      }
-
-      // ปรับปรุงฟังก์ชันเลือกประเภทสินค้า
-      function selectProductType(type) {
-        productType = type;
-        console.log("เลือกประเภทสินค้า: ", productType);
-
-        // อัปเดตประเภทสินค้าในตะกร้า
-        updateCartTitle();
-
-        // จัดการปุ่มเลือกประเภทสินค้า
-        document.getElementById("btn-piking-tasoss").classList.remove("btn-active");
-        document.getElementById("btn-samros").classList.remove("btn-active");
-        document.getElementById("btn-shabu").classList.remove("btn-active");
-
-        if (type === 'ปิ้งทาซอสหม่าล่า') {
-            document.getElementById("btn-piking-tasoss").classList.add("btn-active");
-            toggleShabuOptions(false);
-        } else if (type === 'ยำสามรส') {
-            document.getElementById("btn-samros").classList.add("btn-active");
-            toggleShabuOptions(false);
-        } else if (type === 'ชาบู') {
-            document.getElementById("btn-shabu").classList.add("btn-active");
-            toggleShabuOptions(true);
-        }
-
-        // ตรวจสอบว่าทั้งสองการเลือกครบแล้วหรือไม่
-        checkAndShowProducts();
-      }
-
-
-      function selectShabuType(type) {
-          if (currentShabuType === type) {
-              currentShabuType = "";
-              console.log("ยกเลิกการเลือกน้ำซุป");
-          } else {
-              currentShabuType = type;
-              console.log("เลือกประเภทน้ำซุป: " + currentShabuType);
-          }
-          updateShabuButtons();
-          updateCartTitle();
-      }
-
-      // อัปเดตสถานะปุ่มน้ำซุป
-      function updateShabuButtons() {
-          const buttons = document.querySelectorAll('#shabu-options button');
-          buttons.forEach(button => {
-              button.classList.toggle('btn-active', button.innerText === currentShabuType);
-          });
-      }
-
-      // แสดง/ซ่อนตัวเลือกน้ำซุปสำหรับชาบู
-      function toggleShabuOptions(show) {
-          let shabuOptions = document.getElementById("shabu-options");
-          shabuOptions.style.display = show ? "block" : "none";
-          if (!show) {
-              currentShabuType = "";
-              updateShabuButtons();
-          }
-      }
-
-      // ฟังก์ชันอัปเดตชื่อประเภทสินค้าในตะกร้า
-      function updateCartTitle() {
-        let cartTitle = document.getElementById("cart-type-title");
-        if (cartTitle) {
-            let displayText = productType;
-            if (productType === "ชาบู" && currentShabuType) {
-                displayText += ` (${currentShabuType})`;
-            }
-            cartTitle.innerText = `ตะกร้าสินค้า: ${displayText || '-'}`;
-        }
-    }
-
-      window.onload = fetchProducts;
-    </script>
-  </section>
-
-  <!-- ปุ่มเปิดตะกร้า -->
-  <div class="fixed-bottom-bar">
-    <button class="cart-btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart">
-      ดูตะกร้าสินค้า <span id="total-price"><strong>0 บาท</strong></span>
-    </button>
-  </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
-  </script>
-  <?!= HtmlService.createHtmlOutputFromFile('plugins').getContent() ?>
-  <?!= HtmlService.createHtmlOutputFromFile('script').getContent() ?>
-  <script src="script.js"></script>
+renderNPC("all");
+</script>
 </body>
-
 </html>
