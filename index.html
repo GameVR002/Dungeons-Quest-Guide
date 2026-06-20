@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Alylica's Dungeons — Quest Guide v2.1 (Responsive Update)</title>
+<title>Dungeons & Quest Guide v0.1 (BETA TEST)</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
@@ -157,8 +157,8 @@ body{background:var(--bg);color:var(--text);font-family:'Crimson Text',serif;min
 
 <div class="hero">
   <div class="hero-title">Dungeons & Quest Guide</div>
-  <div class="hero-sub">The Shattered Realm Chronicles — Quest & NPC Guide v2.1</div>
-  <div class="hero-meta">Multiplayer 120 คน · Party Quest · Hardcore Mode · 93 Objectives</div>
+  <div class="hero-sub">The Shattered Realm Chronicles — Quest & NPC Guide v0.1 BETA TEST</div>
+  <div class="hero-meta">Multiplayer 120 คน · Party Quest · Hardcore Mode · 102 Objectives</div>
 </div>
 
 <div class="stat-bar">
@@ -248,9 +248,14 @@ body{background:var(--bg);color:var(--text);font-family:'Crimson Text',serif;min
   </div>
   <div id="npcGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px"></div>
   <div style="margin-top:1rem;padding:.75rem 1rem;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);font-size:12px;color:var(--text2)">
-    💡 NPC ×2 = วางสองตัวในจุดเดียวกันเพื่อรองรับ 50 คน / NPC Bridge วางนอก Hub ใกล้พื้นที่ Quest
+    <!--💡 NPC ×2 = วางสองตัวในจุดเดียวกันเพื่อรองรับ 50 คน / NPC Bridge วางนอก Hub ใกล้พื้นที่ Quest-->
   </div>
 </div>
+
+<!-- Credit Footer Section -->
+<footer class="credit-footer">
+  <p>DungeonsAddON Created by <a class="credit-link" href="https://www.youtube.com/@Alylica" target="_blank"><i class="ti ti-brand-open-source"></i> alylica</a></p>
+</footer>
 
 </div>
 
@@ -770,7 +775,7 @@ const npcs = [
   {type:"main", icon:"⚡", name:"Stormcaller Mira", count:2, npcId:"stormcaller_mira", role:"นักเรียกพายุแห่ง Thunder Keep", desc:"ให้ Quest บทที่ 3 / รับการรักษาหลัง Quest จบ", location:"จุด E — ซ้ายบน", quest:"ฟ้าคำรามในพายุ (Tempest Golem)"},
   {type:"main", icon:"🖤", name:"Void Miner Drax", count:2, npcId:"void_miner_drax", role:"นักขุดผู้หนีจาก Nether", desc:"ให้ Quest บทที่ 3 / ให้ Layout Obsidian Fortress", location:"จุด C — ขวากลาง", quest:"เงาแห่งออบซิเดียน (Obsidian Monstrosity)"},
   {type:"main", icon:"🍄", name:"Mushroom Hermit Bolo", count:2, npcId:"hermit_bolo", role:"ผู้อยู่อาศัยใน Mushroom Island", desc:"ให้ Side Quest บทที่ 3 / มีความลับ Arch-Illager", location:"จุด F — ใต้สุด", quest:"เห็ดแห่งการทดสอบ (Mooshroom Monstrosity)"},
-  {type:"main", icon:"🌀", name:"Rift Scholar Saya", count:2, npcId:"rift_saya", role:"นักวิจัย Ender Dimension", desc:"ให้ Quest บทที่ 4 / อธิบาย 6 รูปแบบ Endersent", location:"Hub A — เกาะหินเหนือ (ปลดล็อคหลังบทที่ 3)", quest:"ผู้ส่งสาร 6 หน้า (Enchanted Endersent)"},
+  {type:"main", icon:"🧑‍🔬", name:"Rift Scholar Saya", count:2, npcId:"rift_saya", role:"นักวิจัย Ender Dimension", desc:"ให้ Quest บทที่ 4 / อธิบาย 6 รูปแบบ Endersent", location:"Hub A — เกาะหินเหนือ (ปลดล็อคหลังบทที่ 3)", quest:"ผู้ส่งสาร 6 หน้า (Enchanted Endersent)"},
   {type:"bridge", icon:"👻", name:"Ghost Whisperer Omra", count:1, npcId:"ghost_omra", role:"ผู้สื่อสารกับวิญญาณ", desc:"ให้ข้อมูลจุดอ่อน Wretched Wraith / ให้ Frost Ward Charm Formula", location:"ใกล้ Frostmere Ruins (X:-80 Z:200)", quest:"วิญญาณที่ไม่ยอมจาก"},
   {type:"bridge", icon:"💀", name:"Skeleton Deserter", count:1, npcId:"skeleton_deserter", role:"โครงกระดูกผู้แปรพักตร์", desc:"ให้ Insider Info เกี่ยวกับ Nameless One / บอกตำแหน่งร่างแยก", location:"ป่าตะวันออก (X:350 Z:120)", quest:"ชื่อที่ถูกลืม"},
   {type:"bridge", icon:"🌋", name:"Blaze Refugee", count:1, npcId:"blaze_refugee", role:"Blaze ที่หนีจากการควบคุม", desc:"ให้ Fireproof Potion Recipe / บอกจุดอ่อน Hovering Inferno", location:"ใกล้ซาก Embercrest (X:500 Z:-200)", quest:"ไฟใต้ท้องฟ้า"},
@@ -787,7 +792,7 @@ function renderNPC(filter){
   grid.innerHTML="";
   const list = filter==="all" ? npcs : npcs.filter(n=>n.type===filter);
   list.forEach(n=>{
-    const typeLabel = {hub:"Hub",main:"Quest หลัก",bridge:"Bridge",reward:"Reward"}[n.type];
+    const typeLabel = {hub:"Hub",main:"Quest หลัก",bridge:"Bridge",reward:"Reward"} [n.type];
     const typeCls = {hub:"nb-hub",main:"nb-main",bridge:"nb-bridge",reward:"nb-reward"}[n.type];
     const iconCls = {hub:"npc-icon-hub",main:"npc-icon-main",bridge:"npc-icon-bridge",reward:"npc-icon-reward"}[n.type];
     grid.innerHTML+=`
