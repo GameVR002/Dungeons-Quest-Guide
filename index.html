@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Dungeons — Quest Guide v2 (Dialogue Update)</title>
+<title>Alylica's Dungeons — Quest Guide v2.1 (Responsive Update)</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
@@ -16,57 +16,69 @@
   --radius:10px;--radius-sm:6px;
 }
 body{background:var(--bg);color:var(--text);font-family:'Crimson Text',serif;min-height:100vh}
-.page{max-width:1100px;margin:0 auto;padding:2rem 1.5rem}
+.page{max-width:1100px;margin:0 auto;padding:1rem 1rem}
+@media(min-width:768px){ .page{padding:2rem 1.5rem} }
 
 /* hero */
-.hero{text-align:center;padding:3rem 2rem 2.5rem;margin-bottom:2rem;background:linear-gradient(135deg,rgba(122,92,255,.12),rgba(0,0,0,.2));border:1px solid #5144a8;border-radius:20px;position:relative;overflow:hidden}
+.hero{text-align:center;padding:2rem 1rem;margin-bottom:1.5rem;background:linear-gradient(135deg,rgba(122,92,255,.12),rgba(0,0,0,.2));border:1px solid #5144a8;border-radius:20px;position:relative;overflow:hidden}
+@media(min-width:768px){ .hero{padding:3rem 2rem 2.5rem;margin-bottom:2rem} }
 .hero::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at center,rgba(122,92,255,.2),transparent 70%)}
-.hero-title{font-family:'Cinzel',serif;font-size:40px;font-weight:600;color:var(--gold);text-shadow:0 0 20px rgba(244,208,111,.3);position:relative}
-.hero-sub{font-size:16px;color:#b9b9c9;font-style:italic;margin-top:.5rem;position:relative}
-.hero-meta{font-size:12px;color:#606080;margin-top:.5rem;position:relative}
+.hero-title{font-family:'Cinzel',serif;font-size:26px;font-weight:600;color:var(--gold);text-shadow:0 0 20px rgba(244,208,111,.3);position:relative;line-height:1.2}
+@media(min-width:768px){ .hero-title{font-size:40px} }
+.hero-sub{font-size:14px;color:#b9b9c9;font-style:italic;margin-top:.5rem;position:relative}
+@media(min-width:768px){ .hero-sub{font-size:16px} }
+.hero-meta{font-size:11px;color:#606080;margin-top:.5rem;position:relative}
 
 /* stats */
-.stat-bar{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:2rem}
+.stat-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:1.5rem}
+@media(min-width:768px){ .stat-bar{grid-template-columns:repeat(5,1fr);margin-bottom:2rem} }
 .stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:.85rem 1rem;text-align:center}
-.stat-num{font-family:'Cinzel',serif;font-size:22px;font-weight:600}
+.stat-num{font-family:'Cinzel',serif;font-size:20px;font-weight:600}
+@media(min-width:768px){ .stat-num{font-size:22px} }
 .stat-label{font-size:11px;color:var(--text2);margin-top:3px}
 
 /* section */
-.section{margin-bottom:2.5rem}
-.section-title{font-family:'Cinzel',serif;font-size:14px;font-weight:600;letter-spacing:.06em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid #5144a8}
+.section{margin-bottom:2rem}
+.section-title{font-family:'Cinzel',serif;font-size:13px;font-weight:600;letter-spacing:.06em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid #5144a8}
 
 /* dialogue banner */
-.dialogue-banner{background:linear-gradient(90deg, #161626 0%, #201a35 100%);border:1px dashed var(--gold);border-radius:var(--radius);padding:1.25rem;margin-bottom:2rem;text-align:center;cursor:pointer;transition:all .2s;position:relative}
+.dialogue-banner{background:linear-gradient(90deg, #161626 0%, #201a35 100%);border:1px dashed var(--gold);border-radius:var(--radius);padding:1.25rem;margin-bottom:1.5rem;text-align:center;cursor:pointer;transition:all .2s;position:relative}
 .dialogue-banner:hover{border-color:var(--purple);box-shadow:0 0 12px rgba(244,208,111,0.15)}
 .dialogue-banner i{color:var(--gold);margin-right:8px}
 
 /* tabs */
-.tabs{display:flex;gap:6px;margin-bottom:1.5rem;flex-wrap:wrap}
-.tab{padding:6px 14px;border-radius:20px;font-size:13px;border:1px solid var(--border);cursor:pointer;background:var(--bg2);color:var(--text2);transition:all .15s;font-family:'Crimson Text',serif}
+.tabs{display:flex;gap:6px;margin-bottom:1.25rem;flex-wrap:wrap}
+.tab{padding:5px 12px;border-radius:20px;font-size:12.5px;border:1px solid var(--border);cursor:pointer;background:var(--bg2);color:var(--text2);transition:all .15s;font-family:'Crimson Text',serif}
 .tab.active{background:var(--purple);border-color:var(--purple);color:#fff}
 .tab:hover:not(.active){border-color:var(--purple);color:var(--text)}
+
+/* type legend */
+.type-legend{display:flex;flex-wrap:wrap;gap:10px;background:var(--bg2);padding:1rem;border-radius:var(--radius);border:1px solid var(--border);font-size:13px}
+.legend-item{min-width:240px;flex:1}
 
 /* quest cards */
 .quest-list{display:flex;flex-direction:column;gap:1rem}
 .quest-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:all .2s}
 .quest-card:hover{border-color:var(--border-hi);box-shadow:0 0 15px rgba(122,92,255,.2)}
-.quest-header{display:flex;align-items:center;gap:12px;padding:1rem 1.25rem;cursor:pointer}
+.quest-header{display:flex;align-items:center;gap:12px;padding:1rem 1.25rem;cursor:pointer;flex-wrap:wrap}
 .quest-diff{width:38px;height:38px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
-.quest-info{flex:1}
+.quest-info{flex:1;min-width:200px}
 .quest-chapter{font-size:11px;font-weight:600;letter-spacing:.08em;color:var(--text2);text-transform:uppercase}
 .quest-name{font-family:'Cinzel',serif;font-size:15px;font-weight:600;color:#fff;margin-top:2px}
 .quest-boss{font-size:13px;color:#9e9eb8;font-style:italic;margin-top:2px}
 .quest-prereq{font-size:11px;color:#f4a830;margin-top:3px}
-.chevron{color:var(--text2);font-size:18px;transition:transform .2s;flex-shrink:0}
+.chevron{color:var(--text2);font-size:18px;transition:transform .2s;flex-shrink:0;margin-left:auto}
 .chevron.open{transform:rotate(180deg)}
-.quest-body{border-top:1px solid var(--border);padding:1.25rem;display:none}
+.quest-body{border-top:1px solid var(--border);padding:1rem;display:none}
+@media(min-width:768px){ .quest-body{padding:1.25rem} }
 .quest-body.open{display:block}
 
 /* story */
 .story-box{background:#161621;border-left:3px solid var(--purple);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:.75rem 1rem;font-size:14px;font-style:italic;color:#d2d2dd;margin-bottom:1rem;line-height:1.6}
 
 /* detail grid */
-.detail-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:1.25rem}
+.detail-grid{display:grid;grid-template-columns:1fr;gap:1.25rem}
+@media(min-width:768px){ .detail-grid{grid-template-columns:1fr 1.6fr} }
 .detail-label{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text2);margin-bottom:6px;margin-top:10px}
 .detail-label:first-child{margin-top:0}
 
@@ -106,7 +118,8 @@ body{background:var(--bg);color:var(--text);font-family:'Crimson Text',serif;min
 .diff-final{background:#a22222;box-shadow:0 0 10px rgba(255,0,0,.3)}
 
 /* system cards */
-.sys-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:2rem}
+.sys-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:1.5rem}
+@media(min-width:768px){ .sys-grid{grid-template-columns:1fr 1fr;margin-bottom:2rem} }
 .sys-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.1rem}
 .sys-title{font-size:13px;font-weight:500;margin-bottom:8px;display:flex;align-items:center;gap:8px;color:var(--text)}
 .sys-body{font-size:13px;color:var(--text2);line-height:1.7}
@@ -143,9 +156,9 @@ body{background:var(--bg);color:var(--text);font-family:'Crimson Text',serif;min
 <div class="page">
 
 <div class="hero">
-  <div class="hero-title">Dungeons & Quest Guide</div>
-  <div class="hero-sub">The Shattered Realm Chronicles — Quest & NPC Guide v2</div>
-  <div class="hero-meta">Multiplayer 100 คน · Party Quest · Hardcore Mode · 93 Objectives</div>
+  <div class="hero-title">Alylica's Dungeons</div>
+  <div class="hero-sub">The Shattered Realm Chronicles — Quest & NPC Guide v2.1</div>
+  <div class="hero-meta">Multiplayer 50 คน · Party Quest · Hardcore Mode · 93 Objectives</div>
 </div>
 
 <div class="stat-bar">
@@ -156,6 +169,7 @@ body{background:var(--bg);color:var(--text);font-family:'Crimson Text',serif;min
   <div class="stat"><div class="stat-num" style="color:#c03030">5</div><div class="stat-label">บทเรื่องราว</div></div>
 </div>
 
+<!-- Interactive Dialogue Banner -->
 <div class="section" style="margin-bottom: 1.5rem;">
   <div class="section-title">🔊 เสียงเล่าอ้างจากนักเดินทาง (สุ่มบทพูดเปิดตัวบอส)</div>
   <div class="dialogue-banner" onclick="rollIntroDialogue()">
@@ -250,7 +264,6 @@ const T = {
   mine: '<span class="b-type bt-mine">⛏ ขุด</span>',
 };
 
-// 15 General Intro Boss Quotes
 const introQuotes = [
   "ข้าได้ยินเสียงคำรามของบางสิ่งจากส่วนลึกใต้พิภพ...",
   "มีผู้กล้ามากมายหายสาบสูญระหว่างตามล่ามัน...",
@@ -646,7 +659,6 @@ const quests = [
   },
 ];
 
-// count total objectives
 const totalObj = quests.reduce((s,q)=>s+q.objectives.length,0);
 document.querySelectorAll('.stat-num')[0].textContent = totalObj;
 
@@ -673,7 +685,6 @@ function renderQuests(filter){
     card.className="quest-card";
     const prereqNote = q.id>1 ? `<div class="quest-prereq"><i class="ti ti-lock" style="font-size:10px"></i> ต้องทำ Quest ก่อนหน้าก่อน</div>` : "";
     
-    // Generate Dialogue HTML Block
     const dialogueHtml = q.dialogues ? `
       <div class="detail-label" style="color:var(--gold); margin-top:12px;"><i class="ti ti-message-chatbot"></i> เบาะแสและคำเตือนจาก NPC (${q.dialogues.length})</div>
       <div style="background:rgba(244,208,111,0.03); border:1px dashed rgba(244,208,111,0.25); border-radius:var(--radius-sm); padding:0.75rem; max-height:160px; overflow-y:auto; margin-bottom:10px;">
@@ -690,8 +701,8 @@ function renderQuests(filter){
           <div class="quest-boss">${q.boss}</div>
           ${prereqNote}
         </div>
-        <div style="text-align:right;flex-shrink:0">
-          <div style="font-size:11px;color:#a080ff;margin-bottom:4px">${q.objectives.length} objectives</div>
+        <div style="text-align:right;flex-shrink:0;margin-left:auto;display:flex;flex-direction:column;align-items:flex-end">
+          <div style="font-size:11px;color:#a080ff;margin-bottom:4px">${q.objectives.length} objs</div>
           <i class="ti ti-chevron-down chevron" id="chv-${q.id}"></i>
         </div>
       </div>
@@ -706,7 +717,6 @@ function renderQuests(filter){
             <div class="detail-label">รางวัล</div>
             <div><span class="badge b-reward">${q.reward}</span></div>
             ${q.fragment!=="-"?`<div style="margin-top:6px"><span class="badge b-frag">${q.fragment}</span></div>`:""}
-            
             ${dialogueHtml}
           </div>
           <div>
@@ -740,102 +750,36 @@ function filterQuests(f,el){
 
 renderQuests("all");
 
-// ===== NPC DATA =====
 const npcs = [
-  // HUB
-  {type:"hub", icon:"👴", name:"Elder Maren", count:2, npcId:"elder_maren",
-   role:"ผู้อาวุโสแห่ง Sanctuary", desc:"ให้ Main Quest ทุกบท / Final Quest บทที่ 5",
-   location:"Hub A — เกาะหินเหนือ", quest:"Main Story (บทที่ 1–5)"},
-  {type:"hub", icon:"⚔️", name:"Sergeant Dova", count:2, npcId:"sergeant_dova",
-   role:"จ่าทหารผู้ฝึกฝน", desc:"ให้ Side Quest และ Tips การต่อสู้กับบอส",
-   location:"Hub A — เกาะหินเหนือ", quest:"Side Quest / Combat Tips"},
-  {type:"hub", icon:"⚗️", name:"Alchemist Rue", count:2, npcId:"alchemist_rue",
-   role:"นักเล่นแร่แปรธาตุ", desc:"อัปเกรดอาวุธ แลกวัสดุจากบอส รับ Crafting Recipe พิเศษ",
-   location:"Hub A — เกาะหินเหนือ", quest:"Shop / Upgrade"},
-  {type:"hub", icon:"📚", name:"Archivist Lenn", count:1, npcId:"archivist_lenn",
-   role:"นักจดบันทึกประวัติศาสตร์", desc:"เก็บ Lore ทุกชิ้น ให้ Bonus Reward เมื่อเก็บครบ / จด Hall of Fame",
-   location:"Hub A — เกาะหินเหนือ", quest:"Lore Collector / Epilogue"},
-  {type:"hub", icon:"💰", name:"Trader Brix", count:1, npcId:"trader_brix",
-   role:"พ่อค้าร่อนเร่", desc:"ขายของหายาก รับซื้อ Drop จากบอส",
-   location:"Hub A — เกาะหินเหนือ", quest:"Shop"},
-  {type:"hub", icon:"🔒", name:"Gate Keeper", count:1, npcId:"gate_keeper",
-   role:"ผู้รักษาประตู", desc:"ตรวจสอบ Key Fragment / แจก Info เนื้อเรื่อง / เปิดทาง Final Boss",
-   location:"Hub A — เกาะหินเหนือ", quest:"Fragment Check / Gate"},
-
-  // REWARD
-  {type:"reward", icon:"🎁", name:"Reward Clerk Hana", count:2, npcId:"reward_clerk_hana",
-   role:"เสมียนรางวัลฝั่งต้น", desc:"รับรางวัล Quest บทที่ 1–2 หลัง Quest Complete",
-   location:"Hub A — เกาะหินเหนือ", quest:"Reward บทที่ 1–2"},
-  {type:"reward", icon:"🎁", name:"Reward Clerk Oswin", count:2, npcId:"reward_clerk_oswin",
-   role:"เสมียนรางวัลฝั่งกลาง", desc:"รับรางวัล Quest บทที่ 3 หลัง Quest Complete",
-   location:"Hub A — เกาะหินเหนือ", quest:"Reward บทที่ 3"},
-  {type:"reward", icon:"🎁", name:"Reward Clerk Taya", count:1, npcId:"reward_clerk_taya",
-   role:"เสมียนรางวัลฝั่งท้าย", desc:"รับรางวัล Quest บทที่ 4–5 และ Legendary Items",
-   location:"Hub A — เกาะหินเหนือ", quest:"Reward บทที่ 4–5"},
-
-  // MAIN — Quest NPC
-  {type:"main", icon:"🧑‍🌾", name:"Farmer Aldus", count:2, npcId:"farmer_aldus",
-   role:"ชาวนาผู้รอดชีวิตจาก Ashfen", desc:"ให้ Quest บทที่ 1 / บอก Lore หมู่บ้าน Ashfen Village",
-   location:"จุด D — กลาง Map", quest:"หม้อต้มแห่งหายนะ (Corrupted Cauldron)"},
-  {type:"main", icon:"🕯️", name:"Sister Vael", count:2, npcId:"sister_vael",
-   role:"นักบวชผู้เคราะห์ร้าย", desc:"ให้ Quest บทที่ 1 / รับ Soul Shard ตอน Quest จบ",
-   location:"จุด D — กลาง Map", quest:"วิญญาณที่ไม่ยอมจาก (Wretched Wraith)"},
-  {type:"main", icon:"📖", name:"Scholar Verik", count:2, npcId:"scholar_verik",
-   role:"นักวิชาการผู้คลั่งไคล้ตำรา", desc:"ให้ Quest บทที่ 2 / รับตำราต้องห้ามตอน Quest จบ",
-   location:"จุด B — กลางบน", quest:"ชื่อที่ถูกลืม (The Nameless One)"},
-  {type:"main", icon:"🔥", name:"Pyromancer Ixal", count:2, npcId:"pyromancer_ixal",
-   role:"นักไฟผู้เคยฝึกกับ Blaze", desc:"ให้ Quest บทที่ 2 / ให้ Fireproof Potion Formula",
-   location:"จุด D — กลาง Map", quest:"ไฟใต้ท้องฟ้า (Hovering Inferno)"},
-  {type:"main", icon:"⚓", name:"Admiral Coris", count:2, npcId:"admiral_coris",
-   role:"นักสำรวจทะเลผู้เฒ่า", desc:"ให้ Quest บทที่ 2 / บอกเส้นทางใต้น้ำ Sunken Archive",
-   location:"จุด F — ใต้สุด", quest:"ยามแห่งท้องทะเลลึก (Ancient Guardian)"},
-  {type:"main", icon:"⚙️", name:"Engineer Torvin", count:2, npcId:"engineer_torvin",
-   role:"วิศวกรผู้สร้าง Redstone Golem", desc:"ให้ Quest บทที่ 3 / ให้ Blueprint Ironveil",
-   location:"จุด C — ขวากลาง", quest:"หัวใจหินแดง (Redstone Monstrosity)"},
-  {type:"main", icon:"🌿", name:"Druid Essara", count:2, npcId:"druid_essara",
-   role:"นักบวชป่าผู้บาดเจ็บ", desc:"ให้ Quest บทที่ 3 / ให้พร Poison Resist ชั่วคราว",
-   location:"จุด E — ซ้ายบน", quest:"รากเลือด (Jungle Abomination)"},
-  {type:"main", icon:"⚡", name:"Stormcaller Mira", count:2, npcId:"stormcaller_mira",
-   role:"นักเรียกพายุแห่ง Thunder Keep", desc:"ให้ Quest บทที่ 3 / รับการรักษาหลัง Quest จบ",
-   location:"จุด E — ซ้ายบน", quest:"ฟ้าคำรามในพายุ (Tempest Golem)"},
-  {type:"main", icon:"🖤", name:"Void Miner Drax", count:2, npcId:"void_miner_drax",
-   role:"นักขุดผู้หนีจาก Nether", desc:"ให้ Quest บทที่ 3 / ให้ Layout Obsidian Fortress",
-   location:"จุด C — ขวากลาง", quest:"เงาแห่งออบซิเดียน (Obsidian Monstrosity)"},
-  {type:"main", icon:"🍄", name:"Mushroom Hermit Bolo", count:2, npcId:"hermit_bolo",
-   role:"ผู้อยู่อาศัยใน Mushroom Island", desc:"ให้ Side Quest บทที่ 3 / มีความลับ Arch-Illager",
-   location:"จุด F — ใต้สุด", quest:"เห็ดแห่งการทดสอบ (Mooshroom Monstrosity)"},
-  {type:"main", icon:"🌀", name:"Rift Scholar Saya", count:2, npcId:"rift_saya",
-   role:"นักวิจัย Ender Dimension", desc:"ให้ Quest บทที่ 4 / อธิบาย 6 รูปแบบ Endersent",
-   location:"Hub A — เกาะหินเหนือ (ปลดล็อคหลังบทที่ 3)", quest:"ผู้ส่งสาร 6 หน้า (Enchanted Endersent)"},
-
-  // BRIDGE
-  {type:"bridge", icon:"👻", name:"Ghost Whisperer Omra", count:1, npcId:"ghost_omra",
-   role:"ผู้สื่อสารกับวิญญาณ", desc:"ให้ข้อมูลจุดอ่อน Wretched Wraith / ให้ Frost Ward Charm Formula",
-   location:"ใกล้ Frostmere Ruins (X:-80 Z:200)", quest:"วิญญาณที่ไม่ยอมจาก"},
-  {type:"bridge", icon:"💀", name:"Skeleton Deserter", count:1, npcId:"skeleton_deserter",
-   role:"โครงกระดูกผู้แปรพักตร์", desc:"ให้ Insider Info เกี่ยวกับ Nameless One / บอกตำแหน่งร่างแยก",
-   location:"ป่าตะวันออก (X:350 Z:120)", quest:"ชื่อที่ถูกลืม"},
-  {type:"bridge", icon:"🌋", name:"Blaze Refugee", count:1, npcId:"blaze_refugee",
-   role:"Blaze ที่หนีจากการควบคุม", desc:"ให้ Fireproof Potion Recipe / บอกจุดอ่อน Hovering Inferno",
-   location:"ใกล้ซาก Embercrest (X:500 Z:-200)", quest:"ไฟใต้ท้องฟ้า"},
-  {type:"bridge", icon:"🐟", name:"Drowned Messenger", count:1, npcId:"drowned_messenger",
-   role:"ซอมบี้ใต้น้ำที่ยังมีสติ", desc:"ให้เส้นทางใต้น้ำสู่ Sunken Archive / บอกตำแหน่ง Poison Mine",
-   location:"ชายฝั่งใต้ (X:-100 Z:600)", quest:"ยามแห่งท้องทะเลลึก"},
-  {type:"bridge", icon:"🔴", name:"Redstone Cube Survivor", count:1, npcId:"rs_cube_survivor",
-   role:"นักทดลองที่รอดชีวิตจาก Golem", desc:"บอกจุดอ่อน Redstone Monstrosity / ตำแหน่ง Spawner",
-   location:"ใกล้ Ironveil (X:280 Z:-80)", quest:"หัวใจหินแดง"},
-  {type:"bridge", icon:"🌳", name:"Ancient Tree Spirit", count:1, npcId:"tree_spirit",
-   role:"วิญญาณต้นไม้โบราณ", desc:"ให้ Vine Cutter / บอกตำแหน่ง Corrupted Root 5 จุด",
-   location:"ใน Verdant Abyss (X:-400 Z:-300)", quest:"รากเลือด"},
-  {type:"bridge", icon:"🗿", name:"Totem Guardian", count:1, npcId:"totem_guardian",
-   role:"โกเลมเล็กที่ยังจงรักภักดี", desc:"บอกวิธีเข้าหาโทเท็มอย่างปลอดภัย / ลำดับการทำลาย",
-   location:"Thunder Keep (X:600 Z:-500)", quest:"ฟ้าคำรามในพายุ"},
-  {type:"bridge", icon:"🪓", name:"Vindicator Defector", count:1, npcId:"vindicator_defector",
-   role:"Vindicator ผู้แปรพักตร์", desc:"ให้ Obsidian Weakness Scroll / บอก Layout ป้อม",
-   location:"ชานเมือง Fortress (X:700 Z:400)", quest:"เงาแห่งออบซิเดียน"},
-  {type:"bridge", icon:"🐄", name:"Angry Mooshroom Scout", count:1, npcId:"mooshroom_scout",
-   role:"Mooshroom ที่ยังเป็นมิตร", desc:"ให้ Mushroom Antidote / บอกตำแหน่ง Mooshroom Monstrosity",
-   location:"Mushroom Island (X:-600 Z:500)", quest:"เห็ดแห่งการทดสอบ"},
+  {type:"hub", icon:"👴", name:"Elder Maren", count:2, npcId:"elder_maren", role:"ผู้อาวุโสแห่ง Sanctuary", desc:"ให้ Main Quest ทุกบท / Final Quest บทที่ 5", location:"Hub A — เกาะหินเหนือ", quest:"Main Story (บทที่ 1–5)"},
+  {type:"hub", icon:"⚔️", name:"Sergeant Dova", count:2, npcId:"sergeant_dova", role:"จ่าทหารผู้ฝึกฝน", desc:"ให้ Side Quest และ Tips การต่อสู้กับบอส", location:"Hub A — เกาะหินเหนือ", quest:"Side Quest / Combat Tips"},
+  {type:"hub", icon:"⚗️", name:"Alchemist Rue", count:2, npcId:"alchemist_rue", role:"นักเล่นแร่แปรธาตุ", desc:"อัปเกรดอาวุธ แลกวัสดุจากบอส รับ Crafting Recipe พิเศษ", location:"Hub A — เกาะหินเหนือ", quest:"Shop / Upgrade"},
+  {type:"hub", icon:"📚", name:"Archivist Lenn", count:1, npcId:"archivist_lenn", role:"นักจดบันทึกประวัติศาสตร์", desc:"เก็บ Lore ทุกชิ้น ให้ Bonus Reward เมื่อเก็บครบ / จด Hall of Fame", location:"Hub A — เกาะหินเหนือ", quest:"Lore Collector / Epilogue"},
+  {type:"hub", icon:"💰", name:"Trader Brix", count:1, npcId:"trader_brix", role:"พ่อค้าร่อนเร่", desc:"ขายของหายาก รับซื้อ Drop จากบอส", location:"Hub A — เกาะหินเหนือ", quest:"Shop"},
+  {type:"hub", icon:"🔒", name:"Gate Keeper", count:1, npcId:"gate_keeper", role:"ผู้รักษาประตู", desc:"ตรวจสอบ Key Fragment / แจก Info เนื้อเรื่อง / เปิดทาง Final Boss", location:"Hub A — เกาะหินเหนือ", quest:"Fragment Check / Gate"},
+  {type:"reward", icon:"🎁", name:"Reward Clerk Hana", count:2, npcId:"reward_clerk_hana", role:"เสมียนรางวัลฝั่งต้น", desc:"รับรางวัล Quest บทที่ 1–2 หลัง Quest Complete", location:"Hub A — เกาะหินเหนือ", quest:"Reward บทที่ 1–2"},
+  {type:"reward", icon:"🎁", name:"Reward Clerk Oswin", count:2, npcId:"reward_clerk_oswin", role:"เสมียนรางวัลฝั่งกลาง", desc:"รับรางวัล Quest บทที่ 3 หลัง Quest Complete", location:"Hub A — เกาะหินเหนือ", quest:"Reward บทที่ 3"},
+  {type:"reward", icon:"🎁", name:"Reward Clerk Taya", count:1, npcId:"reward_clerk_taya", role:"เสมียนรางวัลฝั่งท้าย", desc:"รับรางวัล Quest บทที่ 4–5 และ Legendary Items", location:"Hub A — เกาะหินเหนือ", quest:"Reward บทที่ 4–5"},
+  {type:"main", icon:"🧑‍🌾", name:"Farmer Aldus", count:2, npcId:"farmer_aldus", role:"ชาวนาผู้รอดชีวิตจาก Ashfen", desc:"ให้ Quest บทที่ 1 / บอก Lore หมู่บ้าน Ashfen Village", location:"จุด D — กลาง Map", quest:"หม้อต้มแห่งหายนะ (Corrupted Cauldron)"},
+  {type:"main", icon:"🕯️", name:"Sister Vael", count:2, npcId:"sister_vael", role:"นักบวชผู้เคราะห์ร้าย", desc:"ให้ Quest บทที่ 1 / รับ Soul Shard ตอน Quest จบ", location:"จุด D — กลาง Map", quest:"วิญญาณที่ไม่ยอมจาก (Wretched Wraith)"},
+  {type:"main", icon:"📖", name:"Scholar Verik", count:2, npcId:"scholar_verik", role:"นักวิชาการผู้คลั่งไคล้ตำรา", desc:"ให้ Quest บทที่ 2 / รับตำราต้องห้ามตอน Quest จบ", location:"จุด B — กลางบน", quest:"ชื่อที่ถูกลืม (The Nameless One)"},
+  {type:"main", icon:"🔥", name:"Pyromancer Ixal", count:2, npcId:"pyromancer_ixal", role:"นักไฟผู้เคยฝึกกับ Blaze", desc:"ให้ Quest บทที่ 2 / ให้ Fireproof Potion Formula", location:"จุด D — กลาง Map", quest:"ไฟใต้ท้องฟ้า (Hovering Inferno)"},
+  {type:"main", icon:"⚓", name:"Admiral Coris", count:2, npcId:"admiral_coris", role:"นักสำรวจทะเลผู้เฒ่า", desc:"ให้ Quest บทที่ 2 / บอกเส้นทางใต้น้ำ Sunken Archive", location:"จุด F — ใต้สุด", quest:"ยามแห่งท้องทะเลลึก (Ancient Guardian)"},
+  {type:"main", icon:"⚙️", name:"Engineer Torvin", count:2, npcId:"engineer_torvin", role:"วิศวกรผู้สร้าง Redstone Golem", desc:"ให้ Quest บทที่ 3 / ให้ Blueprint Ironveil", location:"จุด C — ขวากลาง", quest:"หัวใจหินแดง (Redstone Monstrosity)"},
+  {type:"main", icon:"🌿", name:"Druid Essara", count:2, npcId:"druid_essara", role:"นักบวชป่าผู้บาดเจ็บ", desc:"ให้ Quest บทที่ 3 / ให้พร Poison Resist ชั่วคราว", location:"จุด E — ซ้ายบน", quest:"รากเลือด (Jungle Abomination)"},
+  {type:"main", icon:"⚡", name:"Stormcaller Mira", count:2, npcId:"stormcaller_mira", role:"นักเรียกพายุแห่ง Thunder Keep", desc:"ให้ Quest บทที่ 3 / รับการรักษาหลัง Quest จบ", location:"จุด E — ซ้ายบน", quest:"ฟ้าคำรามในพายุ (Tempest Golem)"},
+  {type:"main", icon:"🖤", name:"Void Miner Drax", count:2, npcId:"void_miner_drax", role:"นักขุดผู้หนีจาก Nether", desc:"ให้ Quest บทที่ 3 / ให้ Layout Obsidian Fortress", location:"จุด C — ขวากลาง", quest:"เงาแห่งออบซิเดียน (Obsidian Monstrosity)"},
+  {type:"main", icon:"🍄", name:"Mushroom Hermit Bolo", count:2, npcId:"hermit_bolo", role:"ผู้อยู่อาศัยใน Mushroom Island", desc:"ให้ Side Quest บทที่ 3 / มีความลับ Arch-Illager", location:"จุด F — ใต้สุด", quest:"เห็ดแห่งการทดสอบ (Mooshroom Monstrosity)"},
+  {type:"main", icon:"🌀", name:"Rift Scholar Saya", count:2, npcId:"rift_saya", role:"นักวิจัย Ender Dimension", desc:"ให้ Quest บทที่ 4 / อธิบาย 6 รูปแบบ Endersent", location:"Hub A — เกาะหินเหนือ (ปลดล็อคหลังบทที่ 3)", quest:"ผู้ส่งสาร 6 หน้า (Enchanted Endersent)"},
+  {type:"bridge", icon:"👻", name:"Ghost Whisperer Omra", count:1, npcId:"ghost_omra", role:"ผู้สื่อสารกับวิญญาณ", desc:"ให้ข้อมูลจุดอ่อน Wretched Wraith / ให้ Frost Ward Charm Formula", location:"ใกล้ Frostmere Ruins (X:-80 Z:200)", quest:"วิญญาณที่ไม่ยอมจาก"},
+  {type:"bridge", icon:"💀", name:"Skeleton Deserter", count:1, npcId:"skeleton_deserter", role:"โครงกระดูกผู้แปรพักตร์", desc:"ให้ Insider Info เกี่ยวกับ Nameless One / บอกตำแหน่งร่างแยก", location:"ป่าตะวันออก (X:350 Z:120)", quest:"ชื่อที่ถูกลืม"},
+  {type:"bridge", icon:"🌋", name:"Blaze Refugee", count:1, npcId:"blaze_refugee", role:"Blaze ที่หนีจากการควบคุม", desc:"ให้ Fireproof Potion Recipe / บอกจุดอ่อน Hovering Inferno", location:"ใกล้ซาก Embercrest (X:500 Z:-200)", quest:"ไฟใต้ท้องฟ้า"},
+  {type:"bridge", icon:"🐟", name:"Drowned Messenger", count:1, npcId:"drowned_messenger", role:"ซอมบี้ใต้น้ำที่ยังมีสติ", desc:"ให้เส้นทางใต้น้ำสู่ Sunken Archive / บอกตำแหน่ง Poison Mine", location:"ชายฝั่งใต้ (X:-100 Z:600)", quest:"ยามแห่งท้องทะเลลึก"},
+  {type:"bridge", icon:"🔴", name:"Redstone Cube Survivor", count:1, npcId:"rs_cube_survivor", role:"นักทดลองที่รอดชีวิตจาก Golem", desc:"บอกจุดอ่อน Redstone Monstrosity / ตำแหน่ง Spawner", location:"ใกล้ Ironveil (X:280 Z:-80)", quest:"หัวใจหินแดง"},
+  {type:"bridge", icon:"🌳", name:"Ancient Tree Spirit", count:1, npcId:"tree_spirit", role:"วิญญาณต้นไม้โบราณ", desc:"ให้ Vine Cutter / บอกตำแหน่ง Corrupted Root 5 จุด", location:"ใน Verdant Abyss (X:-400 Z:-300)", quest:"รากเลือด"},
+  {type:"bridge", icon:"🗿", name:"Totem Guardian", count:1, npcId:"totem_guardian", role:"โกเลมเล็กที่ยังจงรักภักดี", desc:"บอกวิธีเข้าหาโทเท็มอย่างปลอดภัย / ลำดับการทำลาย", location:"Thunder Keep (X:600 Z:-500)", quest:"ฟ้าคำรามในพายุ"},
+  {type:"bridge", icon:"🪓", name:"Vindicator Defector", count:1, npcId:"vindicator_defector", role:"Vindicator ผู้แปรพักตร์", desc:"ให้ Obsidian Weakness Scroll / บอก Layout ป้อม", location:"ชานเมือง Fortress (X:700 Z:400)", quest:"เงาแห่งออบซิเดียน"},
+  {type:"bridge", icon:"🐄", name:"Angry Mooshroom Scout", count:1, npcId:"mooshroom_scout", role:"Mooshroom ที่ยังเป็นมิตร", desc:"ให้ Mushroom Antidote / บอกตำแหน่ง Mooshroom Monstrosity", location:"Mushroom Island (X:-600 Z:500)", quest:"เห็ดแห่งการทดสอบ"},
 ];
 
 function renderNPC(filter){
