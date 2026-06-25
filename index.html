@@ -233,6 +233,7 @@ input.item-search-box::placeholder{color:#505070}
   <div class="nav-divider"></div>
   <div class="nav-links">
     <a class="nav-link active" onclick="navScrollTo('sec-overview')"><i class="ti ti-home"></i> Overview</a>
+	<a class="nav-link" onclick="navScrollTo('sec-map')"><i class="ti ti-map"></i> Map</a>
     <a class="nav-link" onclick="navScrollTo('sec-legend')"><i class="ti ti-list-details"></i> Objectives</a>
     <a class="nav-link" onclick="navScrollTo('sec-quests')"><i class="ti ti-scroll"></i> Quests <span class="nav-pill">13</span></a>
     <a class="nav-link" onclick="navScrollTo('sec-party')"><i class="ti ti-users"></i> Party</a>
@@ -264,6 +265,14 @@ input.item-search-box::placeholder{color:#505070}
     <span style="font-size: 15px; color: var(--gold); font-style: italic;" id="introQuoteDisplay">
       <i class="ti ti-volume"></i> "คลิกตรงนี้เพื่อฟังเสียงกระซิบแห่งโชคชะตาเกี่ยวกับเหล่าอสูรร้าย..."
     </span>
+  </div>
+</div>
+
+<!-- ===== MAP SECTION ===== -->
+<div class="section" id="sec-map" style="margin-bottom: 2rem;">
+  <div class="section-title">🗺️ Interactive Map</div>
+  <div style="border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: 0 0 15px rgba(122,92,255,.1);">
+    <iframe src="https://overviewer.org/warcraft/#/-6379/64/8339/-8/0/0" width="100%" height="600px" style="border: none;" allowfullscreen loading="lazy"></iframe>
   </div>
 </div>
 
@@ -953,7 +962,7 @@ function navScrollTo(id){
   window.scrollTo({top: el.getBoundingClientRect().top + window.scrollY - offset, behavior:'smooth'});
 }
 
-const navSections = ['sec-overview','sec-legend','sec-quests','sec-party','sec-npc','sec-items'];
+const navSections = ['sec-overview','sec-map','sec-legend','sec-quests','sec-party','sec-npc','sec-items'];
 const navLinks = document.querySelectorAll('.nav-link');
 function updateActiveNav(){
   let current = navSections[0];
