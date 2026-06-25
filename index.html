@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Dungeons & Quest Guide v0.1 (BETA TEST)</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -150,12 +150,100 @@ body{background:var(--bg);color:var(--text);font-family:'Crimson Text',serif;min
 .npc-row-val{font-size:12px;color:var(--text2)}
 .npc-id{font-size:10px;color:#6060a0;font-family:monospace;background:#111118;padding:1px 5px;border-radius:3px;margin-top:4px;display:inline-block}
 .npc-location-badge{font-size:10px;padding:1px 7px;border-radius:10px;background:#1e1e30;color:#8080b0;border:1px solid #343450;display:inline-block;margin-top:4px}
+
+/* ===== NAVBAR ===== */
+#topnav{position:sticky;top:0;z-index:999;background:rgba(18,18,26,0.92);backdrop-filter:blur(12px);border-bottom:1px solid #2e2e50;display:flex;align-items:center;gap:0;padding:0 1rem;height:48px;overflow-x:auto;scrollbar-width:none}
+#topnav::-webkit-scrollbar{display:none}
+.nav-brand{font-family:'Cinzel',serif;font-size:13px;font-weight:600;color:var(--gold);white-space:nowrap;margin-right:16px;flex-shrink:0;text-shadow:0 0 10px rgba(244,208,111,.3)}
+.nav-brand span{color:#7a5cff}
+.nav-divider{width:1px;height:20px;background:#2e2e50;flex-shrink:0;margin-right:4px}
+.nav-links{display:flex;align-items:center;gap:2px;flex-shrink:0}
+.nav-link{display:flex;align-items:center;gap:5px;padding:6px 10px;border-radius:6px;font-size:12px;color:var(--text2);cursor:pointer;white-space:nowrap;transition:all .15s;text-decoration:none;border:none;background:none;font-family:'Crimson Text',serif}
+.nav-link:hover{background:rgba(122,92,255,.15);color:var(--text)}
+.nav-link.active{background:rgba(122,92,255,.2);color:#c4b0ff;border:1px solid rgba(122,92,255,.3)}
+.nav-link i{font-size:14px;flex-shrink:0}
+.nav-pill{display:inline-block;font-size:9px;font-weight:700;background:#7a5cff;color:#fff;padding:1px 5px;border-radius:8px;margin-left:2px;line-height:1.5}
+
+body{background:var(--bg);color:var(--text);font-family:'Crimson Text',serif;min-height:100vh;scroll-behavior:smooth}
+html{scroll-behavior:smooth}
+
+/* ===== ITEMS DB SECTION ===== */
+:root{
+  --bg4:#1f1f35;
+  --t0:#4a9955;--t0bg:#0d2015;
+  --t1:#5588cc;--t1bg:#0d1830;
+  --t2:#cc7722;--t2bg:#2a1a08;
+  --t3:#aa3333;--t3bg:#1e0808;
+  --t4:#7733cc;--t4bg:#180d2e;
+  --mono:'JetBrains Mono',monospace;
+}
+#sec-items{padding:0}
+.items-header{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.25rem}
+.items-header-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1rem}
+.items-title{font-family:'Cinzel',serif;font-size:13px;font-weight:600;letter-spacing:.06em;color:var(--gold);text-transform:uppercase}
+.items-search{flex:1;max-width:300px}
+input.item-search-box{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:.4rem .85rem;color:var(--text);font-family:var(--mono);font-size:12px;outline:none;transition:border-color .15s}
+input.item-search-box:focus{border-color:#6644cc}
+input.item-search-box::placeholder{color:#505070}
+.items-cat-bar{display:flex;gap:6px;flex-wrap:wrap}
+.cat-btn{padding:4px 14px;border-radius:20px;font-size:12px;font-family:'Crimson Text',serif;font-weight:600;border:1px solid var(--border);background:var(--bg2);color:var(--text2);cursor:pointer;transition:all .15s;letter-spacing:.04em}
+.cat-btn:hover{border-color:#6644cc;color:var(--text)}
+.cat-btn.active{background:#6644cc;border-color:#6644cc;color:#fff}
+.tier-btn.active{background:var(--tc,#6644cc);border-color:var(--tc,#6644cc);color:#fff}
+.items-legend{display:flex;gap:12px;flex-wrap:wrap;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:.65rem 1rem;margin-bottom:1.25rem}
+.leg{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2)}
+.leg-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.items-stat-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:1.25rem}
+.istat{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:.45rem .85rem;font-size:12px;color:var(--text2)}
+.istat strong{font-family:'Cinzel',serif;font-size:15px;color:var(--gold);margin-right:5px}
+.tier-section{margin-bottom:1.75rem}
+.tier-label{display:inline-flex;align-items:center;gap:10px;font-family:'Cinzel',serif;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.75rem;padding:.3rem .85rem;border-radius:4px}
+.tier-0 .tier-label{background:var(--t0bg);color:var(--t0);border-left:3px solid var(--t0)}
+.tier-1 .tier-label{background:var(--t1bg);color:var(--t1);border-left:3px solid var(--t1)}
+.tier-2 .tier-label{background:var(--t2bg);color:var(--t2);border-left:3px solid var(--t2)}
+.tier-3 .tier-label{background:var(--t3bg);color:var(--t3);border-left:3px solid var(--t3)}
+.tier-4 .tier-label{background:var(--t4bg);color:var(--t4);border-left:3px solid var(--t4)}
+.item-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:7px}
+.item-card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:.6rem .8rem;display:flex;align-items:center;gap:9px;transition:border-color .15s,background .15s;cursor:pointer;position:relative;overflow:hidden}
+.item-card:hover{border-color:#6644cc;background:var(--bg3)}
+.item-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px}
+.tier-0 .item-card::before{background:var(--t0)}
+.tier-1 .item-card::before{background:var(--t1)}
+.tier-2 .item-card::before{background:var(--t2)}
+.tier-3 .item-card::before{background:var(--t3)}
+.tier-4 .item-card::before{background:var(--t4)}
+.item-icon{width:30px;height:30px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;background:var(--bg4)}
+.item-info{flex:1;min-width:0}
+.item-name{font-size:12.5px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.item-id{font-family:var(--mono);font-size:10px;color:#505070;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.item-tag{font-size:10px;font-weight:600;letter-spacing:.05em;padding:1px 7px;border-radius:10px;white-space:nowrap;flex-shrink:0}
+.tag-weapon{background:#3a1a1a;color:#ff8888}
+.tag-armor{background:#1a2a3a;color:#88bbff}
+.tag-item{background:#1a2a1a;color:#88dd88}
+.item-no-result{padding:2.5rem;text-align:center;color:#505070;font-family:'Cinzel',serif;font-size:15px}
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:#242435;border:1px solid #6644cc;border-radius:6px;padding:.5rem 1rem;font-size:12px;font-family:var(--mono);color:var(--text);opacity:0;transform:translateY(6px);transition:all .2s;pointer-events:none;z-index:9999}
+.toast.show{opacity:1;transform:translateY(0)}
 </style>
 </head>
 <body>
+
+<!-- ===== NAVBAR ===== -->
+<nav id="topnav">
+  <div class="nav-brand">⚔ Dungeons<span>&</span>Quest</div>
+  <div class="nav-divider"></div>
+  <div class="nav-links">
+    <a class="nav-link active" onclick="navScrollTo('sec-overview')"><i class="ti ti-home"></i> Overview</a>
+    <a class="nav-link" onclick="navScrollTo('sec-legend')"><i class="ti ti-list-details"></i> Objectives</a>
+    <a class="nav-link" onclick="navScrollTo('sec-quests')"><i class="ti ti-scroll"></i> Quests <span class="nav-pill">13</span></a>
+    <a class="nav-link" onclick="navScrollTo('sec-party')"><i class="ti ti-users"></i> Party</a>
+    <a class="nav-link" onclick="navScrollTo('sec-npc')"><i class="ti ti-mood-smile"></i> NPC <span class="nav-pill">27</span></a>
+    <a class="nav-link" onclick="navScrollTo('sec-items')"><i class="ti ti-sword"></i> Items DB</a>
+  </div>
+</nav>
+
 <div class="page">
 
-<div class="hero">
+<div id="sec-overview" class="hero">
   <div class="hero-title">Dungeons & Quest Guide</div>
   <div class="hero-sub">The Shattered Realm Chronicles — Quest & NPC Guide v0.1 BETA TEST</div>
   <div class="hero-meta">Multiplayer 120 คน · Party Quest · Hardcore Mode · 102 Objectives</div>
@@ -179,7 +267,7 @@ body{background:var(--bg);color:var(--text);font-family:'Crimson Text',serif;min
   </div>
 </div>
 
-<div class="section">
+<div class="section" id="sec-legend">
   <div class="section-title">ประเภท Objective ที่รองรับ</div>
   <div class="type-legend">
     <div class="legend-item"><span class="b-type bt-fight">⚔ ต่อสู้</span> สังหารมอนสเตอร์ / Boss (รองรับ Custom Entity ID)</div>
@@ -191,7 +279,7 @@ body{background:var(--bg);color:var(--text);font-family:'Crimson Text',serif;min
   </div>
 </div>
 
-<div class="section">
+<div class="section" id="sec-quests">
   <div class="section-title">Quest ทั้งหมด</div>
   <div class="tabs">
     <div class="tab active" onclick="filterQuests('all',this)">ทั้งหมด</div>
@@ -204,7 +292,7 @@ body{background:var(--bg);color:var(--text);font-family:'Crimson Text',serif;min
   <div class="quest-list" id="questList"></div>
 </div>
 
-<div class="section">
+<div class="section" id="sec-party">
   <div class="section-title">ระบบ Party Quest — Hardcore Mode</div>
   <div class="sys-grid">
     <div class="sys-card">
@@ -237,7 +325,7 @@ body{background:var(--bg);color:var(--text);font-family:'Crimson Text',serif;min
   </div>
 </div>
 
-<div class="section">
+<div class="section" id="sec-npc">
   <div class="section-title">NPC ทั้งหมด</div>
   <div class="tabs" style="margin-bottom:1.25rem">
     <div class="tab active" onclick="filterNPC('all',this)">ทั้งหมด</div>
@@ -250,6 +338,40 @@ body{background:var(--bg);color:var(--text);font-family:'Crimson Text',serif;min
   <div style="margin-top:1rem;padding:.75rem 1rem;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);font-size:12px;color:var(--text2)">
     <!--💡 NPC ×2 = วางสองตัวในจุดเดียวกันเพื่อรองรับ 50 คน / NPC Bridge วางนอก Hub ใกล้พื้นที่ Quest-->
   </div>
+</div>
+
+<!-- ===== ITEMS DB SECTION ===== -->
+<div class="section" id="sec-items" style="margin-top:2rem">
+  <div class="items-header">
+    <div class="items-header-row">
+      <div class="items-title">⚔ Items Database — Cheat Sheet</div>
+      <div class="items-search">
+        <input class="item-search-box" type="search" id="itemSearchBox" placeholder="ค้นหา ID หรือชื่อ..." oninput="itemFilterAll()">
+      </div>
+    </div>
+    <div class="items-cat-bar">
+      <button class="cat-btn active" data-igroup="cat" onclick="itemSetCategory('all',this)">ทั้งหมด</button>
+      <button class="cat-btn" data-igroup="cat" onclick="itemSetCategory('weapon',this)">⚔ อาวุธ</button>
+      <button class="cat-btn" data-igroup="cat" onclick="itemSetCategory('armor',this)">🛡 ชุดเกราะ</button>
+      <button class="cat-btn" data-igroup="cat" onclick="itemSetCategory('item',this)">📦 อุปกรณ์</button>
+      <span style="width:1px;background:var(--border);margin:0 4px;align-self:stretch;display:inline-block;opacity:.5"></span>
+      <button class="cat-btn tier-btn active" data-igroup="tier" onclick="itemSetTier('all',this)">All Tier</button>
+      <button class="cat-btn tier-btn" data-igroup="tier" onclick="itemSetTier(0,this)" style="--tc:var(--t0)">🟢 T0</button>
+      <button class="cat-btn tier-btn" data-igroup="tier" onclick="itemSetTier(1,this)" style="--tc:var(--t1)">🔵 T1</button>
+      <button class="cat-btn tier-btn" data-igroup="tier" onclick="itemSetTier(2,this)" style="--tc:var(--t2)">🟠 T2</button>
+      <button class="cat-btn tier-btn" data-igroup="tier" onclick="itemSetTier(3,this)" style="--tc:var(--t3)">🔴 T3</button>
+      <button class="cat-btn tier-btn" data-igroup="tier" onclick="itemSetTier(4,this)" style="--tc:var(--t4)">⚫ T4</button>
+    </div>
+  </div>
+  <div class="items-legend">
+    <div class="leg"><div class="leg-dot" style="background:var(--t0)"></div>Tier 0 — Common</div>
+    <div class="leg"><div class="leg-dot" style="background:var(--t1)"></div>Tier 1 — Standard</div>
+    <div class="leg"><div class="leg-dot" style="background:var(--t2)"></div>Tier 2 — Unique</div>
+    <div class="leg"><div class="leg-dot" style="background:var(--t3)"></div>Tier 3 — Rare</div>
+    <div class="leg"><div class="leg-dot" style="background:var(--t4)"></div>Tier 4 — Special/Unobtainable</div>
+  </div>
+  <div class="items-stat-bar" id="itemStatBar"></div>
+  <div id="itemTierContainer"></div>
 </div>
 
 <!-- Credit Footer Section -->
@@ -328,11 +450,11 @@ const quests = [
     objectives:[
       {type:"talk", text:"คุยกับ Farmer Aldus — NPC ID: farmer_aldus"},
       {type:"explore", text:"เดินทางไปยังซาก Ashfen Village (พิกัด X:120 Z:-340)"},
-      {type:"mine", text:"ทำลาย Corrupted Block ×3 — ID: alylica:corrupted_stone"},
-      {type:"collect", text:"เก็บ Village Clue ×3 — Item ID: alylica:village_clue"},
-      {type:"fight", text:"สังหาร Corrupted Zombie ×5 — Entity ID: alylica:corrupted_zombie"},
-      {type:"fight", text:"สังหาร Corrupted Slime ×3 — Entity ID: alylica:corrupted_slime"},
-      {type:"fight", text:"ทำลาย Corrupted Cauldron — Entity ID: alylica:corrupted_cauldron"},
+      {type:"mine", text:"ทำลาย Corrupted Block ×3 — ID: dungeons:corrupted_core"},
+      {type:"collect", text:"เก็บ Village Clue ×3 — Item ID: minecraft:paper"},
+      {type:"fight", text:"สังหาร Corrupted Zombie ×5 — Entity ID: minecraft:zombie"},
+      {type:"fight", text:"สังหาร Corrupted Slime ×3 — Entity ID: dungeons:cauldron_slime"},
+      {type:"fight", text:"ทำลาย Corrupted Cauldron — Entity ID: dungeons:corrupted_cauldron"},
       {type:"talk", text:"รายงานผลกับ Elder Maren — NPC ID: elder_maren"},
     ]
   },
@@ -356,10 +478,10 @@ const quests = [
       {type:"talk", text:"คุยกับ Sister Vael — NPC ID: sister_vael"},
       {type:"explore", text:"หา Ghost Whisperer Omra บริเวณ Frostmere Ruins (X:-80 Z:200)"},
       {type:"talk", text:"คุยกับ Ghost Whisperer Omra — NPC ID: ghost_omra"},
-      {type:"collect", text:"เก็บ Frost Crystal ×5 — Item ID: alylica:frost_crystal"},
-      {type:"craft", text:"สร้าง Frost Ward Charm ×1 — Item ID: alylica:frost_ward_charm"},
-      {type:"fight", text:"สังหาร Skeleton Vanguard ×4 — Entity ID: alylica:skeleton_vanguard"},
-      {type:"fight", text:"ทำลาย Wretched Wraith — Entity ID: alylica:wretched_wraith"},
+      {type:"collect", text:"เก็บ Frost Crystal ×5 — Item ID: minecraft:blue_ice"},
+      {type:"craft", text:"สร้าง Frost Ward Charm ×1 — Item ID: minecraft:totem_of_undying"},
+      {type:"fight", text:"สังหาร Skeleton Vanguard ×4 — Entity ID: dungeons:vanguard"},
+      {type:"fight", text:"ทำลาย Wretched Wraith — Entity ID: dungeons:wretched_wraith"},
       {type:"talk", text:"นำ Soul Shard คืนให้ Sister Vael — NPC ID: sister_vael"},
     ]
   },
@@ -383,10 +505,10 @@ const quests = [
       {type:"talk", text:"คุยกับ Scholar Verik — NPC ID: scholar_verik"},
       {type:"explore", text:"ค้นหา Skeleton Deserter ในป่าทางตะวันออก (X:350 Z:120)"},
       {type:"talk", text:"คุยกับ Skeleton Deserter — NPC ID: skeleton_deserter"},
-      {type:"collect", text:"เก็บ Ancient Tome Page ×4 — Item ID: alylica:ancient_tome_page"},
-      {type:"fight", text:"สังหาร Skeleton Vanguard ×8 — Entity ID: alylica:skeleton_vanguard"},
-      {type:"fight", text:"ทำลายร่างแยกของ Nameless One ×3 — Entity ID: alylica:nameless_clone"},
-      {type:"fight", text:"สังหาร The Nameless One — Entity ID: alylica:the_nameless_one"},
+      {type:"collect", text:"เก็บ Ancient Tome Page ×4 — Item ID: minecraft:paper"},
+      {type:"fight", text:"สังหาร Skeleton Vanguard ×8 — Entity ID: dungeons:vanguard"},
+      {type:"fight", text:"ทำลายร่างแยกของ Nameless One ×3 — Entity ID: dungeons:nameless_one_illusion"},
+      {type:"fight", text:"สังหาร The Nameless One — Entity ID: dungeons:nameless_one"},
       {type:"talk", text:"ส่งตำราต้องห้ามให้ Scholar Verik — NPC ID: scholar_verik"},
     ]
   },
@@ -411,9 +533,9 @@ const quests = [
       {type:"explore", text:"หา Blaze Refugee ใกล้ซาก Embercrest (X:500 Z:-200)"},
       {type:"talk", text:"คุยกับ Blaze Refugee — NPC ID: blaze_refugee"},
       {type:"collect", text:"เก็บ Blaze Rod ×8 — Item ID: minecraft:blaze_rod"},
-      {type:"craft", text:"สร้าง Fireproof Potion ×10 — Item ID: alylica:fireproof_potion"},
-      {type:"fight", text:"สังหาร Blaze Minion ×6 — Entity ID: alylica:blaze_minion"},
-      {type:"fight", text:"ทำลาย Hovering Inferno — Entity ID: alylica:hovering_inferno"},
+      {type:"craft", text:"สร้าง Fireproof Potion ×10 — Item ID: minecraft:potion"},
+      {type:"fight", text:"สังหาร Blaze Minion ×6 — Entity ID: minecraft:blaze"},
+      {type:"fight", text:"ทำลาย Hovering Inferno — Entity ID: dungeons:boss_wildfire"},
       {type:"explore", text:"เดินไปยังจุดดับไฟ Embercrest (X:520 Z:-220) หลังบอสตาย"},
     ]
   },
@@ -438,9 +560,9 @@ const quests = [
       {type:"explore", text:"หา Drowned Messenger บริเวณชายฝั่งใต้ (X:-100 Z:600)"},
       {type:"talk", text:"คุยกับ Drowned Messenger — NPC ID: drowned_messenger"},
       {type:"collect", text:"เก็บ Prismarine Shard ×10 — Item ID: minecraft:prismarine_shard"},
-      {type:"mine", text:"ทำลาย Poison Mine ×4 — ID: alylica:poison_mine_block"},
+      {type:"mine", text:"ทำลาย Poison Mine ×4 — ID: dungeons:biomine"},
       {type:"fight", text:"สังหาร Guardian Minion ×6 — Entity ID: minecraft:guardian"},
-      {type:"fight", text:"ทำลาย Ancient Guardian — Entity ID: alylica:ancient_guardian"},
+      {type:"fight", text:"ทำลาย Ancient Guardian — Entity ID: dungeons:ancient_guardian"},
       {type:"explore", text:"เข้าถึง Sunken Archive เก็บ Secret Map (X:-150 Z:650)"},
     ]
   },
@@ -464,11 +586,11 @@ const quests = [
       {type:"talk", text:"คุยกับ Engineer Torvin รับ Blueprint — NPC ID: engineer_torvin"},
       {type:"explore", text:"หา Redstone Cube Survivor ใกล้ Ironveil (X:280 Z:-80)"},
       {type:"talk", text:"คุยกับ Redstone Cube Survivor — NPC ID: rs_cube_survivor"},
-      {type:"mine", text:"ทำลาย Redstone Spawner ×4 — ID: alylica:redstone_spawner"},
-      {type:"fight", text:"สังหาร Redstone Cube ×10 — Entity ID: alylica:redstone_cube"},
-      {type:"collect", text:"เก็บ Redstone Fragment ×6 — Item ID: alylica:redstone_fragment"},
-      {type:"fight", text:"ทำลาย Redstone Monstrosity — Entity ID: alylica:redstone_monstrosity"},
-      {type:"collect", text:"เก็บ Core Crystal จากซาก — Item ID: alylica:core_crystal"},
+      {type:"mine", text:"ทำลาย Redstone Spawner ×4 — ID: dungeons:redstone_core_block"},
+      {type:"fight", text:"สังหาร Redstone Cube ×10 — Entity ID: dungeons:redstone_cube"},
+      {type:"collect", text:"เก็บ Redstone Fragment ×6 — Item ID: dungeons:redstone_core_block"},
+      {type:"fight", text:"ทำลาย Redstone Monstrosity — Entity ID: dungeons:redstone_monstrosity"},
+      {type:"collect", text:"เก็บ Core Crystal จากซาก — Item ID: minecraft:nether_star"},
     ]
   },
   {
@@ -491,11 +613,11 @@ const quests = [
       {type:"talk", text:"คุยกับ Druid Essara รับพร Poison Resist — NPC ID: druid_essara"},
       {type:"explore", text:"หา Ancient Tree Spirit ใน Verdant Abyss (X:-400 Z:-300)"},
       {type:"talk", text:"คุยกับ Ancient Tree Spirit รับ Vine Cutter — NPC ID: tree_spirit"},
-      {type:"mine", text:"ทำลาย Corrupted Root ×5 — ID: alylica:corrupted_root"},
-      {type:"fight", text:"สังหาร Poison Vine ×8 — Entity ID: alylica:poison_vine"},
-      {type:"fight", text:"สังหาร Angry Mooshroom ×4 — Entity ID: alylica:angry_mooshroom"},
-      {type:"fight", text:"สังหาร Jungle Abomination (Phase Berserk) — Entity ID: alylica:jungle_abomination"},
-      {type:"collect", text:"เก็บ Life Seed — Item ID: alylica:life_seed"},
+      {type:"mine", text:"ทำลาย Corrupted Root ×5 — ID: dungeons:abomination_bloom"},
+      {type:"fight", text:"สังหาร Poison Vine ×8 — Entity ID: dungeons:abomination_vine"},
+      {type:"fight", text:"สังหาร Angry Mooshroom ×4 — Entity ID: dungeons:angry_mooshroom"},
+      {type:"fight", text:"สังหาร Jungle Abomination (Phase Berserk) — Entity ID: dungeons:jungle_abomination"},
+      {type:"collect", text:"เก็บ Life Seed — Item ID: minecraft:spore_blossom"},
     ]
   },
   {
@@ -517,11 +639,11 @@ const quests = [
     objectives:[
       {type:"talk", text:"คุยกับ Stormcaller Mira — NPC ID: stormcaller_mira"},
       {type:"talk", text:"คุยกับ Totem Guardian รับคำแนะนำ — NPC ID: totem_guardian"},
-      {type:"mine", text:"ทำลาย Storm Totem เหนือ — ID: alylica:storm_totem_north"},
-      {type:"mine", text:"ทำลาย Storm Totem ใต้ — ID: alylica:storm_totem_south"},
-      {type:"mine", text:"ทำลาย Storm Totem ตะวันออก — ID: alylica:storm_totem_east"},
-      {type:"mine", text:"ทำลาย Storm Totem ตะวันตก — ID: alylica:storm_totem_west"},
-      {type:"fight", text:"สังหาร Tempest Golem (ไร้โล่) — Entity ID: alylica:tempest_golem"},
+      {type:"mine", text:"ทำลาย Storm Totem เหนือ — ID: dungeons:wind_totem_left"},
+      {type:"mine", text:"ทำลาย Storm Totem ใต้ — ID: dungeons:wind_totem_right"},
+      {type:"mine", text:"ทำลาย Storm Totem ตะวันออก — ID: dungeons:wind_totem_left"},
+      {type:"mine", text:"ทำลาย Storm Totem ตะวันตก — ID: dungeons:wind_totem_right"},
+      {type:"fight", text:"สังหาร Tempest Golem (ไร้โล่) — Entity ID: dungeons:tempest_golem"},
       {type:"talk", text:"กลับรายงาน Stormcaller Mira — NPC ID: stormcaller_mira"},
     ]
   },
@@ -545,11 +667,11 @@ const quests = [
       {type:"talk", text:"คุยกับ Void Miner Drax รับ Blueprint — NPC ID: void_miner_drax"},
       {type:"explore", text:"หา Vindicator Defector ชานเมือง Fortress (X:700 Z:400)"},
       {type:"talk", text:"คุยกับ Vindicator Defector รับ Weakness Scroll — NPC ID: vindicator_defector"},
-      {type:"collect", text:"เก็บ Electric Core ×4 — Item ID: alylica:electric_core"},
-      {type:"craft", text:"สร้าง Electric Bomb Trap ×3 — Item ID: alylica:electric_bomb_trap"},
-      {type:"mine", text:"ทำลาย Obsidian Gate Seal ×2 — ID: alylica:obsidian_gate_seal"},
+      {type:"collect", text:"เก็บ Electric Core ×4 — Item ID: minecraft:raw_iron"},
+      {type:"craft", text:"สร้าง Electric Bomb Trap ×3 — Item ID: minecraft:iron_block"},
+      {type:"mine", text:"ทำลาย Obsidian Gate Seal ×2 — ID: dungeons:obsidian_claw"},
       {type:"fight", text:"สังหาร Vindicator Guard ×6 — Entity ID: minecraft:vindicator"},
-      {type:"fight", text:"ทำลาย Obsidian Monstrosity — Entity ID: alylica:obsidian_monstrosity"},
+      {type:"fight", text:"ทำลาย Obsidian Monstrosity — Entity ID: dungeons:obsidian_monstrosity"},
     ]
   },
   {
@@ -572,9 +694,9 @@ const quests = [
       {type:"talk", text:"คุยกับ Mushroom Hermit Bolo — NPC ID: hermit_bolo"},
       {type:"explore", text:"หา Angry Mooshroom Scout ที่ Mushroom Island (X:-600 Z:500)"},
       {type:"talk", text:"คุยกับ Angry Mooshroom Scout รับ Antidote — NPC ID: mooshroom_scout"},
-      {type:"collect", text:"เก็บ Mushroom Spore ×6 — Item ID: alylica:mushroom_spore"},
-      {type:"fight", text:"สังหาร Angry Mooshroom ×8 — Entity ID: alylica:angry_mooshroom"},
-      {type:"fight", text:"ทำลาย Mooshroom Monstrosity — Entity ID: alylica:mooshroom_monstrosity"},
+      {type:"collect", text:"เก็บ Mushroom Spore ×6 — Item ID: minecraft:red_mushroom"},
+      {type:"fight", text:"สังหาร Angry Mooshroom ×8 — Entity ID: dungeons:angry_mooshroom"},
+      {type:"fight", text:"ทำลาย Mooshroom Monstrosity — Entity ID: dungeons:mooshroom_monstrosity"},
       {type:"talk", text:"รับความลับจาก Hermit Bolo — NPC ID: hermit_bolo"},
     ]
   },
@@ -596,15 +718,15 @@ const quests = [
     ],
     objectives:[
       {type:"talk", text:"คุยกับ Rift Scholar Saya รับข้อมูล 6 รูปแบบ — NPC ID: rift_saya"},
-      {type:"collect", text:"เก็บ Resistance Crystal ×6 (แต่ละธาตุ) — Item ID: alylica:resistance_crystal"},
-      {type:"craft", text:"สร้าง Ender Resistance Potion ×6 — Item ID: alylica:ender_resist_potion"},
-      {type:"fight", text:"เอาชนะ Endersent Storm Form — Entity ID: alylica:endersent_storm"},
-      {type:"fight", text:"เอาชนะ Endersent Inferno Form — Entity ID: alylica:endersent_inferno"},
-      {type:"fight", text:"เอาชนะ Endersent Void Form — Entity ID: alylica:endersent_void"},
-      {type:"fight", text:"เอาชนะ Endersent Frost Form — Entity ID: alylica:endersent_frost"},
-      {type:"fight", text:"เอาชนะ Endersent True Form — Entity ID: alylica:endersent_true"},
-      {type:"collect", text:"เก็บ Ender Seal Fragment ×6 — Item ID: alylica:ender_seal_fragment"},
-      {type:"craft", text:"ประกอบ Ender Seal Key — Item ID: alylica:ender_seal_key"},
+      {type:"collect", text:"เก็บ Resistance Crystal ×6 (แต่ละธาตุ) — Item ID: minecraft:ender_eye"},
+      {type:"craft", text:"สร้าง Ender Resistance Potion ×6 — Item ID: minecraft:potion"},
+      {type:"fight", text:"เอาชนะ Endersent Storm Form — Entity ID: dungeons:savage_eye"},
+      {type:"fight", text:"เอาชนะ Endersent Inferno Form — Entity ID: dungeons:spiked_eye"},
+      {type:"fight", text:"เอาชนะ Endersent Void Form — Entity ID: dungeons:reaping_eye"},
+      {type:"fight", text:"เอาชนะ Endersent Frost Form — Entity ID: dungeons:blight_eye"},
+      {type:"fight", text:"เอาชนะ Endersent True Form — Entity ID: dungeons:ravenous_eye"},
+      {type:"collect", text:"เก็บ Ender Seal Fragment ×6 — Item ID: minecraft:ender_eye"},
+      {type:"craft", text:"ประกอบ Ender Seal Key — Item ID: minecraft:ender_eye"},
     ]
   },
   {
@@ -629,13 +751,13 @@ const quests = [
     ],
     objectives:[
       {type:"talk", text:"รับ Final Briefing จาก Elder Maren — NPC ID: elder_maren"},
-      {type:"collect", text:"ตรวจสอบว่ามี Life Seed — Item ID: alylica:life_seed"},
-      {type:"collect", text:"ตรวจสอบว่ามี Ender Seal Key — Item ID: alylica:ender_seal_key"},
+      {type:"collect", text:"ตรวจสอบว่ามี Life Seed — Item ID: minecraft:spore_blossom"},
+      {type:"collect", text:"ตรวจสอบว่ามี Ender Seal Key — Item ID: minecraft:ender_eye"},
       {type:"explore", text:"เข้าสู่ Ender Realm Portal (X:0 Z:0 Y:64)"},
-      {type:"fight", text:"สังหาร Arch-Illager Phase 1 — Entity ID: alylica:arch_illager"},
-      {type:"fight", text:"ทำลาย Ender Shield ด้วย Life Seed — Entity ID: alylica:ender_shield"},
+      {type:"fight", text:"สังหาร Arch-Illager Phase 1 — Entity ID: dungeons:arch_illager"},
+      {type:"fight", text:"ทำลาย Ender Shield ด้วย Life Seed — Entity ID: dungeons:void_portal"},
       {type:"fight", text:"สังหาร Endermite Wave ×20 — Entity ID: minecraft:endermite"},
-      {type:"fight", text:"ทำลาย Vengeful Heart of Ender — Entity ID: alylica:vengeful_heart_of_ender"},
+      {type:"fight", text:"ทำลาย Vengeful Heart of Ender — Entity ID: dungeons:vengeful_heart_of_ender"},
       {type:"explore", text:"ใช้ Ender Seal Key ปิดผนึก Heart of Ender ที่ Seal Point"},
       {type:"talk", text:"กลับรายงาน Elder Maren — NPC ID: elder_maren"},
     ]
@@ -822,6 +944,647 @@ function filterNPC(f,el){
 }
 
 renderNPC("all");
+
+// ===== NAVBAR SCROLL =====
+function navScrollTo(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  const offset = 56;
+  window.scrollTo({top: el.getBoundingClientRect().top + window.scrollY - offset, behavior:'smooth'});
+}
+
+const navSections = ['sec-overview','sec-legend','sec-quests','sec-party','sec-npc','sec-items'];
+const navLinks = document.querySelectorAll('.nav-link');
+function updateActiveNav(){
+  let current = navSections[0];
+  navSections.forEach(id=>{
+    const el = document.getElementById(id);
+    if(el && window.scrollY >= el.getBoundingClientRect().top + window.scrollY - 80) current = id;
+  });
+  navLinks.forEach((a,i)=>{
+    a.classList.toggle('active', navSections[i]===current);
+  });
+}
+window.addEventListener('scroll', updateActiveNav, {passive:true});
+</script>
+
+<div class="toast" id="toast">คัดลอก ID แล้ว ✓</div>
+
+<script>
+// ─────────────────────────────────────────────
+//  DATA — all IDs from TXT files
+// ─────────────────────────────────────────────
+
+const IWEAPONS = [
+  // anchor
+  {id:'dungeons:encrusted_anchor',name:'Encrusted Anchor',type:'weapon',folder:'anchor'},
+  {id:'dungeons:anchor',name:'Anchor',type:'weapon',folder:'anchor'},
+  // axe
+  {id:'dungeons:firebrand',name:'Firebrand',type:'weapon',folder:'axe'},
+  {id:'dungeons:highlands_axe',name:'Highlands Axe',type:'weapon',folder:'axe'},
+  {id:'dungeons:axe',name:'Axe',type:'weapon',folder:'axe'},
+  // backstabber
+  {id:'dungeons:swift_striker',name:'Swift Striker',type:'weapon',folder:'backstabber'},
+  {id:'dungeons:backstabber',name:'Backstabber',type:'weapon',folder:'backstabber'},
+  // battlestaff
+  {id:'dungeons:battlestaff_of_terror',name:'Battlestaff of Terror',type:'weapon',folder:'battlestaff'},
+  {id:'dungeons:battlestaff',name:'Battlestaff',type:'weapon',folder:'battlestaff'},
+  {id:'dungeons:growing_staff',name:'Growing Staff',type:'weapon',folder:'battlestaff'},
+  // boneclub
+  {id:'dungeons:bone_cudgel',name:'Bone Cudgel',type:'weapon',folder:'boneclub'},
+  {id:'dungeons:bone_club',name:'Bone Club',type:'weapon',folder:'boneclub'},
+  // broken_sawblade
+  {id:'dungeons:broken_sawblade',name:'Broken Sawblade',type:'weapon',folder:'broken_sawblade'},
+  {id:'dungeons:mechanised_sawblade',name:'Mechanised Sawblade',type:'weapon',folder:'broken_sawblade'},
+  // claymore
+  {id:'dungeons:broadsword',name:'Broadsword',type:'weapon',folder:'claymore'},
+  {id:'dungeons:heartstealer',name:'Heartstealer',type:'weapon',folder:'claymore'},
+  {id:'dungeons:great_axeblade',name:'Great Axeblade',type:'weapon',folder:'claymore'},
+  {id:'dungeons:claymore',name:'Claymore',type:'weapon',folder:'claymore'},
+  // coral_blade
+  {id:'dungeons:sponge_striker',name:'Sponge Striker',type:'weapon',folder:'coral_blade'},
+  {id:'dungeons:coral_blade',name:'Coral Blade',type:'weapon',folder:'coral_blade'},
+  // cutlass
+  {id:'dungeons:nameless_blade',name:'Nameless Blade',type:'weapon',folder:'cutlass'},
+  {id:'dungeons:dancers_sword',name:"Dancer's Sword",type:'weapon',folder:'cutlass'},
+  {id:'dungeons:cutlass',name:'Cutlass',type:'weapon',folder:'cutlass'},
+  // daggers
+  {id:'dungeons:moon_daggers',name:'Moon Daggers',type:'weapon',folder:'daggers'},
+  {id:'dungeons:sheer_daggers',name:'Sheer Daggers',type:'weapon',folder:'daggers'},
+  {id:'dungeons:daggers',name:'Daggers',type:'weapon',folder:'daggers'},
+  {id:'dungeons:frost_knives',name:'Frost Knives',type:'weapon',folder:'daggers'},
+  // double_axe
+  {id:'dungeons:double_axe',name:'Double Axe',type:'weapon',folder:'double_axe'},
+  {id:'dungeons:whirlwind',name:'Whirlwind',type:'weapon',folder:'double_axe'},
+  {id:'dungeons:cursed_axe',name:'Cursed Axe',type:'weapon',folder:'double_axe'},
+  // gauntlets
+  {id:'dungeons:fighters_bindings',name:"Fighter's Bindings",type:'weapon',folder:'gauntlets'},
+  {id:'dungeons:maulers',name:'Maulers',type:'weapon',folder:'gauntlets'},
+  {id:'dungeons:soul_fists',name:'Soul Fists',type:'weapon',folder:'gauntlets'},
+  {id:'dungeons:gauntlets',name:'Gauntlets',type:'weapon',folder:'gauntlets'},
+  // glaive
+  {id:'dungeons:glaive',name:'Glaive',type:'weapon',folder:'glaive'},
+  {id:'dungeons:cackling_broom',name:'Cackling Broom',type:'weapon',folder:'glaive'},
+  {id:'dungeons:venom_glaive',name:'Venom Glaive',type:'weapon',folder:'glaive'},
+  {id:'dungeons:grave_bane',name:'Grave Bane',type:'weapon',folder:'glaive'},
+  // hammer
+  {id:'dungeons:stormlander',name:'Stormlander',type:'weapon',folder:'hammer'},
+  {id:'dungeons:great_hammer',name:'Great Hammer',type:'weapon',folder:'hammer'},
+  {id:'dungeons:bonehead_hammer',name:'Bonehead Hammer',type:'weapon',folder:'hammer'},
+  {id:'dungeons:hammer_of_gravity',name:'Hammer of Gravity',type:'weapon',folder:'hammer'},
+  // katana
+  {id:'dungeons:dark_katana',name:'Dark Katana',type:'weapon',folder:'katana'},
+  {id:'dungeons:masters_katana',name:"Master's Katana",type:'weapon',folder:'katana'},
+  {id:'dungeons:katana',name:'Katana',type:'weapon',folder:'katana'},
+  // longsword
+  {id:'dungeons:diamond_sword',name:'Diamond Sword',type:'weapon',folder:'longsword'},
+  {id:'dungeons:hawkbrand',name:'Hawkbrand',type:'weapon',folder:'longsword'},
+  {id:'dungeons:sinister_sword',name:'Sinister Sword',type:'weapon',folder:'longsword'},
+  {id:'dungeons:sword',name:'Sword',type:'weapon',folder:'longsword'},
+  // mace
+  {id:'dungeons:suns_grace',name:"Sun's Grace",type:'weapon',folder:'mace'},
+  {id:'dungeons:flail',name:'Flail',type:'weapon',folder:'mace'},
+  {id:'dungeons:mace',name:'Mace',type:'weapon',folder:'mace'},
+  // obsidian_claymore
+  {id:'dungeons:starless_night',name:'Starless Night',type:'weapon',folder:'obsidian_claymore'},
+  {id:'dungeons:obsidian_claymore',name:'Obsidian Claymore',type:'weapon',folder:'obsidian_claymore'},
+  // pickaxe
+  {id:'dungeons:sharpened_pickaxe',name:'Sharpened Pickaxe',type:'weapon',folder:'pickaxe'},
+  {id:'dungeons:sharpened_diamond_pickaxe',name:'Sharpened Diamond Pickaxe',type:'weapon',folder:'pickaxe'},
+  {id:'dungeons:the_monkey_motivator',name:'The Monkey Motivator',type:'weapon',folder:'pickaxe'},
+  // rapier
+  {id:'dungeons:rapier',name:'Rapier',type:'weapon',folder:'rapier'},
+  {id:'dungeons:freezing_foil',name:'Freezing Foil',type:'weapon',folder:'rapier'},
+  {id:'dungeons:bee_stinger',name:'Bee Stinger',type:'weapon',folder:'rapier'},
+  // rush_spear
+  {id:'dungeons:rush_spear',name:'Rush Spear',type:'weapon',folder:'rush_spear'},
+  {id:'dungeons:whispering_spear',name:'Whispering Spear',type:'weapon',folder:'rush_spear'},
+  {id:'dungeons:fortune_spear',name:'Fortune Spear',type:'weapon',folder:'rush_spear'},
+  // scythe
+  {id:'dungeons:soul_scythe',name:'Soul Scythe',type:'weapon',folder:'scythe'},
+  {id:'dungeons:skull_scythe',name:'Skull Scythe',type:'weapon',folder:'scythe'},
+  {id:'dungeons:frost_scythe',name:'Frost Scythe',type:'weapon',folder:'scythe'},
+  {id:'dungeons:jailors_scythe',name:"Jailor's Scythe",type:'weapon',folder:'scythe'},
+  // sickles
+  {id:'dungeons:the_last_laugh',name:'The Last Laugh',type:'weapon',folder:'sickles'},
+  {id:'dungeons:sickles',name:'Sickles',type:'weapon',folder:'sickles'},
+  {id:'dungeons:nightmares_bite',name:"Nightmare's Bite",type:'weapon',folder:'sickles'},
+  // soul_knife
+  {id:'dungeons:truthseeker',name:'Truthseeker',type:'weapon',folder:'soul_knife'},
+  {id:'dungeons:eternal_knife',name:'Eternal Knife',type:'weapon',folder:'soul_knife'},
+  {id:'dungeons:soul_knife',name:'Soul Knife',type:'weapon',folder:'soul_knife'},
+  // whip
+  {id:'dungeons:whip',name:'Whip',type:'weapon',folder:'whip'},
+  {id:'dungeons:vine_whip',name:'Vine Whip',type:'weapon',folder:'whip'},
+  // unobtainable
+  {id:'dungeons:alylicleaver',name:'Alylicleaver',type:'weapon',folder:'unobtainable'},
+  // bows/crossbows
+  {id:'dungeons:bubble_burster',name:'Bubble Burster',type:'weapon',folder:'bubble'},
+  {id:'dungeons:bubble_bow',name:'Bubble Bow',type:'weapon',folder:'bubble'},
+  {id:'dungeons:corrupted_crossbow',name:'Corrupted Crossbow',type:'weapon',folder:'burst'},
+  {id:'dungeons:soul_hunter_crossbow',name:'Soul Hunter Crossbow',type:'weapon',folder:'burst'},
+  {id:'dungeons:burst_crossbow',name:'Burst Crossbow',type:'weapon',folder:'burst'},
+  {id:'dungeons:cog_crossbow',name:'Cog Crossbow',type:'weapon',folder:'cog'},
+  {id:'dungeons:pride_of_the_piglins',name:'Pride of the Piglins',type:'weapon',folder:'cog'},
+  {id:'dungeons:spellbound_crossbows',name:'Spellbound Crossbows',type:'weapon',folder:'dual'},
+  {id:'dungeons:dual_crossbows',name:'Dual Crossbows',type:'weapon',folder:'dual'},
+  {id:'dungeons:baby_crossbows',name:'Baby Crossbows',type:'weapon',folder:'dual'},
+  {id:'dungeons:imploding_crossbow',name:'Imploding Crossbow',type:'weapon',folder:'exploding'},
+  {id:'dungeons:exploding_crossbow',name:'Exploding Crossbow',type:'weapon',folder:'exploding'},
+  {id:'dungeons:firebolt_thrower',name:'Firebolt Thrower',type:'weapon',folder:'exploding'},
+  {id:'dungeons:nautical_crossbow',name:'Nautical Crossbow',type:'weapon',folder:'harpoon'},
+  {id:'dungeons:harpoon_crossbow',name:'Harpoon Crossbow',type:'weapon',folder:'harpoon'},
+  {id:'dungeons:heavy_crossbow',name:'Heavy Crossbow',type:'weapon',folder:'heavy'},
+  {id:'dungeons:doom_crossbow',name:'Doom Crossbow',type:'weapon',folder:'heavy'},
+  {id:'dungeons:slayer_crossbow',name:'Slayer Crossbow',type:'weapon',folder:'heavy'},
+  {id:'dungeons:red_snake',name:'Red Snake',type:'weapon',folder:'longbow'},
+  {id:'dungeons:longbow',name:'Longbow',type:'weapon',folder:'longbow'},
+  {id:'dungeons:guardian_bow',name:'Guardian Bow',type:'weapon',folder:'longbow'},
+  {id:'dungeons:elite_power_bow',name:'Elite Power Bow',type:'weapon',folder:'power_bow'},
+  {id:'dungeons:power_bow',name:'Power Bow',type:'weapon',folder:'power_bow'},
+  {id:'dungeons:sabrewing',name:'Sabrewing',type:'weapon',folder:'power_bow'},
+  {id:'dungeons:harp_crossbow',name:'Harp Crossbow',type:'weapon',folder:'scatter'},
+  {id:'dungeons:scatter_crossbow',name:'Scatter Crossbow',type:'weapon',folder:'scatter'},
+  {id:'dungeons:lightning_harp_crossbow',name:'Lightning Harp Crossbow',type:'weapon',folder:'scatter'},
+  {id:'dungeons:veiled_crossbow',name:'Veiled Crossbow',type:'weapon',folder:'shadow'},
+  {id:'dungeons:shrieking_crossbow',name:'Shrieking Crossbow',type:'weapon',folder:'shadow'},
+  {id:'dungeons:shadow_crossbow',name:'Shadow Crossbow',type:'weapon',folder:'shadow'},
+  {id:'dungeons:winters_touch',name:"Winter's Touch",type:'weapon',folder:'snowbow'},
+  {id:'dungeons:snow_bow',name:'Snow Bow',type:'weapon',folder:'snowbow'},
+  {id:'dungeons:webbed_bow',name:'Webbed Bow',type:'weapon',folder:'snowbow'},
+  {id:'dungeons:feral_soul_crossbow',name:'Feral Soul Crossbow',type:'weapon',folder:'soul'},
+  {id:'dungeons:voidcaller',name:'Voidcaller',type:'weapon',folder:'soul'},
+  {id:'dungeons:soul_crossbow',name:'Soul Crossbow',type:'weapon',folder:'soul'},
+  {id:'dungeons:soul_bow',name:'Soul Bow',type:'weapon',folder:'soulbow'},
+  {id:'dungeons:nocturnal_bow',name:'Nocturnal Bow',type:'weapon',folder:'soulbow'},
+  {id:'dungeons:bow_of_lost_souls',name:'Bow of Lost Souls',type:'weapon',folder:'soulbow'},
+  {id:'dungeons:bonebow',name:'Bonebow',type:'weapon',folder:'vanillabow'},
+  {id:'dungeons:twin_bow',name:'Twin Bow',type:'weapon',folder:'vanillabow'},
+  {id:'dungeons:haunted_bow',name:'Haunted Bow',type:'weapon',folder:'vanillabow'},
+  {id:'dungeons:twisting_vine_bow',name:'Twisting Vine Bow',type:'weapon',folder:'vinebow'},
+  {id:'dungeons:weeping_vine_bow',name:'Weeping Vine Bow',type:'weapon',folder:'vinebow'},
+  {id:'dungeons:call_of_the_void',name:'Call of the Void',type:'weapon',folder:'voidbow'},
+  {id:'dungeons:void_bow',name:'Void Bow',type:'weapon',folder:'voidbow'},
+  {id:'dungeons:burst_gale_bow',name:'Burst Gale Bow',type:'weapon',folder:'windbow'},
+  {id:'dungeons:echo_of_the_valley',name:'Echo of the Valley',type:'weapon',folder:'windbow'},
+  {id:'dungeons:wind_bow',name:'Wind Bow',type:'weapon',folder:'windbow'},
+  {id:'dungeons:void_touched_blades',name:'Void Touched Blades',type:'weapon',folder:'void_blades'},
+  {id:'dungeons:the_beginning_and_the_end',name:'The Beginning and the End',type:'weapon',folder:'void_blades'},
+  {id:'dungeons:tempest_knife',name:'Tempest Knife',type:'weapon',folder:'tempest_knife'},
+  {id:'dungeons:resolute_tempest_knife',name:'Resolute Tempest Knife',type:'weapon',folder:'tempest_knife'},
+  {id:'dungeons:chill_gale_knife',name:'Chill Gale Knife',type:'weapon',folder:'tempest_knife'},
+];
+
+const IARMORS = [
+  {id:'dungeons:beehive_helmet',name:'Beehive Helmet',type:'armor',folder:'beehive'},
+  {id:'dungeons:beehive_chestplate',name:'Beehive Chestplate',type:'armor',folder:'beehive'},
+  {id:'dungeons:beehive_leggings',name:'Beehive Leggings',type:'armor',folder:'beehive'},
+  {id:'dungeons:beehive_boots',name:'Beehive Boots',type:'armor',folder:'beehive'},
+  {id:'dungeons:beenest_helmet',name:'Beenest Helmet',type:'armor',folder:'beenest'},
+  {id:'dungeons:beenest_chestplate',name:'Beenest Chestplate',type:'armor',folder:'beenest'},
+  {id:'dungeons:beenest_leggings',name:'Beenest Leggings',type:'armor',folder:'beenest'},
+  {id:'dungeons:beenest_boots',name:'Beenest Boots',type:'armor',folder:'beenest'},
+  {id:'dungeons:black_spot_helmet',name:'Black Spot Helmet',type:'armor',folder:'black_spot'},
+  {id:'dungeons:black_spot_chestplate',name:'Black Spot Chestplate',type:'armor',folder:'black_spot'},
+  {id:'dungeons:black_spot_leggings',name:'Black Spot Leggings',type:'armor',folder:'black_spot'},
+  {id:'dungeons:black_spot_boots',name:'Black Spot Boots',type:'armor',folder:'black_spot'},
+  {id:'dungeons:black_wolf_helmet',name:'Black Wolf Helmet',type:'armor',folder:'black_wolf'},
+  {id:'dungeons:black_wolf_chestplate',name:'Black Wolf Chestplate',type:'armor',folder:'black_wolf'},
+  {id:'dungeons:black_wolf_leggings',name:'Black Wolf Leggings',type:'armor',folder:'black_wolf'},
+  {id:'dungeons:black_wolf_boots',name:'Black Wolf Boots',type:'armor',folder:'black_wolf'},
+  {id:'dungeons:cauldron_helmet',name:'Cauldron Helmet',type:'armor',folder:'cauldron'},
+  {id:'dungeons:cauldron_chestplate',name:'Cauldron Chestplate',type:'armor',folder:'cauldron'},
+  {id:'dungeons:cauldron_leggings',name:'Cauldron Leggings',type:'armor',folder:'cauldron'},
+  {id:'dungeons:cauldron_boots',name:'Cauldron Boots',type:'armor',folder:'cauldron'},
+  {id:'dungeons:champions_helmet',name:"Champion's Helmet",type:'armor',folder:'champion'},
+  {id:'dungeons:champions_chestplate',name:"Champion's Chestplate",type:'armor',folder:'champion'},
+  {id:'dungeons:champions_leggings',name:"Champion's Leggings",type:'armor',folder:'champion'},
+  {id:'dungeons:champions_boots',name:"Champion's Boots",type:'armor',folder:'champion'},
+  {id:'dungeons:cloaked_skull_helmet',name:'Cloaked Skull Helmet',type:'armor',folder:'cloaked_skull'},
+  {id:'dungeons:cloaked_skull_chestplate',name:'Cloaked Skull Chestplate',type:'armor',folder:'cloaked_skull'},
+  {id:'dungeons:cloaked_skull_leggings',name:'Cloaked Skull Leggings',type:'armor',folder:'cloaked_skull'},
+  {id:'dungeons:cloaked_skull_boots',name:'Cloaked Skull Boots',type:'armor',folder:'cloaked_skull'},
+  {id:'dungeons:dark_helmet',name:'Dark Helmet',type:'armor',folder:'dark_armour'},
+  {id:'dungeons:dark_chestplate',name:'Dark Chestplate',type:'armor',folder:'dark_armour'},
+  {id:'dungeons:dark_leggings',name:'Dark Leggings',type:'armor',folder:'dark_armour'},
+  {id:'dungeons:dark_boots',name:'Dark Boots',type:'armor',folder:'dark_armour'},
+  {id:'dungeons:ember_helmet',name:'Ember Helmet',type:'armor',folder:'ember_robes'},
+  {id:'dungeons:ember_chestplate',name:'Ember Chestplate',type:'armor',folder:'ember_robes'},
+  {id:'dungeons:ember_leggings',name:'Ember Leggings',type:'armor',folder:'ember_robes'},
+  {id:'dungeons:ember_boots',name:'Ember Boots',type:'armor',folder:'ember_robes'},
+  {id:'dungeons:emerald_helmet',name:'Emerald Helmet',type:'armor',folder:'emerald_gear'},
+  {id:'dungeons:emerald_chestplate',name:'Emerald Chestplate',type:'armor',folder:'emerald_gear'},
+  {id:'dungeons:emerald_leggings',name:'Emerald Leggings',type:'armor',folder:'emerald_gear'},
+  {id:'dungeons:emerald_boots',name:'Emerald Boots',type:'armor',folder:'emerald_gear'},
+  {id:'dungeons:ender_helmet',name:'Ender Helmet',type:'armor',folder:'ender_armour'},
+  {id:'dungeons:ender_chestplate',name:'Ender Chestplate',type:'armor',folder:'ender_armour'},
+  {id:'dungeons:ender_leggings',name:'Ender Leggings',type:'armor',folder:'ender_armour'},
+  {id:'dungeons:ender_boots',name:'Ender Boots',type:'armor',folder:'ender_armour'},
+  {id:'dungeons:entertainer_helmet',name:'Entertainer Helmet',type:'armor',folder:'entertainer_garb'},
+  {id:'dungeons:entertainer_chestplate',name:'Entertainer Chestplate',type:'armor',folder:'entertainer_garb'},
+  {id:'dungeons:entertainer_leggings',name:'Entertainer Leggings',type:'armor',folder:'entertainer_garb'},
+  {id:'dungeons:entertainer_boots',name:'Entertainer Boots',type:'armor',folder:'entertainer_garb'},
+  {id:'dungeons:evocation_helmet',name:'Evocation Helmet',type:'armor',folder:'evocation_robes'},
+  {id:'dungeons:evocation_chestplate',name:'Evocation Chestplate',type:'armor',folder:'evocation_robes'},
+  {id:'dungeons:evocation_leggings',name:'Evocation Leggings',type:'armor',folder:'evocation_robes'},
+  {id:'dungeons:evocation_boots',name:'Evocation Boots',type:'armor',folder:'evocation_robes'},
+  {id:'dungeons:fox_helmet',name:'Fox Helmet',type:'armor',folder:'fox_armour'},
+  {id:'dungeons:fox_chestplate',name:'Fox Chestplate',type:'armor',folder:'fox_armour'},
+  {id:'dungeons:fox_leggings',name:'Fox Leggings',type:'armor',folder:'fox_armour'},
+  {id:'dungeons:fox_boots',name:'Fox Boots',type:'armor',folder:'fox_armour'},
+  {id:'dungeons:frost_helmet',name:'Frost Helmet',type:'armor',folder:'frost'},
+  {id:'dungeons:frost_chestplate',name:'Frost Chestplate',type:'armor',folder:'frost'},
+  {id:'dungeons:frost_leggings',name:'Frost Leggings',type:'armor',folder:'frost'},
+  {id:'dungeons:frost_boots',name:'Frost Boots',type:'armor',folder:'frost'},
+  {id:'dungeons:frost_bite_helmet',name:'Frost Bite Helmet',type:'armor',folder:'frost_bite'},
+  {id:'dungeons:frost_bite_chestplate',name:'Frost Bite Chestplate',type:'armor',folder:'frost_bite'},
+  {id:'dungeons:frost_bite_leggings',name:'Frost Bite Leggings',type:'armor',folder:'frost_bite'},
+  {id:'dungeons:frost_bite_boots',name:'Frost Bite Boots',type:'armor',folder:'frost_bite'},
+  {id:'dungeons:full_metal_helmet',name:'Full Metal Helmet',type:'armor',folder:'full_metal'},
+  {id:'dungeons:full_metal_chestplate',name:'Full Metal Chestplate',type:'armor',folder:'full_metal'},
+  {id:'dungeons:full_metal_leggings',name:'Full Metal Leggings',type:'armor',folder:'full_metal'},
+  {id:'dungeons:full_metal_boots',name:'Full Metal Boots',type:'armor',folder:'full_metal'},
+  {id:'dungeons:ghost_kindler_helmet',name:'Ghost Kindler Helmet',type:'armor',folder:'ghost_kindler'},
+  {id:'dungeons:ghost_kindler_chestplate',name:'Ghost Kindler Chestplate',type:'armor',folder:'ghost_kindler'},
+  {id:'dungeons:ghost_kindler_leggings',name:'Ghost Kindler Leggings',type:'armor',folder:'ghost_kindler'},
+  {id:'dungeons:ghost_kindler_boots',name:'Ghost Kindler Boots',type:'armor',folder:'ghost_kindler'},
+  {id:'dungeons:ghostly_helmet',name:'Ghostly Helmet',type:'armor',folder:'ghostly'},
+  {id:'dungeons:ghostly_chestplate',name:'Ghostly Chestplate',type:'armor',folder:'ghostly'},
+  {id:'dungeons:ghostly_leggings',name:'Ghostly Leggings',type:'armor',folder:'ghostly'},
+  {id:'dungeons:ghostly_boots',name:'Ghostly Boots',type:'armor',folder:'ghostly'},
+  {id:'dungeons:gilded_glory_helmet',name:'Gilded Glory Helmet',type:'armor',folder:'gilded_glory'},
+  {id:'dungeons:gilded_glory_chestplate',name:'Gilded Glory Chestplate',type:'armor',folder:'gilded_glory'},
+  {id:'dungeons:gilded_glory_leggings',name:'Gilded Glory Leggings',type:'armor',folder:'gilded_glory'},
+  {id:'dungeons:gilded_glory_boots',name:'Gilded Glory Boots',type:'armor',folder:'gilded_glory'},
+  {id:'dungeons:glow_squid_helmet',name:'Glow Squid Helmet',type:'armor',folder:'glow_squid'},
+  {id:'dungeons:glow_squid_chestplate',name:'Glow Squid Chestplate',type:'armor',folder:'glow_squid'},
+  {id:'dungeons:glow_squid_leggings',name:'Glow Squid Leggings',type:'armor',folder:'glow_squid'},
+  {id:'dungeons:glow_squid_boots',name:'Glow Squid Boots',type:'armor',folder:'glow_squid'},
+  {id:'dungeons:golden_piglin_helmet',name:'Golden Piglin Helmet',type:'armor',folder:'golden_piglin'},
+  {id:'dungeons:golden_piglin_chestplate',name:'Golden Piglin Chestplate',type:'armor',folder:'golden_piglin'},
+  {id:'dungeons:golden_piglin_leggings',name:'Golden Piglin Leggings',type:'armor',folder:'golden_piglin'},
+  {id:'dungeons:golden_piglin_boots',name:'Golden Piglin Boots',type:'armor',folder:'golden_piglin'},
+  {id:'dungeons:grim_helmet',name:'Grim Helmet',type:'armor',folder:'grim_armour'},
+  {id:'dungeons:grim_chestplate',name:'Grim Chestplate',type:'armor',folder:'grim_armour'},
+  {id:'dungeons:grim_leggings',name:'Grim Leggings',type:'armor',folder:'grim_armour'},
+  {id:'dungeons:grim_boots',name:'Grim Boots',type:'armor',folder:'grim_armour'},
+  {id:'dungeons:guard_helmet',name:'Guard Helmet',type:'armor',folder:'guard_armour'},
+  {id:'dungeons:guard_chestplate',name:'Guard Chestplate',type:'armor',folder:'guard_armour'},
+  {id:'dungeons:guard_leggings',name:'Guard Leggings',type:'armor',folder:'guard_armour'},
+  {id:'dungeons:guard_boots',name:'Guard Boots',type:'armor',folder:'guard_armour'},
+  {id:'dungeons:heros_helmet',name:"Hero's Helmet",type:'armor',folder:'hero_armour'},
+  {id:'dungeons:heros_chestplate',name:"Hero's Chestplate",type:'armor',folder:'hero_armour'},
+  {id:'dungeons:heros_leggings',name:"Hero's Leggings",type:'armor',folder:'hero_armour'},
+  {id:'dungeons:heros_boots',name:"Hero's Boots",type:'armor',folder:'hero_armour'},
+  {id:'dungeons:living_vines_helmet',name:'Living Vines Helmet',type:'armor',folder:'living_vines'},
+  {id:'dungeons:living_vines_chestplate',name:'Living Vines Chestplate',type:'armor',folder:'living_vines'},
+  {id:'dungeons:living_vines_leggings',name:'Living Vines Leggings',type:'armor',folder:'living_vines'},
+  {id:'dungeons:living_vines_boots',name:'Living Vines Boots',type:'armor',folder:'living_vines'},
+  {id:'dungeons:nimble_turtle_helmet',name:'Nimble Turtle Helmet',type:'armor',folder:'nimble_turtle'},
+  {id:'dungeons:nimble_turtle_chestplate',name:'Nimble Turtle Chestplate',type:'armor',folder:'nimble_turtle'},
+  {id:'dungeons:nimble_turtle_leggings',name:'Nimble Turtle Leggings',type:'armor',folder:'nimble_turtle'},
+  {id:'dungeons:nimble_turtle_boots',name:'Nimble Turtle Boots',type:'armor',folder:'nimble_turtle'},
+  {id:'dungeons:ocelot_helmet',name:'Ocelot Helmet',type:'armor',folder:'ocelot_armour'},
+  {id:'dungeons:ocelot_chestplate',name:'Ocelot Chestplate',type:'armor',folder:'ocelot_armour'},
+  {id:'dungeons:ocelot_leggings',name:'Ocelot Leggings',type:'armor',folder:'ocelot_armour'},
+  {id:'dungeons:ocelot_boots',name:'Ocelot Boots',type:'armor',folder:'ocelot_armour'},
+  {id:'dungeons:opulent_helmet',name:'Opulent Helmet',type:'armor',folder:'opulent_armour'},
+  {id:'dungeons:opulent_chestplate',name:'Opulent Chestplate',type:'armor',folder:'opulent_armour'},
+  {id:'dungeons:opulent_leggings',name:'Opulent Leggings',type:'armor',folder:'opulent_armour'},
+  {id:'dungeons:opulent_boots',name:'Opulent Boots',type:'armor',folder:'opulent_armour'},
+  {id:'dungeons:phantom_helmet',name:'Phantom Helmet',type:'armor',folder:'phantom_armour'},
+  {id:'dungeons:phantom_chestplate',name:'Phantom Chestplate',type:'armor',folder:'phantom_armour'},
+  {id:'dungeons:phantom_leggings',name:'Phantom Leggings',type:'armor',folder:'phantom_armour'},
+  {id:'dungeons:phantom_boots',name:'Phantom Boots',type:'armor',folder:'phantom_armour'},
+  {id:'dungeons:piglin_helmet',name:'Piglin Helmet',type:'armor',folder:'piglin_armour'},
+  {id:'dungeons:piglin_chestplate',name:'Piglin Chestplate',type:'armor',folder:'piglin_armour'},
+  {id:'dungeons:piglin_leggings',name:'Piglin Leggings',type:'armor',folder:'piglin_armour'},
+  {id:'dungeons:piglin_boots',name:'Piglin Boots',type:'armor',folder:'piglin_armour'},
+  {id:'dungeons:plate_helmet',name:'Plate Helmet',type:'armor',folder:'plate_armour'},
+  {id:'dungeons:plate_chestplate',name:'Plate Chestplate',type:'armor',folder:'plate_armour'},
+  {id:'dungeons:plate_leggings',name:'Plate Leggings',type:'armor',folder:'plate_armour'},
+  {id:'dungeons:plate_boots',name:'Plate Boots',type:'armor',folder:'plate_armour'},
+  {id:'dungeons:root_rot_helmet',name:'Root Rot Helmet',type:'armor',folder:'root_rot'},
+  {id:'dungeons:root_rot_chestplate',name:'Root Rot Chestplate',type:'armor',folder:'root_rot'},
+  {id:'dungeons:root_rot_leggings',name:'Root Rot Leggings',type:'armor',folder:'root_rot'},
+  {id:'dungeons:root_rot_boots',name:'Root Rot Boots',type:'armor',folder:'root_rot'},
+  {id:'dungeons:shadow_walker_helmet',name:'Shadow Walker Helmet',type:'armor',folder:'shadow_walker'},
+  {id:'dungeons:shadow_walker_chestplate',name:'Shadow Walker Chestplate',type:'armor',folder:'shadow_walker'},
+  {id:'dungeons:shadow_walker_leggings',name:'Shadow Walker Leggings',type:'armor',folder:'shadow_walker'},
+  {id:'dungeons:shadow_walker_boots',name:'Shadow Walker Boots',type:'armor',folder:'shadow_walker'},
+  {id:'dungeons:shulker_helmet',name:'Shulker Helmet',type:'armor',folder:'shulker_armour'},
+  {id:'dungeons:shulker_chestplate',name:'Shulker Chestplate',type:'armor',folder:'shulker_armour'},
+  {id:'dungeons:shulker_leggings',name:'Shulker Leggings',type:'armor',folder:'shulker_armour'},
+  {id:'dungeons:shulker_boots',name:'Shulker Boots',type:'armor',folder:'shulker_armour'},
+  {id:'dungeons:snow_helmet',name:'Snow Helmet',type:'armor',folder:'snow_armour'},
+  {id:'dungeons:snow_chestplate',name:'Snow Chestplate',type:'armor',folder:'snow_armour'},
+  {id:'dungeons:snow_leggings',name:'Snow Leggings',type:'armor',folder:'snow_armour'},
+  {id:'dungeons:snow_boots',name:'Snow Boots',type:'armor',folder:'snow_armour'},
+  {id:'dungeons:souldancer_helmet',name:'Souldancer Helmet',type:'armor',folder:'souldancer_robe'},
+  {id:'dungeons:souldancer_chestplate',name:'Souldancer Chestplate',type:'armor',folder:'souldancer_robe'},
+  {id:'dungeons:souldancer_leggings',name:'Souldancer Leggings',type:'armor',folder:'souldancer_robe'},
+  {id:'dungeons:souldancer_boots',name:'Souldancer Boots',type:'armor',folder:'souldancer_robe'},
+  {id:'dungeons:soul_helmet',name:'Soul Helmet',type:'armor',folder:'soul_robe'},
+  {id:'dungeons:soul_chestplate',name:'Soul Chestplate',type:'armor',folder:'soul_robe'},
+  {id:'dungeons:soul_leggings',name:'Soul Leggings',type:'armor',folder:'soul_robe'},
+  {id:'dungeons:soul_boots',name:'Soul Boots',type:'armor',folder:'soul_robe'},
+  {id:'dungeons:spider_helmet',name:'Spider Helmet',type:'armor',folder:'spider_armour'},
+  {id:'dungeons:spider_chestplate',name:'Spider Chestplate',type:'armor',folder:'spider_armour'},
+  {id:'dungeons:spider_leggings',name:'Spider Leggings',type:'armor',folder:'spider_armour'},
+  {id:'dungeons:spider_boots',name:'Spider Boots',type:'armor',folder:'spider_armour'},
+  {id:'dungeons:spooky_gourdian_helmet',name:'Spooky Gourdian Helmet',type:'armor',folder:'spooky_gourdian'},
+  {id:'dungeons:spooky_gourdian_chestplate',name:'Spooky Gourdian Chestplate',type:'armor',folder:'spooky_gourdian'},
+  {id:'dungeons:spooky_gourdian_leggings',name:'Spooky Gourdian Leggings',type:'armor',folder:'spooky_gourdian'},
+  {id:'dungeons:spooky_gourdian_boots',name:'Spooky Gourdian Boots',type:'armor',folder:'spooky_gourdian'},
+  {id:'dungeons:sprout_helmet',name:'Sprout Helmet',type:'armor',folder:'sprout_armour'},
+  {id:'dungeons:sprout_chestplate',name:'Sprout Chestplate',type:'armor',folder:'sprout_armour'},
+  {id:'dungeons:sprout_leggings',name:'Sprout Leggings',type:'armor',folder:'sprout_armour'},
+  {id:'dungeons:sprout_boots',name:'Sprout Boots',type:'armor',folder:'sprout_armour'},
+  {id:'dungeons:squid_helmet',name:'Squid Helmet',type:'armor',folder:'squid_armour'},
+  {id:'dungeons:squid_chestplate',name:'Squid Chestplate',type:'armor',folder:'squid_armour'},
+  {id:'dungeons:squid_leggings',name:'Squid Leggings',type:'armor',folder:'squid_armour'},
+  {id:'dungeons:squid_boots',name:'Squid Boots',type:'armor',folder:'squid_armour'},
+  {id:'dungeons:sturdy_shulker_helmet',name:'Sturdy Shulker Helmet',type:'armor',folder:'sturdy_shulker'},
+  {id:'dungeons:sturdy_shulker_chestplate',name:'Sturdy Shulker Chestplate',type:'armor',folder:'sturdy_shulker'},
+  {id:'dungeons:sturdy_shulker_leggings',name:'Sturdy Shulker Leggings',type:'armor',folder:'sturdy_shulker'},
+  {id:'dungeons:sturdy_shulker_boots',name:'Sturdy Shulker Boots',type:'armor',folder:'sturdy_shulker'},
+  {id:'dungeons:teleportation_helmet',name:'Teleportation Helmet',type:'armor',folder:'teleportation_robes'},
+  {id:'dungeons:teleportation_chestplate',name:'Teleportation Chestplate',type:'armor',folder:'teleportation_robes'},
+  {id:'dungeons:teleportation_leggings',name:'Teleportation Leggings',type:'armor',folder:'teleportation_robes'},
+  {id:'dungeons:teleportation_boots',name:'Teleportation Boots',type:'armor',folder:'teleportation_robes'},
+  {id:'dungeons:thief_helmet',name:'Thief Helmet',type:'armor',folder:'thief_armour'},
+  {id:'dungeons:thief_chestplate',name:'Thief Chestplate',type:'armor',folder:'thief_armour'},
+  {id:'dungeons:thief_leggings',name:'Thief Leggings',type:'armor',folder:'thief_armour'},
+  {id:'dungeons:thief_boots',name:'Thief Boots',type:'armor',folder:'thief_armour'},
+  {id:'dungeons:titans_shroud_helmet',name:"Titan's Shroud Helmet",type:'armor',folder:'titans_shroud'},
+  {id:'dungeons:titans_shroud_chestplate',name:"Titan's Shroud Chestplate",type:'armor',folder:'titans_shroud'},
+  {id:'dungeons:titans_shroud_leggings',name:"Titan's Shroud Leggings",type:'armor',folder:'titans_shroud'},
+  {id:'dungeons:titans_shroud_boots',name:"Titan's Shroud Boots",type:'armor',folder:'titans_shroud'},
+  {id:'dungeons:troubadour_helmet',name:'Troubadour Helmet',type:'armor',folder:'troubadour'},
+  {id:'dungeons:troubadour_chestplate',name:'Troubadour Chestplate',type:'armor',folder:'troubadour'},
+  {id:'dungeons:troubadour_leggings',name:'Troubadour Leggings',type:'armor',folder:'troubadour'},
+  {id:'dungeons:troubadour_boots',name:'Troubadour Boots',type:'armor',folder:'troubadour'},
+  {id:'dungeons:turtle_helmet',name:'Turtle Helmet',type:'armor',folder:'turtle_armour'},
+  {id:'dungeons:turtle_chestplate',name:'Turtle Chestplate',type:'armor',folder:'turtle_armour'},
+  {id:'dungeons:turtle_leggings',name:'Turtle Leggings',type:'armor',folder:'turtle_armour'},
+  {id:'dungeons:turtle_boots',name:'Turtle Boots',type:'armor',folder:'turtle_armour'},
+  {id:'dungeons:unstable_helmet',name:'Unstable Helmet',type:'armor',folder:'unstable_robes'},
+  {id:'dungeons:unstable_chestplate',name:'Unstable Chestplate',type:'armor',folder:'unstable_robes'},
+  {id:'dungeons:unstable_leggings',name:'Unstable Leggings',type:'armor',folder:'unstable_robes'},
+  {id:'dungeons:unstable_boots',name:'Unstable Boots',type:'armor',folder:'unstable_robes'},
+  {id:'dungeons:verdant_helmet',name:'Verdant Helmet',type:'armor',folder:'verdant_robes'},
+  {id:'dungeons:verdant_chestplate',name:'Verdant Chestplate',type:'armor',folder:'verdant_robes'},
+  {id:'dungeons:verdant_leggings',name:'Verdant Leggings',type:'armor',folder:'verdant_robes'},
+  {id:'dungeons:verdant_boots',name:'Verdant Boots',type:'armor',folder:'verdant_robes'},
+  {id:'dungeons:wither_helmet',name:'Wither Helmet',type:'armor',folder:'wither'},
+  {id:'dungeons:wither_chestplate',name:'Wither Chestplate',type:'armor',folder:'wither'},
+  {id:'dungeons:wither_leggings',name:'Wither Leggings',type:'armor',folder:'wither'},
+  {id:'dungeons:wither_boots',name:'Wither Boots',type:'armor',folder:'wither'},
+  {id:'dungeons:wolf_helmet',name:'Wolf Helmet',type:'armor',folder:'wolf_armour'},
+  {id:'dungeons:wolf_chestplate',name:'Wolf Chestplate',type:'armor',folder:'wolf_armour'},
+  {id:'dungeons:wolf_leggings',name:'Wolf Leggings',type:'armor',folder:'wolf_armour'},
+  {id:'dungeons:wolf_boots',name:'Wolf Boots',type:'armor',folder:'wolf_armour'},
+];
+
+const IITEMS = [
+  // common artifacts
+  {id:'dungeons:boots_of_swiftness',name:'Boots of Swiftness',type:'item',folder:'common'},
+  {id:'dungeons:blast_fungus',name:'Blast Fungus',type:'item',folder:'common'},
+  {id:'dungeons:buzzy_nest',name:'Buzzy Nest',type:'item',folder:'common'},
+  {id:'dungeons:corrupted_beacon',name:'Corrupted Beacon',type:'item',folder:'common'},
+  {id:'dungeons:vexing_chant',name:'Vexing Chant',type:'item',folder:'common'},
+  {id:'dungeons:wind_horn',name:'Wind Horn',type:'item',folder:'common'},
+  {id:'dungeons:wonderful_wheat',name:'Wonderful Wheat',type:'item',folder:'common'},
+  {id:'dungeons:powershaker',name:'Powershaker',type:'item',folder:'common'},
+  {id:'dungeons:corrupted_seeds',name:'Corrupted Seeds',type:'item',folder:'common'},
+  {id:'dungeons:iron_hide_amulet',name:'Iron Hide Amulet',type:'item',folder:'common'},
+  {id:'dungeons:soul_healer',name:'Soul Healer',type:'item',folder:'common'},
+  {id:'dungeons:shock_powder',name:'Shock Powder',type:'item',folder:'common'},
+  {id:'dungeons:shadow_shifter',name:'Shadow Shifter',type:'item',folder:'common'},
+  {id:'dungeons:soul_lantern',name:'Soul Lantern',type:'item',folder:'common'},
+  {id:'dungeons:tome_of_duplication',name:'Tome of Duplication',type:'item',folder:'common'},
+  {id:'dungeons:tasty_bone',name:'Tasty Bone',type:'item',folder:'common'},
+  {id:'dungeons:spinblade',name:'Spinblade',type:'item',folder:'common'},
+  {id:'dungeons:love_medallion',name:'Love Medallion',type:'item',folder:'common'},
+  {id:'dungeons:light_feather',name:'Light Feather',type:'item',folder:'common'},
+  {id:'dungeons:lightning_rod',name:'Lightning Rod',type:'item',folder:'common'},
+  {id:'dungeons:satchel_of_elements',name:'Satchel of Elements',type:'item',folder:'common'},
+  {id:'dungeons:scatter_mines',name:'Scatter Mines',type:'item',folder:'common'},
+  {id:'dungeons:satchel_of_snacks',name:'Satchel of Snacks',type:'item',folder:'common'},
+  {id:'dungeons:satchel_of_elixirs',name:'Satchel of Elixirs',type:'item',folder:'common'},
+  {id:'dungeons:eye_of_the_guardian',name:'Eye of the Guardian',type:'item',folder:'common'},
+  {id:'dungeons:ghost_cloak',name:'Ghost Cloak',type:'item',folder:'common'},
+  {id:'dungeons:death_cap_mushroom',name:'Death Cap Mushroom',type:'item',folder:'common'},
+  {id:'dungeons:totem_of_regeneration',name:'Totem of Regeneration',type:'item',folder:'common'},
+  {id:'dungeons:updraft_tome',name:'Updraft Tome',type:'item',folder:'common'},
+  {id:'dungeons:totem_of_soul_protection',name:'Totem of Soul Protection',type:'item',folder:'common'},
+  {id:'dungeons:totem_of_shielding',name:'Totem of Shielding',type:'item',folder:'common'},
+  {id:'dungeons:harvester',name:'Harvester',type:'item',folder:'common'},
+  {id:'dungeons:ice_wand',name:'Ice Wand',type:'item',folder:'common'},
+  {id:'dungeons:totem_of_casting',name:'Totem of Casting',type:'item',folder:'common'},
+  {id:'dungeons:gong_of_weakening',name:'Gong of Weakening',type:'item',folder:'common'},
+  {id:'dungeons:enchanted_grass',name:'Enchanted Grass',type:'item',folder:'common'},
+  {id:'dungeons:enchanters_tome',name:"Enchanter's Tome",type:'item',folder:'common'},
+  {id:'dungeons:golem_kit',name:'Golem Kit',type:'item',folder:'common'},
+  // rare artifacts
+  {id:'dungeons:rare_corrupted_seeds',name:'Corrupted Seeds (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_death_cap_mushroom',name:'Death Cap Mushroom (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_blast_fungus',name:'Blast Fungus (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_corrupted_beacon',name:'Corrupted Beacon (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_buzzy_nest',name:'Buzzy Nest (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_eye_of_the_guardian',name:'Eye of the Guardian (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_totem_of_regeneration',name:'Totem of Regeneration (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_totem_of_shielding',name:'Totem of Shielding (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_tome_of_duplication',name:'Tome of Duplication (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_totem_of_casting',name:'Totem of Casting (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_vexing_chant',name:'Vexing Chant (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_wind_horn',name:'Wind Horn (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_totem_of_soul_protection',name:'Totem of Soul Protection (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_updraft_tome',name:'Updraft Tome (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_tasty_bone',name:'Tasty Bone (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_scatter_mines',name:'Scatter Mines (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_shadow_shifter',name:'Shadow Shifter (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_satchel_of_elixirs',name:'Satchel of Elixirs (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_satchel_of_snacks',name:'Satchel of Snacks (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_soul_lantern',name:'Soul Lantern (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_spinblade',name:'Spinblade (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_shock_powder',name:'Shock Powder (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_soul_healer',name:'Soul Healer (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_wonderful_wheat',name:'Wonderful Wheat (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_ghost_cloak',name:'Ghost Cloak (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_harvester',name:'Harvester (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_golem_kit',name:'Golem Kit (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_ice_wand',name:'Ice Wand (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_gong_of_weakening',name:'Gong of Weakening (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_lightning_rod',name:'Lightning Rod (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_powershaker',name:'Powershaker (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_satchel_of_elements',name:'Satchel of Elements (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_iron_hide_amulet',name:'Iron Hide Amulet (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_love_medallion',name:'Love Medallion (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_light_feather',name:'Light Feather (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_boots_of_swiftness',name:'Boots of Swiftness (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_enchanted_grass',name:'Enchanted Grass (Rare)',type:'item',folder:'rare'},
+  {id:'dungeons:rare_enchanters_tome',name:"Enchanter's Tome (Rare)",type:'item',folder:'rare'},
+  // keys
+  {id:'dungeons:corrupted_key',name:'Corrupted Key',type:'item',folder:'keys'},
+  {id:'dungeons:wretched_key',name:'Wretched Key',type:'item',folder:'keys'},
+  {id:'dungeons:nameless_key',name:'Nameless Key',type:'item',folder:'keys'},
+  {id:'dungeons:blaze_key',name:'Blaze Key',type:'item',folder:'keys'},
+  {id:'dungeons:ancient_key',name:'Ancient Key',type:'item',folder:'keys'},
+  {id:'dungeons:redstone_key',name:'Redstone Key',type:'item',folder:'keys'},
+  {id:'dungeons:jungle_key',name:'Jungle Key',type:'item',folder:'keys'},
+  {id:'dungeons:tempest_key',name:'Tempest Key',type:'item',folder:'keys'},
+  {id:'dungeons:obsidian_key',name:'Obsidian Key',type:'item',folder:'keys'},
+  {id:'dungeons:questionable_key',name:'Questionable Key',type:'item',folder:'keys'},
+  {id:'dungeons:skeleton_key',name:'Skeleton Key',type:'item',folder:'keys'},
+  {id:'dungeons:echo_key',name:'Echo Key',type:'item',folder:'keys'},
+  {id:'dungeons:heart_key',name:'Heart Key',type:'item',folder:'keys'},
+  {id:'dungeons:void_key',name:'Void Key',type:'item',folder:'keys'},
+  {id:'dungeons:trial_key_stone',name:'Trial Key (Stone)',type:'item',folder:'keys'},
+  {id:'dungeons:trial_key_void',name:'Trial Key (Void)',type:'item',folder:'keys'},
+  {id:'dungeons:trial_key_calcite',name:'Trial Key (Calcite)',type:'item',folder:'keys'},
+  {id:'dungeons:trial_key_mossy',name:'Trial Key (Mossy)',type:'item',folder:'keys'},
+  // arrows
+  {id:'dungeons:harpoon_arrow',name:'Harpoon Arrow',type:'item',folder:'arrows'},
+  {id:'dungeons:firework_arrow',name:'Firework Arrow',type:'item',folder:'arrows'},
+  {id:'dungeons:torment_arrow',name:'Torment Arrow',type:'item',folder:'arrows'},
+  {id:'dungeons:thundering_arrow',name:'Thundering Arrow',type:'item',folder:'arrows'},
+  {id:'dungeons:burning_arrow',name:'Burning Arrow',type:'item',folder:'arrows'},
+  // special/unobtainable items
+  {id:'dungeons:ladle',name:'Ladle',type:'item',folder:'unobtainable'},
+  {id:'dungeons:enchanted_eye_of_ender',name:'Enchanted Eye of Ender',type:'item',folder:'items'},
+  {id:'dungeons:diamond_dust',name:'Diamond Dust',type:'item',folder:'items'},
+  {id:'dungeons:bottle_of_souls',name:'Bottle of Souls',type:'item',folder:'items'},
+  {id:'dungeons:corrupted_pumpkin',name:'Corrupted Pumpkin',type:'item',folder:'limited'},
+  {id:'dungeons:blue_print',name:'Blueprint',type:'item',folder:'items'},
+  {id:'dungeons:pink_print',name:'Pinkprint',type:'item',folder:'items'},
+  {id:'dungeons:book_of_heroes',name:'Book of Heroes',type:'item',folder:'items'},
+];
+
+// Tier assignment (folder → tier)
+const FOLDER_TIER = {
+  // T0 common/easiest
+  common:0, arrows:0,
+  // T1 standard weapons & armor
+  anchor:1,axe:1,backstabber:1,battlestaff:1,boneclub:1,claymore:1,coral_blade:1,cutlass:1,
+  daggers:1,double_axe:1,gauntlets:1,glaive:1,hammer:1,katana:1,longsword:1,mace:1,pickaxe:1,
+  rapier:1,rush_spear:1,scythe:1,sickles:1,soul_knife:1,whip:1,
+  bubble:1,burst:1,cog:1,dual:1,exploding:1,harpoon:1,heavy:1,longbow:1,power_bow:1,
+  scatter:1,shadow:1,snowbow:1,soul:1,soulbow:1,vanillabow:1,vinebow:1,voidbow:1,windbow:1,
+  // armor T1
+  beehive:1,beenest:1,cauldron:1,dark_armour:1,ember_robes:1,evocation_robes:1,fox_armour:1,
+  frost:1,full_metal:1,ghostly:1,guard_armour:1,hero_armour:1,living_vines:1,nimble_turtle:1,
+  ocelot_armour:1,opulent_armour:1,phantom_armour:1,piglin_armour:1,plate_armour:1,snow_armour:1,
+  spider_armour:1,sprout_armour:1,squid_armour:1,thief_armour:1,troubadour:1,verdant_robes:1,
+  wolf_armour:1,
+  // T2 unique/boss-drop weapons & armor
+  broken_sawblade:2,obsidian_claymore:2,void_blades:2,tempest_knife:2,
+  black_spot:2,black_wolf:2,champion:2,cloaked_skull:2,emerald_gear:2,ender_armour:2,
+  entertainer_garb:2,fox_armour:2,ghost_kindler:2,gilded_glory:2,glow_squid:2,
+  golden_piglin:2,grim_armour:2,root_rot:2,shadow_walker:2,shulker_armour:2,
+  souldancer_robe:2,soul_robe:2,spooky_gourdian:2,sturdy_shulker:2,teleportation_robes:2,
+  titans_shroud:2,turtle_armour:2,unstable_robes:2,wither:2,frost_bite:2,
+  // T3 rare artifacts & hard-to-get gear
+  rare:3,keys:3,
+  // T4 special / unobtainable
+  unobtainable:4,limited:4,items:4,
+};
+
+function iGetTier(item){
+  const f=item.folder;
+  if(f in FOLDER_TIER) return FOLDER_TIER[f];
+  return 1;
+}
+
+const TIERS=[
+  {tier:0,label:'Tier 0 — Common',emoji:'🟢',desc:'หาได้ง่าย / Artifact พื้นฐาน'},
+  {tier:1,label:'Tier 1 — Standard',emoji:'🔵',desc:'อาวุธ / ชุดเกราะ / อุปกรณ์ทั่วไป'},
+  {tier:2,label:'Tier 2 — Unique',emoji:'🟠',desc:'ของพิเศษ / variant ที่ยากกว่า / บางตัว boss drop'},
+  {tier:3,label:'Tier 3 — Rare',emoji:'🔴',desc:'rare_ prefix / Boss Key'},
+  {tier:4,label:'Tier 4 — Special / Unobtainable',emoji:'⚫',desc:'ของที่ไม่ได้ drop หรือหายากมาก'},
+];
+
+const ICONS={weapon:'⚔',armor:'🛡',item:'📦'};
+const IALL=[...IWEAPONS,...IARMORS,...IITEMS];
+let iCurrentCat='all';
+let iCurrentTier='all';
+
+function itemBuildUI(){
+  const statBar=document.getElementById('itemStatBar');
+  const w=IWEAPONS.length,a=IARMORS.length,it=IITEMS.length;
+  statBar.innerHTML=`
+    <div class="istat"><strong>${IALL.length}</strong>รายการทั้งหมด</div>
+    <div class="istat"><strong style="color:#ff8888">${w}</strong>อาวุธ</div>
+    <div class="istat"><strong style="color:#88bbff">${a}</strong>ชุดเกราะ</div>
+    <div class="istat"><strong style="color:#88dd88">${it}</strong>อุปกรณ์</div>
+  `;
+  itemRenderTiers(IALL);
+}
+
+function itemRenderTiers(items){
+  const con=document.getElementById('itemTierContainer');
+  con.innerHTML='';
+  if(!items.length){con.innerHTML='<div class="no-result">ไม่พบรายการที่ค้นหา</div>';return;}
+  TIERS.forEach(({tier,label,emoji})=>{
+    if(iCurrentTier!=='all'&&iCurrentTier!==tier) return;
+    const group=items.filter(i=>iGetTier(i)===tier);
+    if(!group.length) return;
+    const sec=document.createElement('div');
+    sec.className=`tier-section tier-${tier}`;
+    sec.innerHTML=`<div class="tier-label">${emoji} ${label} <span style="font-size:11px;opacity:.6;font-family:var(--body);font-weight:400">(${group.length} รายการ)</span></div>`;
+    const grid=document.createElement('div');grid.className='item-grid';
+    group.forEach(it=>{
+      const card=document.createElement('div');
+      card.className='item-card';
+      card.title='คลิกเพื่อคัดลอก ID';
+      card.onclick=()=>itemCopyId(it.id);
+      card.innerHTML=`
+        <div class="item-icon">${ICONS[it.type]}</div>
+        <div class="item-info">
+          <div class="item-name">${it.name}</div>
+          <div class="item-id">${it.id}</div>
+        </div>
+        <div class="item-tag tag-${it.type}">${it.type==='weapon'?'WEAPON':it.type==='armor'?'ARMOR':'ITEM'}</div>
+      `;
+      grid.appendChild(card);
+    });
+    sec.appendChild(grid);
+    con.appendChild(sec);
+  });
+}
+
+function itemSetCategory(cat,btn){
+  iCurrentCat=cat;
+  document.querySelectorAll('[data-igroup="cat"]').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  itemFilterAll();
+}
+
+function itemSetTier(tier,btn){
+  iCurrentTier=tier;
+  document.querySelectorAll('[data-igroup="tier"]').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  itemFilterAll();
+}
+
+function itemFilterAll(){
+  const q=document.getElementById('itemSearchBox').value.toLowerCase().trim();
+  let items=IALL;
+  if(iCurrentCat!=='all') items=items.filter(i=>i.type===iCurrentCat);
+  if(q) items=items.filter(i=>i.id.includes(q)||i.name.toLowerCase().includes(q)||i.folder.includes(q));
+  itemRenderTiers(items);
+}
+
+function itemCopyId(id){
+  navigator.clipboard.writeText(id).then(()=>{
+    const t=document.getElementById('toast');
+    t.textContent=`คัดลอก: ${id} ✓`;
+    t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'),1800);
+  });
+}
+
+itemBuildUI();
 </script>
 </body>
 </html>
